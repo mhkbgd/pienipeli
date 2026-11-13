@@ -42,19 +42,27 @@ HTML, CSS and JavaScript with **no build step and no dependencies**.
 games/find-the-animal/
 ├── index.html     Page markup: welcome screen, game screen, celebration
 ├── style.css      Layout, animations, responsive card sizes
+├── strings.js     All text in every language
 ├── animals.js     The 40 animals: names in en/fi/bn, sound recipe, SVG drawing
 ├── sounds.js      All sounds, generated live with the Web Audio API (no audio files)
-├── script.js      Game logic, translations, speech, confetti
+├── narrator.js    The narrator: recorded clips if present, else the warmest TTS voice
+├── narration/     Optional recorded narration clips + manifest.js + README (voice brief)
+├── tools/         narration-lines.mjs: lists every spoken line for recording
+├── script.js      Game logic, speech timing, confetti
 └── card-art.svg   Picture for the game card on the landing page
 ```
 
 - **Adding an animal:** add one entry to the `ANIMALS` list in `animals.js` with its
   names, a sound recipe from `sounds.js` (or none for a gentle chime) and its drawing
   (shapes in a 200 × 200 box, using the helpers at the top of the file).
-- **Adding a language:** add a block to `T` in `script.js`, a flag to `FLAGS`, the
+- **Adding a language:** add a block to `T` in `strings.js`, a flag to `FLAGS`, the
   language code to `LANGS`, and the name to every animal's `names`.
-- **Speech** uses the browser's built-in voices (`speechSynthesis`), picking `en-US`,
-  `fi-FI` or `bn-BD` and falling back to any voice of the same language. If a device has
+- **Narrator:** a warm, gentle kindergarten-teacher voice. For the most natural sound,
+  record or generate clips as described in [`narration/README.md`](games/find-the-animal/narration/README.md).
+  Without clips, the game uses the browser's built-in voices (`speechSynthesis`). It prefers
+  warm, high-quality female voices in `en-US`, `fi-FI` or `bn-BD`, falls back to any voice
+  of the same language, and speaks a little slower and brighter, with a different tone for
+  questions, praise and "try again". If a device has
   no voice for the chosen language, the welcome screen says so and the game still works
   with text, animations and sounds. Bengali voices are often missing on desktop computers.
   Android and iOS/macOS usually have one (on Apple devices it may need downloading in

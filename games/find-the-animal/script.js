@@ -10,69 +10,10 @@
   const toSVG = window.FTA_toSVG;
   const Sound = window.FTA_Sound;
 
-  const ROUND = 10;          // stars in one round; after that a big celebration
+  const ROUND = window.FTA_STRINGS.ROUND; // stars in one round; after that a big celebration
   const NO_REPEAT = 12;      // an animal won't be the answer again within this many questions
 
-  // ---------- Translations ----------
-  const bnDigits = n => String(n).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
-
-  const T = {
-    en: {
-      langName: 'English', speech: ['en-US', 'en-GB', 'en'],
-      title: 'Find the Animal!',
-      subtitle: 'Listen, look and tap the right animal!',
-      play: 'Play!', playAgain: 'Play again', moreGames: 'More games',
-      ask: a => `Where is the ${a.toLowerCase()}?`,
-      itIs: a => `It's the ${a.toLowerCase()}!`,
-      thatIs: a => `That's the ${a.toLowerCase()}.`,
-      praise: ['Great job!', 'Well done!', 'Yay!', 'You found it!', 'Super!', 'Amazing!', 'Hooray!'],
-      tryAgain: ['Try again!', 'Almost! Try again!', 'Keep looking!'],
-      roundDone: n => `Hooray! You found ${n} animals!`,
-      found: (n, s) => `Animals found: ${n}. Stars: ${s} of ${ROUND}.`,
-      soundOn: 'Turn sound on', soundOff: 'Turn sound off',
-      musicOn: 'Turn music on', musicOff: 'Turn music off',
-      repeat: 'Hear the question again', home: 'Home', restart: 'Start over', language: 'Language',
-      noVoice: 'This device has no English voice, so the game can’t speak. Text and sounds still work.',
-      num: n => String(n),
-    },
-    fi: {
-      langName: 'Suomi', speech: ['fi-FI', 'fi'],
-      title: 'Etsi eläin!',
-      subtitle: 'Kuuntele, katso ja napauta oikeaa eläintä!',
-      play: 'Pelaa!', playAgain: 'Pelaa uudelleen', moreGames: 'Lisää pelejä',
-      ask: a => `Missä on ${a.toLowerCase()}?`,
-      itIs: a => `Se on ${a.toLowerCase()}!`,
-      thatIs: a => `Tuo on ${a.toLowerCase()}.`,
-      praise: ['Hienoa!', 'Hyvin tehty!', 'Jee!', 'Löysit sen!', 'Mahtavaa!', 'Upeaa!', 'Hurraa!'],
-      tryAgain: ['Yritä uudelleen!', 'Melkein! Yritä uudelleen!', 'Etsi vielä!'],
-      roundDone: n => `Hurraa! Löysit ${n} eläintä!`,
-      found: (n, s) => `Löydetyt eläimet: ${n}. Tähdet: ${s}/${ROUND}.`,
-      soundOn: 'Ääni päälle', soundOff: 'Ääni pois',
-      musicOn: 'Musiikki päälle', musicOff: 'Musiikki pois',
-      repeat: 'Kuuntele kysymys uudelleen', home: 'Alkuun', restart: 'Aloita alusta', language: 'Kieli',
-      noVoice: 'Tällä laitteella ei ole suomenkielistä puheääntä, joten peli ei puhu. Teksti ja äänet toimivat silti.',
-      num: n => String(n),
-    },
-    bn: {
-      langName: 'বাংলা', speech: ['bn-BD', 'bn-IN', 'bn'],
-      title: 'প্রাণী খুঁজি!',
-      subtitle: 'শোনো, দেখো আর ঠিক প্রাণীটিকে ছোঁও!',
-      play: 'খেলো!', playAgain: 'আবার খেলো', moreGames: 'আরও খেলা',
-      ask: a => `${a} কোথায়?`,
-      itIs: a => `এটা ${a}!`,
-      thatIs: a => `এটা ${a}।`,
-      praise: ['দারুণ!', 'খুব ভালো!', 'বাহ্!', 'তুমি খুঁজে পেয়েছ!', 'চমৎকার!', 'অসাধারণ!', 'হুররে!'],
-      tryAgain: ['আবার চেষ্টা করো!', 'প্রায় হয়েছে! আবার চেষ্টা করো!', 'আরেকবার খোঁজো!'],
-      roundDone: n => `হুররে! তুমি ${bnDigits(n)}টি প্রাণী খুঁজে পেয়েছ!`,
-      found: (n, s) => `খুঁজে পাওয়া প্রাণী: ${bnDigits(n)}। তারা: ${bnDigits(s)}/${bnDigits(ROUND)}।`,
-      soundOn: 'শব্দ চালু করো', soundOff: 'শব্দ বন্ধ করো',
-      musicOn: 'গান চালু করো', musicOff: 'গান বন্ধ করো',
-      repeat: 'প্রশ্নটি আবার শোনো', home: 'শুরুর পাতা', restart: 'আবার শুরু করো', language: 'ভাষা',
-      noVoice: 'এই ডিভাইসে বাংলা কণ্ঠ নেই, তাই খেলাটি কথা বলতে পারবে না। লেখা আর শব্দ ঠিকই চলবে।',
-      num: bnDigits,
-    },
-  };
-  const LANGS = ['en', 'fi', 'bn'];
+  const { T, LANGS } = window.FTA_STRINGS;
 
   // Flags drawn as SVG (emoji flags don't show on Windows)
   const FLAGS = {
@@ -101,7 +42,7 @@
   // ---------- State ----------
   const browserLang = (navigator.language || 'en').slice(0, 2);
   let lang = store.get('lang', LANGS.includes(browserLang) ? browserLang : 'en');
-  if (!T[lang]) lang = 'en';
+  if (!LANGS.includes(lang)) lang = 'en';
   let muted = store.get('muted', false);
   let musicOn = store.get('music', false); // background music is off by default
   let found = 0, stars = 0;
@@ -115,65 +56,47 @@
   const t = () => T[lang];
   const nameOf = a => a.names[lang];
 
-  // ---------- Speech (Web Speech API) ----------
-  const synth = window.speechSynthesis || null;
-  let voices = [];
-  function loadVoices() { if (synth) { voices = synth.getVoices() || []; updateVoiceNote(); } }
-  if (synth) {
-    loadVoices();
-    if ('onvoiceschanged' in synth) synth.addEventListener('voiceschanged', loadVoices);
-  }
-
-  // Best voice for a language: exact match (bn-BD), then same language (bn-IN), else none
-  function voiceFor(l) {
-    const norm = s => (s || '').replace('_', '-').toLowerCase();
-    for (const code of T[l].speech) {
-      const v = voices.find(v => norm(v.lang) === code.toLowerCase());
-      if (v) return v;
-    }
-    const base = T[l].speech[0].slice(0, 2);
-    return voices.find(v => norm(v.lang).startsWith(base)) || null;
-  }
+  // ---------- Narrator (see narrator.js) ----------
+  const Narrator = window.FTA_Narrator;
+  Narrator.onVoices(updateVoiceNote);
 
   function updateVoiceNote() {
     const note = $('voiceNote');
     // Voices load late in some browsers; only warn once we know the list
-    const missing = synth ? (voices.length > 0 && !voiceFor(lang)) : true;
+    const missing = Narrator.canSpeak(lang) === false;
     note.hidden = !missing;
     note.textContent = missing ? '🔇 ' + t().noVoice : '';
   }
 
-  // Speak text in the current language. onDone runs when finished (or right away if silent).
+  // Each spoken line has a key (for recorded clips), its text, and a mood
+  const L = {
+    title: () => ({ key: 'title', text: t().title, mood: 'cheer' }),
+    ask: a => ({ key: 'ask-' + a.id, text: t().ask(nameOf(a)), mood: 'ask' }),
+    itIs: a => ({ key: 'itis-' + a.id, text: t().itIs(nameOf(a)), mood: 'cheer' }),
+    thatIs: a => ({ key: 'thatis-' + a.id, text: t().thatIs(nameOf(a)), mood: 'info' }),
+    praise: i => ({ key: 'praise-' + i, text: t().praise[i], mood: 'cheer' }),
+    tryAgain: i => ({ key: 'try-' + i, text: t().tryAgain[i], mood: 'soft' }),
+    round: () => ({ key: 'round', text: t().roundDone(ROUND), mood: 'cheer' }),
+  };
+  const randIdx = arr => Math.floor(Math.random() * arr.length);
+
+  // Speak lines in the current language. onDone runs when finished (or soon, if muted).
   let speakToken = 0;
-  function speak(text, onDone) {
+  function speak(lines, onDone) {
     const token = ++speakToken;
     const done = () => { if (token === speakToken) { Sound.duck(false); onDone && onDone(); } };
-    if (!synth || muted) { setTimeout(done, 300); return; }
-    try {
-      synth.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      const v = voiceFor(lang);
-      if (v) u.voice = v;
-      u.lang = v ? v.lang : T[lang].speech[0];
-      u.rate = 0.9;
-      u.pitch = 1.15;
-      let finished = false;
-      const finish = () => { if (!finished) { finished = true; done(); } };
-      u.onend = finish;
-      u.onerror = finish;
-      // Safety net: some browsers never fire onend
-      setTimeout(finish, 1200 + text.length * 110);
-      Sound.duck(true);
-      synth.speak(u);
-    } catch (err) { setTimeout(done, 300); }
+    if (muted) { Narrator.stop(); setTimeout(done, 300); return; }
+    Sound.duck(true);
+    Narrator.say(lang, lines, done);
   }
-  function stopSpeaking() { speakToken++; if (synth) try { synth.cancel(); } catch (e) { /* ignore */ } }
+  function stopSpeaking() { speakToken++; Narrator.stop(); Sound.duck(false); }
 
   // ---------- Language ----------
   function buildLangPickers() {
     ['langPicker', 'langPickerSmall'].forEach(id => {
       const box = $(id);
       box.innerHTML = '';
+      box.hidden = LANGS.length < 2;
       LANGS.forEach(l => {
         const b = document.createElement('button');
         b.className = 'lang-btn';
@@ -206,7 +129,7 @@
       updateProgress();
       if (fromTap && !$('game').hidden && !locked) askQuestion();
     }
-    if (fromTap && !$('welcome').hidden) speak(t().title);
+    if (fromTap && !$('welcome').hidden) speak([L.title()]);
   }
 
   // ---------- Sound / music buttons ----------
@@ -290,7 +213,7 @@
   function askQuestion() {
     if (!current) return;
     $('question').classList.add('talking');
-    speak(t().ask(nameOf(current.target)), () => $('question').classList.remove('talking'));
+    speak([L.ask(current.target)], () => $('question').classList.remove('talking'));
   }
 
   // ---------- Answers ----------
@@ -316,8 +239,8 @@
 
     Sound.success();
     setTimeout(() => Sound.animal(a.sound), 380);
-    const praise = pick(t().praise);
-    showToast(praise, 'happy');
+    const pi = randIdx(t().praise);
+    showToast(t().praise[pi], 'happy');
     burstFrom(card);
 
     found++; stars++;
@@ -328,7 +251,7 @@
     const startedAt = Date.now();
     setTimeout(() => {
       if (!locked) return;
-      speak(`${praise} ${t().itIs(nameOf(a))}`, () => {
+      speak([L.praise(pi), L.itIs(a)], () => {
         const wait = Math.max(500, 2600 - (Date.now() - startedAt));
         nextTimer = setTimeout(() => (stars >= ROUND ? celebrate() : newQuestion()), wait);
       });
@@ -340,9 +263,9 @@
     card.classList.remove('wiggle'); void card.offsetWidth;
     card.classList.add('wiggle', 'reveal');
     Sound.gentle();
-    const msg = pick(t().tryAgain);
-    showToast(msg, 'soft');
-    speak(`${t().thatIs(nameOf(animal))} ${msg} ${t().ask(nameOf(current.target))}`);
+    const ti = randIdx(t().tryAgain);
+    showToast(t().tryAgain[ti], 'soft');
+    speak([L.thatIs(animal), L.tryAgain(ti), L.ask(current.target)]);
     // After a couple of misses, make the right animal glow softly
     if (misses >= 2) {
       hintTimer = setTimeout(() => {
@@ -378,7 +301,7 @@
     $('celebrate').hidden = false;
     Sound.fanfare();
     confettiRain();
-    setTimeout(() => speak(t().roundDone(roundFinds.length)), 900);
+    setTimeout(() => speak([L.round()]), 900);
     const btn = $('celebrate').querySelector('[data-act="again"]');
     if (btn) btn.focus({ preventScroll: true });
   }
