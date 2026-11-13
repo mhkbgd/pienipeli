@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport-fit + no zoom keeps toddler taps from zooming the page -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Find the Animal! Free Animal Game for Toddlers in English, Finnish &amp; Bengali | Pienipeli</title>
+  <meta name="description" content="Play Find the Animal free online: a gentle talking animal game for toddlers (ages 2–4) in English, Finnish and Bengali. 40 cute animals, animal sounds, no ads, no download.">
+  <link rel="canonical" href="https://pienipeli.fi/games/find-the-animal/">
+  <meta name="theme-color" content="#c9ecff">
+  <link rel="icon" href="../../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pienipeli">
+  <meta property="og:title" content="Find the Animal! Free talking animal game for toddlers">
+  <meta property="og:description" content="Hear an animal's name and tap the right one. 40 cute animals in English, Finnish and Bengali. No ads, no download.">
+  <meta property="og:url" content="https://pienipeli.fi/games/find-the-animal/">
+  <meta property="og:image" content="https://pienipeli.fi/assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" href="../../assets/fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "VideoGame",
+        "@id": "https://pienipeli.fi/games/find-the-animal/#game",
+        "name": "Find the Animal!",
+        "url": "https://pienipeli.fi/games/find-the-animal/",
+        "description": "A free, ad-free talking animal game for toddlers. The game asks for an animal out loud and the child taps the right one of three. 40 animals in English, Finnish and Bengali.",
+        "image": "https://pienipeli.fi/assets/img/og-image.png",
+        "genre": ["Educational", "Casual", "Kids"],
+        "gamePlatform": ["Web browser", "Mobile", "Tablet", "Desktop"],
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "inLanguage": ["en", "fi", "bn"],
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+        "audience": { "@type": "PeopleAudience", "suggestedMinAge": 2, "suggestedMaxAge": 4 },
+        "publisher": { "@type": "Organization", "name": "Pienipeli", "url": "https://pienipeli.fi/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Pienipeli", "item": "https://pienipeli.fi/" },
+          { "@type": "ListItem", "position": 2, "name": "Find the Animal!", "item": "https://pienipeli.fi/games/find-the-animal/" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <!-- Sky decoration -->
+  <div class="sky" aria-hidden="true">
+    <div class="sun"></div>
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+    <div class="hill h1"></div>
+    <div class="hill h2"></div>
+  </div>
+
+  <!-- ============ Welcome screen ============ -->
+  <section id="welcome" class="screen welcome" aria-labelledby="wTitle">
+    <div class="corner-btns">
+      <button class="icon-btn" data-act="sound" data-aria="soundOff"><span class="i-sound" aria-hidden="true">🔊</span></button>
+      <button class="icon-btn" data-act="music" data-aria="musicOn"><span aria-hidden="true">🎵</span></button>
+    </div>
+
+    <div class="parade" id="parade" aria-hidden="true"></div>
+    <h1 id="wTitle" class="w-title" data-t="title">Find the Animal!</h1>
+    <p class="w-sub" data-t="subtitle">Listen, look and tap the right animal!</p>
+
+    <div class="langs" role="group" data-aria="language" id="langPicker"></div>
+    <p class="voice-note" id="voiceNote" hidden></p>
+
+    <button class="play-btn" id="playBtn"><span aria-hidden="true">▶</span> <span data-t="play">Play!</span></button>
+    <a class="back-link" href="../../index.html" data-t="moreGames">More games</a>
+  </section>
+
+  <!-- ============ Game screen ============ -->
+  <section id="game" class="screen game" hidden>
+    <header class="topbar">
+      <h2 class="g-title" data-t="title">Find the Animal!</h2>
+      <div class="langs small" role="group" data-aria="language" id="langPickerSmall"></div>
+      <div class="top-btns">
+        <button class="icon-btn" data-act="sound" data-aria="soundOff"><span class="i-sound" aria-hidden="true">🔊</span></button>
+        <button class="icon-btn" data-act="music" data-aria="musicOn"><span aria-hidden="true">🎵</span></button>
+      </div>
+    </header>
+
+    <div class="question" id="question" aria-live="polite">
+      <button class="q-speaker" data-act="repeat" data-aria="repeat"><span aria-hidden="true">🔈</span></button>
+      <span class="q-text" id="qText"></span>
+    </div>
+
+    <main class="stage" id="stage">
+      <div class="cards" id="cards"></div>
+      <div class="toast" id="toast" aria-live="assertive"></div>
+    </main>
+
+    <footer class="bottombar">
+      <div class="bb-left">
+        <button class="icon-btn" data-act="home" data-aria="home"><span aria-hidden="true">🏠</span></button>
+        <button class="icon-btn" data-act="restart" data-aria="restart"><span aria-hidden="true">🔄</span></button>
+      </div>
+      <div class="progress" id="progress" role="img">
+        <div class="stars" id="stars"></div>
+        <div class="found"><span aria-hidden="true">🐾</span> <span id="foundCount">0</span></div>
+      </div>
+      <button class="icon-btn big" data-act="repeat" data-aria="repeat"><span aria-hidden="true">👂</span></button>
+    </footer>
+  </section>
+
+  <!-- ============ Round complete ============ -->
+  <div class="celebrate" id="celebrate" hidden role="dialog" aria-modal="true" aria-labelledby="cTitle">
+    <div class="c-card">
+      <div class="c-trophy" aria-hidden="true">🏆</div>
+      <h2 id="cTitle"></h2>
+      <div class="c-animals" id="cAnimals" aria-hidden="true"></div>
+      <div class="c-btns">
+        <button class="play-btn" data-act="again"><span aria-hidden="true">▶</span> <span data-t="playAgain">Play again</span></button>
+        <button class="icon-btn" data-act="home" data-aria="home"><span aria-hidden="true">🏠</span></button>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <script src="animals.js"></script>
+  <script src="sounds.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

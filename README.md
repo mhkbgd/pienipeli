@@ -13,6 +13,7 @@ HTML, CSS and JavaScript with **no build step and no dependencies**.
 | Game | Path | Description |
 | --- | --- | --- |
 | **Baby Pop!** | [`games/baby-pop/`](games/baby-pop/) | Pop smiley balloons by tapping, swiping or pressing any key. Includes gentle generated sounds, speed control, full screen and rare rainbow balloons. |
+| **Find the Animal!** | [`games/find-the-animal/`](games/find-the-animal/) | The game asks "Where is the cat?" out loud and the child taps the right one of three animals. 40 animals, English / Finnish / Bengali, spoken questions, animal sounds, confetti, no losing. |
 
 ## Project structure
 
@@ -24,21 +25,53 @@ HTML, CSS and JavaScript with **no build step and no dependencies**.
 ├── assets/
 │   ├── css/site.css      Styles for the landing, privacy and 404 pages
 │   ├── js/site.js        Poppable hero balloons + footer year
-│   ├── fonts/            Self-hosted Fredoka font + its licence (OFL)
+│   ├── fonts/            Self-hosted Fredoka + Noto Sans Bengali fonts and their licences (OFL)
 │   └── img/              Logo (SVG), favicons, app icons, social share image
 ├── games/
-│   └── baby-pop/         Baby Pop! (index.html, script.js, style.css)
+│   ├── baby-pop/         Baby Pop! (index.html, script.js, style.css)
+│   └── find-the-animal/  Find the Animal! (see below)
 ├── site.webmanifest      Web app manifest (name, icons, colours)
 ├── robots.txt            Search engine rules + sitemap location
 ├── sitemap.xml           List of public pages for search engines
 └── _headers              Security & caching headers (read by Cloudflare Pages)
 ```
 
+## Find the Animal!
+
+```
+games/find-the-animal/
+├── index.html     Page markup: welcome screen, game screen, celebration
+├── style.css      Layout, animations, responsive card sizes
+├── animals.js     The 40 animals: names in en/fi/bn, sound recipe, SVG drawing
+├── sounds.js      All sounds, generated live with the Web Audio API (no audio files)
+├── script.js      Game logic, translations, speech, confetti
+└── card-art.svg   Picture for the game card on the landing page
+```
+
+- **Adding an animal:** add one entry to the `ANIMALS` list in `animals.js` with its
+  names, a sound recipe from `sounds.js` (or none for a gentle chime) and its drawing
+  (shapes in a 200 × 200 box, using the helpers at the top of the file).
+- **Adding a language:** add a block to `T` in `script.js`, a flag to `FLAGS`, the
+  language code to `LANGS`, and the name to every animal's `names`.
+- **Speech** uses the browser's built-in voices (`speechSynthesis`), picking `en-US`,
+  `fi-FI` or `bn-BD` and falling back to any voice of the same language. If a device has
+  no voice for the chosen language, the welcome screen says so and the game still works
+  with text, animations and sounds. Bengali voices are often missing on desktop computers.
+  Android and iOS/macOS usually have one (on Apple devices it may need downloading in
+  Settings → Accessibility → Spoken Content → Voices).
+- **Animal sounds** are playful synthesized imitations made in `sounds.js`, so the game
+  needs no audio files and no network.
+
 ## Running locally
 
 No server or install needed. **Double-click `index.html`** to open it in your browser.
 Every link points directly at an `.html` file (for example `games/baby-pop/index.html`,
 not `games/baby-pop/`), so the whole site works when opened from disk.
+
+Opened from disk, Chrome blocks the self-hosted fonts, so text falls back to system fonts
+(Bengali still displays correctly with the system's Bengali font). To see the real fonts,
+serve the folder instead, for example `python3 -m http.server 8000` and open
+<http://localhost:8000>.
 
 Only `404.html` uses absolute paths (it can be shown at any URL), so it looks unstyled
 when opened from disk. That's expected; on Cloudflare it works.
@@ -100,12 +133,15 @@ their own preview URLs.
 
 ## Privacy
 
-The site loads no third-party resources. Even the font is self-hosted. The only stored
-data is Baby Pop's sound and speed settings, kept in the browser's `localStorage`.
+The site loads no third-party resources. Even the fonts are self-hosted. The only stored
+data is small game settings (Baby Pop's sound and speed; Find the Animal's language,
+sound and music), kept in the browser's `localStorage`.
 See [`privacy.html`](privacy.html).
 
 ## Credits & licences
 
 - **Fredoka** font by The Fredoka Project Authors, under the
   [SIL Open Font License 1.1](assets/fonts/OFL.txt).
+- **Noto Sans Bengali** font by The Noto Project Authors, under the
+  [SIL Open Font License 1.1](assets/fonts/OFL-NotoSansBengali.txt).
 - All other code, art and text © Pienipeli. All rights reserved.

@@ -68,6 +68,23 @@
         "publisher": { "@id": "https://pienipeli.fi/#org" }
       },
       {
+        "@type": "VideoGame",
+        "@id": "https://pienipeli.fi/games/find-the-animal/#game",
+        "name": "Find the Animal!",
+        "url": "https://pienipeli.fi/games/find-the-animal/",
+        "description": "A free, ad-free talking animal game for toddlers. The game asks for an animal out loud and the child taps the right one of three. 40 animals in English, Finnish and Bengali.",
+        "image": "https://pienipeli.fi/assets/img/og-image.png",
+        "genre": ["Educational", "Casual", "Kids"],
+        "gamePlatform": ["Web browser", "Mobile", "Tablet", "Desktop"],
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "inLanguage": ["en", "fi", "bn"],
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+        "audience": { "@type": "PeopleAudience", "suggestedMinAge": 2, "suggestedMaxAge": 4 },
+        "publisher": { "@id": "https://pienipeli.fi/#org" }
+      },
+      {
         "@type": "FAQPage",
         "@id": "https://pienipeli.fi/#faq",
         "mainEntity": [
@@ -175,15 +192,28 @@
             </div>
           </article>
 
-          <!-- Placeholder for the next game -->
-          <article class="game-card coming-soon">
-            <div class="game-art soon-art" aria-hidden="true"><span>✨</span></div>
+          <!-- Game #2: Find the Animal -->
+          <article class="game-card">
+            <a class="game-art" href="games/find-the-animal/index.html" tabindex="-1" aria-hidden="true">
+              <img class="game-art-img" src="games/find-the-animal/card-art.svg" alt="" width="640" height="400" loading="lazy">
+            </a>
             <div class="game-body">
               <div class="game-head">
-                <h3>Next game</h3>
-                <span class="badge badge-soft">Coming soon</span>
+                <h3>Find the Animal!</h3>
+                <span class="badge">Ages 2–4</span>
               </div>
-              <p>We're busy making something new for tiny players. Check back soon!</p>
+              <p class="game-sub">Talking animal game in English, Finnish &amp; Bengali</p>
+              <p>
+                The game asks "Where is the cat?" out loud and your little one taps the right animal.
+                40 friendly animals, happy animal sounds and confetti, and a wrong tap only ever gets a gentle "try again".
+              </p>
+              <ul class="tags" aria-label="Features">
+                <li>🗣️ Speaks the question</li>
+                <li>🌍 3 languages</li>
+                <li>🐘 40 animals</li>
+                <li>🎉 No losing</li>
+              </ul>
+              <a class="btn btn-primary btn-block" href="games/find-the-animal/index.html">Play Find the Animal</a>
             </div>
           </article>
         </div>
@@ -288,6 +318,7 @@
       </a>
       <nav aria-label="Footer">
         <a href="games/baby-pop/index.html">Baby Pop</a>
+        <a href="games/find-the-animal/index.html">Find the Animal</a>
         <a href="#faq">FAQ</a>
         <a href="privacy.html">Privacy</a>
         <a href="mailto:hello@pienipeli.fi">Contact</a>
