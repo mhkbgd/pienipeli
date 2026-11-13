@@ -10,7 +10,13 @@
   <meta name="theme-color" content="#bfe6ff">
   <link rel="icon" href="../../assets/img/logo.svg" type="image/svg+xml">
   <link rel="icon" href="../../assets/img/favicon-32.png" sizes="32x32" type="image/png">
-  <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <!-- Add to Home Screen: opens straight into this game, full screen (see manifest.webmanifest) -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Baby Pop">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Pienipeli">
   <meta property="og:title" content="Baby Pop! Free balloon popping game for babies, no ads">
@@ -81,7 +87,7 @@
   <div id="fx" aria-hidden="true"></div>
 
   <!-- Corner buttons -->
-  <button id="muteBtn" class="round-btn left" aria-label="Mute sound" title="Sound on/off">🔊</button>
+  <a id="homeBtn" class="round-btn left" href="../../index.html" aria-label="More games" title="More games">🏠</a>
   <button id="restartBtn" class="round-btn right" aria-label="Restart" title="Restart">🔄</button>
 
   <!-- Pop counter (top centre) -->
@@ -89,15 +95,16 @@
     <span class="counter-icon" aria-hidden="true">🎈</span><span id="count" aria-hidden="true">0</span>
   </div>
 
-  <!-- Bottom control pill: back to all games + speed + full screen -->
+  <!-- Bottom control pill: sound + speed + full screen -->
   <div class="controls">
-    <a id="homeBtn" class="round-btn" href="../../index.html" aria-label="More games" title="More games">🏠</a>
+    <button id="muteBtn" class="round-btn" aria-label="Mute sound" title="Sound on/off">🔊</button>
     <button id="slowBtn" class="round-btn" aria-label="Slower" title="Slower">🐢</button>
     <div class="dots" id="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
     <button id="fastBtn" class="round-btn" aria-label="Faster" title="Faster">🐇</button>
     <button id="fsBtn" class="round-btn" aria-label="Full screen" title="Full screen">⛶</button>
   </div>
 
+  <script src="../../assets/js/app.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

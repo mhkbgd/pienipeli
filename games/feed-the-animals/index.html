@@ -5,12 +5,18 @@
   <!-- viewport-fit + no zoom keeps toddler taps from zooming the page -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <title>Feed the Animals! Free Feeding Game for Toddlers | Pienipeli</title>
-  <meta name="description" content="Play Feed the Animals free online: a hungry monkey, rabbit, cat, dog, elephant or cow waits for food and your toddler taps the right snack. No reading, no ads, no losing.">
+  <meta name="description" content="Play Feed the Animals free online: 21 hungry animals, from a monkey and a panda to a lion and a penguin, wait for food and your toddler taps the right snack. No reading, no ads, no losing.">
   <link rel="canonical" href="https://pienipeli.fi/games/feed-the-animals/">
   <meta name="theme-color" content="#c9ecff">
   <link rel="icon" href="../../assets/img/logo.svg" type="image/svg+xml">
   <link rel="icon" href="../../assets/img/favicon-32.png" sizes="32x32" type="image/png">
-  <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <!-- Add to Home Screen: opens straight into this game, full screen (see manifest.webmanifest) -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Feed Animals">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Pienipeli">
   <meta property="og:title" content="Feed the Animals! Free feeding game for toddlers">
@@ -86,6 +92,7 @@
 
   <noscript><p class="noscript">This game needs JavaScript turned on.</p></noscript>
 
+  <script src="../../assets/js/app.js"></script>
   <script src="sounds.js"></script>
   <script src="animals.js"></script>
   <script src="script.js"></script>

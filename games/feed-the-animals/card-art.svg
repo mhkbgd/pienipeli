@@ -15,34 +15,35 @@
 <circle cx="320" cy="190" r="150" fill="url(#glow)"/>
 <g data-mood="hungry"><svg class="critter" x="40" y="128" width="173.8" height="210" viewBox="0 -20 240 290" xmlns="http://www.w3.org/2000/svg">
       <g class="c-body">
-      <circle class="tail" cx="176" cy="246" r="16" fill="#ffffff" stroke="#e2dbee" stroke-width="3"/>
-      <g class="arm arm-l"><circle cx="66" cy="222" r="16" fill="#f4f1fa" stroke="#e2dbee" stroke-width="3"/></g>
-      <g class="arm arm-r"><circle cx="174" cy="222" r="16" fill="#f4f1fa" stroke="#e2dbee" stroke-width="3"/></g>
-      <ellipse cx="92" cy="258" rx="20" ry="10" fill="#f4f1fa" stroke="#e2dbee" stroke-width="3"/>
-      <ellipse cx="148" cy="258" rx="20" ry="10" fill="#f4f1fa" stroke="#e2dbee" stroke-width="3"/>
-      <ellipse cx="120" cy="228" rx="58" ry="36" fill="#f4f1fa" stroke="#e2dbee" stroke-width="3"/>
+      
+      <g class="arm arm-l"><circle cx="66" cy="222" r="16" fill="#3a3436"/></g>
+      <g class="arm arm-r"><circle cx="174" cy="222" r="16" fill="#3a3436"/></g>
+      <ellipse cx="92" cy="258" rx="20" ry="10" fill="#3a3436"/>
+      <ellipse cx="148" cy="258" rx="20" ry="10" fill="#3a3436"/>
+      <ellipse cx="120" cy="228" rx="58" ry="36" fill="#3a3436"/>
       <ellipse cx="120" cy="236" rx="34" ry="22" fill="#ffffff"/>
       
     </g>
       <g class="c-head">
-        <g class="ear ear-l"><ellipse cx="88" cy="30" rx="20" ry="54" transform="rotate(-10 88 30)" fill="#f4f1fa" stroke="#e2dbee" stroke-width="3"/><ellipse cx="88" cy="34" rx="10" ry="40" transform="rotate(-10 88 34)" fill="#ffc2d6"/></g>
-                 <g class="ear ear-r"><ellipse cx="152" cy="30" rx="20" ry="54" transform="rotate(10 152 30)" fill="#f4f1fa" stroke="#e2dbee" stroke-width="3"/><ellipse cx="152" cy="34" rx="10" ry="40" transform="rotate(10 152 34)" fill="#ffc2d6"/></g>
-        <circle cx="120" cy="120" r="74" fill="#f4f1fa" stroke="#e2dbee" stroke-width="3"/>
-             <ellipse cx="108" cy="144" rx="17" ry="13" fill="#fff"/><ellipse cx="132" cy="144" rx="17" ry="13" fill="#fff"/>
+        <g class="ear ear-l"><circle cx="54" cy="50" r="25" fill="#3a3436"/></g>
+                 <g class="ear ear-r"><circle cx="186" cy="50" r="25" fill="#3a3436"/></g>
+        <circle cx="120" cy="114" r="76" fill="#fff" stroke="#e3e0e6" stroke-width="3"/>
+             <ellipse cx="92" cy="106" rx="21" ry="26" transform="rotate(30 92 106)" fill="#3a3436"/>
+             <ellipse cx="148" cy="106" rx="21" ry="26" transform="rotate(-30 148 106)" fill="#3a3436"/>
         
-        <g class="eye" transform="translate(96 110)">
-      <g class="eye-open"><circle r="11" fill="#3a2a2a"/><circle cx="3.6" cy="-4.2" r="4" fill="#fff"/><circle cx="-3.4" cy="3.6" r="1.7" fill="#fff"/></g>
-      <path class="eye-happy" d="M-11,4 Q0,-10 11,4" fill="none" stroke="#3a2a2a" stroke-width="5.5" stroke-linecap="round"/>
-      <path class="eye-squint" d="M-9,-7 L7,0 L-9,7" fill="none" stroke="#3a2a2a" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <g class="eye" transform="translate(92 104)">
+      <g class="eye-open"><circle r="14" fill="#fff"/><circle r="11" fill="#3a2a2a"/><circle cx="3.6" cy="-4.2" r="4" fill="#fff"/><circle cx="-3.4" cy="3.6" r="1.7" fill="#fff"/></g>
+      <path class="eye-happy" d="M-11,4 Q0,-10 11,4" fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round"/>
+      <path class="eye-squint" d="M-9,-7 L7,0 L-9,7" fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
     </g>
-        <g class="eye" transform="translate(144 110)">
-      <g class="eye-open"><circle r="11" fill="#3a2a2a"/><circle cx="3.6" cy="-4.2" r="4" fill="#fff"/><circle cx="-3.4" cy="3.6" r="1.7" fill="#fff"/></g>
-      <path class="eye-happy" d="M-11,4 Q0,-10 11,4" fill="none" stroke="#3a2a2a" stroke-width="5.5" stroke-linecap="round"/>
-      <path class="eye-squint" d="M9,-7 L-7,0 L9,7" fill="none" stroke="#3a2a2a" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <g class="eye" transform="translate(148 104)">
+      <g class="eye-open"><circle r="14" fill="#fff"/><circle r="11" fill="#3a2a2a"/><circle cx="3.6" cy="-4.2" r="4" fill="#fff"/><circle cx="-3.4" cy="3.6" r="1.7" fill="#fff"/></g>
+      <path class="eye-happy" d="M-11,4 Q0,-10 11,4" fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round"/>
+      <path class="eye-squint" d="M9,-7 L-7,0 L9,7" fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
     </g>
         <g class="cheeks" fill="#ff9fb8" opacity=".55">
-      <ellipse class="cheek" cx="74" cy="138" rx="13" ry="8"/>
-      <ellipse class="cheek" cx="166" cy="138" rx="13" ry="8"/>
+      <ellipse class="cheek" cx="70" cy="140" rx="13" ry="8"/>
+      <ellipse class="cheek" cx="170" cy="140" rx="13" ry="8"/>
     </g>
         <g transform="translate(120 160)">
       <g class="m m-smile"><path d="M-15,-3 Q0,13 15,-3" fill="none" stroke="#3a2a2a" stroke-width="5" stroke-linecap="round"/></g>
@@ -52,55 +53,49 @@
       <g class="m m-yuck"><path d="M-16,0 q8,-7 16,0 q8,7 16,0" fill="none" stroke="#3a2a2a" stroke-width="5" stroke-linecap="round"/><ellipse class="blep" cx="8" cy="7" rx="6.5" ry="8.5" fill="#ff7e9b"/></g>
       <circle class="m-target" r="2" fill="none"/>
     </g>
-        <path d="M113,132 Q120,126 127,132 Q120,141 113,132 Z" fill="#ff8fb0"/><g class="whiskers" stroke="#b7a6c9" stroke-width="3" stroke-linecap="round" opacity=".55">
-      <path d="M78,142 L40,134"/><path d="M78,150 L40,154"/>
-      <path d="M162,142 L200,134"/><path d="M162,150 L200,154"/>
-    </g>
+        <ellipse cx="120" cy="136" rx="12" ry="8" fill="#3a3436"/>
       </g>
     </svg></g>
-<g data-mood="hungry"><svg class="critter" x="452" y="150" width="157.2" height="190" viewBox="0 -20 240 290" xmlns="http://www.w3.org/2000/svg">
+<g data-mood="hungry"><svg class="critter" x="452" y="140" width="165.5" height="200" viewBox="0 -20 240 290" xmlns="http://www.w3.org/2000/svg">
       <g class="c-body">
-      <path class="tail" d="M170,236 C186,236 192,228 194,218" fill="none" stroke="#8aa0c4" stroke-width="7" stroke-linecap="round"/>
-      <g class="arm arm-l"><circle cx="66" cy="222" r="16" fill="#9fb4d6"/></g>
-      <g class="arm arm-r"><circle cx="174" cy="222" r="16" fill="#9fb4d6"/></g>
-      <ellipse cx="92" cy="258" rx="20" ry="10" fill="#9fb4d6"/>
-      <ellipse cx="148" cy="258" rx="20" ry="10" fill="#9fb4d6"/>
-      <ellipse cx="120" cy="228" rx="58" ry="36" fill="#9fb4d6"/>
-      <ellipse cx="120" cy="236" rx="34" ry="22" fill="#b8c9e6"/>
+      
+      <g class="arm arm-l"><circle cx="66" cy="222" r="16" fill="#36415a"/></g>
+      <g class="arm arm-r"><circle cx="174" cy="222" r="16" fill="#36415a"/></g>
+      <ellipse cx="92" cy="258" rx="20" ry="10" fill="#ffa630"/>
+      <ellipse cx="148" cy="258" rx="20" ry="10" fill="#ffa630"/>
+      <ellipse cx="120" cy="228" rx="58" ry="36" fill="#36415a"/>
+      <ellipse cx="120" cy="236" rx="34" ry="22" fill="#ffffff"/>
       
     </g>
       <g class="c-head">
-        <g class="ear ear-l"><ellipse cx="44" cy="110" rx="44" ry="56" fill="#8aa0c4"/><ellipse cx="47" cy="112" rx="28" ry="38" fill="#f6b7c9"/></g>
-                 <g class="ear ear-r"><ellipse cx="196" cy="110" rx="44" ry="56" fill="#8aa0c4"/><ellipse cx="193" cy="112" rx="28" ry="38" fill="#f6b7c9"/></g>
-        <circle cx="120" cy="108" r="72" fill="#9fb4d6"/>
         
-        <g class="eye" transform="translate(94 94)">
+        <circle cx="120" cy="112" r="76" fill="#36415a"/>
+             <circle cx="98" cy="114" r="40" fill="#fff"/><circle cx="142" cy="114" r="40" fill="#fff"/>
+             <ellipse cx="120" cy="140" rx="52" ry="40" fill="#fff"/>
+        
+        <g class="eye" transform="translate(100 108)">
       <g class="eye-open"><circle r="11" fill="#3a2a2a"/><circle cx="3.6" cy="-4.2" r="4" fill="#fff"/><circle cx="-3.4" cy="3.6" r="1.7" fill="#fff"/></g>
       <path class="eye-happy" d="M-11,4 Q0,-10 11,4" fill="none" stroke="#3a2a2a" stroke-width="5.5" stroke-linecap="round"/>
       <path class="eye-squint" d="M-9,-7 L7,0 L-9,7" fill="none" stroke="#3a2a2a" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
     </g>
-        <g class="eye" transform="translate(146 94)">
+        <g class="eye" transform="translate(140 108)">
       <g class="eye-open"><circle r="11" fill="#3a2a2a"/><circle cx="3.6" cy="-4.2" r="4" fill="#fff"/><circle cx="-3.4" cy="3.6" r="1.7" fill="#fff"/></g>
       <path class="eye-happy" d="M-11,4 Q0,-10 11,4" fill="none" stroke="#3a2a2a" stroke-width="5.5" stroke-linecap="round"/>
       <path class="eye-squint" d="M9,-7 L-7,0 L9,7" fill="none" stroke="#3a2a2a" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
     </g>
         <g class="cheeks" fill="#ff9fb8" opacity=".55">
-      <ellipse class="cheek" cx="72" cy="138" rx="13" ry="8"/>
-      <ellipse class="cheek" cx="172" cy="138" rx="13" ry="8"/>
+      <ellipse class="cheek" cx="76" cy="140" rx="13" ry="8"/>
+      <ellipse class="cheek" cx="164" cy="140" rx="13" ry="8"/>
     </g>
-        <g transform="translate(106 166)">
-      <g class="m m-smile"><path d="M-15,-3 Q0,13 15,-3" fill="none" stroke="#3a2a2a" stroke-width="5" stroke-linecap="round"/></g>
-      <g class="m m-open"><ellipse rx="15" ry="17" fill="#5b2333"/><ellipse cy="9" rx="10" ry="6" fill="#ff7e9b"/></g>
-      <g class="m m-chew"><ellipse rx="12" ry="7" fill="#5b2333"/></g>
-      <g class="m m-happy"><path d="M-21,-5 Q0,30 21,-5 Z" fill="#5b2333" stroke="#5b2333" stroke-width="4" stroke-linejoin="round"/><path d="M-10,13 Q0,5 10,13 Q0,20 -10,13 Z" fill="#ff7e9b"/></g>
-      <g class="m m-yuck"><path d="M-16,0 q8,-7 16,0 q8,7 16,0" fill="none" stroke="#3a2a2a" stroke-width="5" stroke-linecap="round"/><ellipse class="blep" cx="8" cy="7" rx="6.5" ry="8.5" fill="#ff7e9b"/></g>
-      <circle class="m-target" r="2" fill="none"/>
+        <g transform="translate(120 140) scale(1.4)">
+      <g class="m m-smile"><path d="M-14,1 Q0,-5 14,1 Q0,13 -14,1 Z" fill="#ffa630" stroke="#e68a1a" stroke-width="2.5" stroke-linejoin="round"/><path d="M-18,-2 Q0,-18 18,-2 Q0,6 -18,-2 Z" fill="#ffa630" stroke="#e68a1a" stroke-width="2.5" stroke-linejoin="round"/></g>
+      <g class="m m-open"><ellipse cy="7" rx="12" ry="9" fill="#5b2333"/><ellipse cy="11" rx="7" ry="4" fill="#ff7e9b"/><path d="M-14,12 Q0,6 14,12 Q0,24 -14,12 Z" fill="#ffa630" stroke="#e68a1a" stroke-width="2.5" stroke-linejoin="round"/><path d="M-18,-2 Q0,-18 18,-2 Q0,6 -18,-2 Z" fill="#ffa630" stroke="#e68a1a" stroke-width="2.5" stroke-linejoin="round"/></g>
+      <g class="m m-chew"><ellipse cy="4" rx="10" ry="5" fill="#5b2333"/><path d="M-14,6 Q0,0 14,6 Q0,18 -14,6 Z" fill="#ffa630" stroke="#e68a1a" stroke-width="2.5" stroke-linejoin="round"/><path d="M-18,-2 Q0,-18 18,-2 Q0,6 -18,-2 Z" fill="#ffa630" stroke="#e68a1a" stroke-width="2.5" stroke-linejoin="round"/></g>
+      <g class="m m-happy"><ellipse cy="9" rx="14" ry="12" fill="#5b2333"/><ellipse cy="14" rx="8" ry="5" fill="#ff7e9b"/><path d="M-14,17 Q0,11 14,17 Q0,29 -14,17 Z" fill="#ffa630" stroke="#e68a1a" stroke-width="2.5" stroke-linejoin="round"/><path d="M-18,-2 Q0,-18 18,-2 Q0,6 -18,-2 Z" fill="#ffa630" stroke="#e68a1a" stroke-width="2.5" stroke-linejoin="round"/></g>
+      <g class="m m-yuck"><ellipse class="blep" cx="9" cy="10" rx="6" ry="8" fill="#ff7e9b"/><path d="M-14,1 Q0,-5 14,1 Q0,13 -14,1 Z" fill="#ffa630" stroke="#e68a1a" stroke-width="2.5" stroke-linejoin="round"/><path d="M-18,-2 Q0,-18 18,-2 Q0,6 -18,-2 Z" fill="#ffa630" stroke="#e68a1a" stroke-width="2.5" stroke-linejoin="round"/></g>
+      <circle class="m-target" cy="4" r="2" fill="none"/>
     </g>
-        <path d="M120,104 C120,136 132,152 154,150 C172,148 178,132 170,120" fill="none" stroke="#7f95bb" stroke-width="32" stroke-linecap="round"/>
-             <path class="trunk" d="M120,104 C120,136 132,152 154,150 C172,148 178,132 170,120" fill="none" stroke="#a9bddd" stroke-width="26" stroke-linecap="round"/>
-             <circle cx="120" cy="100" r="16" fill="#9fb4d6"/>
-             <ellipse cx="170" cy="119" rx="7" ry="5" fill="#7f95bb"/>
-             <g stroke="#8aa0c4" stroke-width="3" stroke-linecap="round" fill="none"><path d="M112,124 h17"/><path d="M116,137 h17"/></g>
+        
       </g>
     </svg></g>
 <g data-mood="happy"><svg class="critter" x="205" y="34" width="240.0" height="290" viewBox="0 -20 240 290" xmlns="http://www.w3.org/2000/svg">

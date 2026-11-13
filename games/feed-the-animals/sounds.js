@@ -115,7 +115,38 @@
       noise({ dur: 0.9, vol: 0.06, filter: { type: 'bandpass', f: 1800, q: 1 } });
     },
     cow: () => tone({ type: 'sawtooth', f: [[0, 140], [0.3, 158], [1.3, 118]], dur: 1.4, vol: 0.45,
-      attack: 0.12, release: 0.3, filter: { f: 260, to: 900, q: 4 } })
+      attack: 0.12, release: 0.3, filter: { f: 260, to: 900, q: 4 } }),
+    pig: () => rep(2, 0.24, at => tone({ type: 'square', f: [[0, 190], [0.14, 140]], at, dur: 0.16, vol: 0.3,
+      filter: { f: 650, q: 8 } })),
+    bear: () => tone({ type: 'sawtooth', f: [[0, 150], [0.4, 230], [0.9, 120]], dur: 1.0, vol: 0.4,
+      filter: { f: 550, q: 3 }, trem: { rate: 16, depth: 0.7 } }),
+    panda: () => rep(2, 0.3, at => tone({ type: 'sawtooth', f: [[0, 520], [0.2, 420]], at, dur: 0.24, vol: 0.2,
+      filter: { type: 'bandpass', f: 1200, q: 2 }, trem: { rate: 14, depth: 0.6 } })),
+    mouse: () => rep(3, 0.17, at => tone({ type: 'sine', f: [[0, 2300], [0.07, 3000], [0.12, 2500]], at, dur: 0.12, vol: 0.18 })),
+    horse: () => tone({ type: 'sawtooth', f: [[0, 760], [0.12, 1050], [1.0, 480]], dur: 1.05, vol: 0.22,
+      filter: { type: 'bandpass', f: 1500, q: 1 }, vib: { rate: 15, depth: 70 } }),
+    sheep: () => tone({ type: 'sawtooth', f: [[0, 330], [0.7, 300]], dur: 0.85, vol: 0.32,
+      filter: { type: 'bandpass', f: 1100, q: 1.5 }, trem: { rate: 8, depth: 0.8 } }),
+    // Big cats: a soft, friendly rumble (never a scary roar for little ones)
+    lion: () => {
+      tone({ type: 'sawtooth', f: [[0, 110], [0.3, 150], [1.0, 90]], dur: 1.05, vol: 0.32, attack: 0.12,
+        filter: { f: 480, to: 300, q: 2 }, trem: { rate: 22, depth: 0.5 } });
+      noise({ dur: 0.9, vol: 0.06, attack: 0.1, filter: { type: 'lowpass', f: 500 } });
+    },
+    tiger: () => tone({ type: 'sawtooth', f: [[0, 95], [0.4, 120], [0.9, 80]], dur: 1.0, vol: 0.35, attack: 0.1,
+      filter: { f: 420, q: 3 }, trem: { rate: 28, depth: 0.6 } }),
+    penguin: () => rep(2, 0.32, at => tone({ type: 'sawtooth', f: [[0, 700], [0.08, 1000], [0.22, 760]], at, dur: 0.24, vol: 0.22,
+      filter: { type: 'bandpass', f: 1300, q: 3 } })),
+    squirrel: () => rep(5, 0.09, at => tone({ type: 'triangle', f: [[0, 1600], [0.05, 2200]], at, dur: 0.06, vol: 0.18 })),
+    chick: () => rep(3, 0.2, at => tone({ type: 'sine', f: [[0, 2400], [0.1, 3200], [0.14, 2800]], at, dur: 0.15, vol: 0.18 })),
+    giraffe: () => tone({ type: 'sine', f: [[0, 160], [0.4, 200], [0.9, 150]], dur: 1.0, vol: 0.4, attack: 0.1, release: 0.3,
+      vib: { rate: 4, depth: 6 } }),
+    koala: () => tone({ type: 'sawtooth', f: [[0, 120], [0.3, 170], [0.7, 110]], dur: 0.8, vol: 0.3,
+      filter: { f: 500, q: 3 }, trem: { rate: 20, depth: 0.7 } }),
+    hippo: () => rep(2, 0.45, at => tone({ type: 'sawtooth', f: [[0, 110], [0.3, 90]], at, dur: 0.38, vol: 0.38,
+      filter: { f: 400, q: 4 }, trem: { rate: 12, depth: 0.6 } })),
+    duck: () => rep(3, 0.26, at => tone({ type: 'sawtooth', f: [[0, 580], [0.16, 460]], at, dur: 0.19, vol: 0.3,
+      filter: { type: 'bandpass', f: 1100, q: 5 } }))
   };
 
   // Play only when sound is on and Web Audio works.

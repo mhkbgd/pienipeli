@@ -15,6 +15,10 @@
   const { T } = window.FTA_STRINGS;
   const CLIPS = window.FTA_NARRATION || {};   // { en: 'mp3' } = English clips are recorded
   const synth = window.speechSynthesis || null;
+  // Clips live next to this file, so the landing page (which also loads this
+  // narrator) finds the same recordings as the game does.
+  const HERE = document.currentScript && document.currentScript.src
+    ? document.currentScript.src.replace(/[^/]*$/, '') : '';
 
   // ---------- Choosing the voice ----------
   // Known warm female voices on Apple, Microsoft, Google and Android devices
@@ -80,7 +84,7 @@
   const player = typeof Audio !== 'undefined' ? new Audio() : null;
   if (player) player.preload = 'auto';
   const missingClips = new Set();
-  const clipUrl = (lang, key) => `narration/${lang}/${key}.${CLIPS[lang]}`;
+  const clipUrl = (lang, key) => `${HERE}narration/${lang}/${key}.${CLIPS[lang]}`;
   const hasClips = lang => !!CLIPS[lang] && !!player;
 
   function playClip(lang, key, onEnd, onFail) {

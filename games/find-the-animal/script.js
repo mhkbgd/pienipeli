@@ -434,6 +434,14 @@
   });
   $('playBtn').addEventListener('click', startGame);
 
+  // Full screen: Fullscreen API on Android/desktop/iPad, an "Add to Home Screen" tip
+  // on iPhone, hidden when the game was opened full screen from its home-screen icon.
+  if (window.Pienipeli) {
+    document.querySelectorAll('.fs-btn').forEach(btn => Pienipeli.fullscreenButton(btn, {
+      onChange(full) { btn.firstElementChild.textContent = full ? '🗗' : '⛶'; }
+    }));
+  }
+
   // No pinch-zoom or long-press menus from little fingers
   document.addEventListener('gesturestart', e => e.preventDefault());
   document.addEventListener('contextmenu', e => e.preventDefault());

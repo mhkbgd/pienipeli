@@ -31,7 +31,8 @@
   const toggle = $('soundToggle');
   function applyMute() {
     if (Sound) Sound.setMuted(muted);
-    if (muted && 'speechSynthesis' in window) speechSynthesis.cancel();
+    if (muted && window.FTA_Narrator) window.FTA_Narrator.stop();
+    else if (muted && 'speechSynthesis' in window) speechSynthesis.cancel();
     if (toggle) {
       toggle.setAttribute('aria-pressed', String(!muted));
       toggle.setAttribute('aria-label', muted ? 'Sound off' : 'Sound on');
@@ -49,12 +50,23 @@
   applyMute();
   const play = (fn, ...args) => { if (Sound && !muted) { Sound.unlock(); Sound[fn](...args); } };
 
-  function say(text) {
-    if (muted || !('speechSynthesis' in window)) return;
-    try {
+  // Say the animal's name in the same gentle narrator voice as Find the Animal:
+  // a recorded clip if one exists, otherwise the warmest, most natural voice on
+  // the device, spoken slowly and softly ("That's the cat.").
+  const Narrator = window.FTA_Narrator || null;
+  const STR = window.FTA_STRINGS ? window.FTA_STRINGS.T.en : null;
+  function say(a) {
+    if (muted) return;
+    const name = a.names.en;
+    if (Narrator && STR) {
+      Narrator.say('en', [{ key: 'thatis-' + a.id, text: STR.thatIs(name), mood: 'soft' }]);
+      return;
+    }
+    if (!('speechSynthesis' in window)) return;
+    try { // fallback if the narrator script didn't load
       speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'en-US'; u.rate = 0.9; u.pitch = 1.15;
+      const u = new SpeechSynthesisUtterance(name);
+      u.lang = 'en-US'; u.rate = 0.82; u.pitch = 1.1;
       speechSynthesis.speak(u);
     } catch (e) { /* no voice: that's fine */ }
   }
@@ -251,7 +263,7 @@
           burst(r.left - zr.left + r.width / 2, r.top - zr.top + r.height * 0.3, ['💛', '✨', '⭐', '💖'], 7, zoo);
           play('animal', a.sound);
           clearTimeout(fill.sayT);
-          fill.sayT = setTimeout(() => say(a.names.en), 650);
+          fill.sayT = setTimeout(() => say(a), 650);
         });
         b.addEventListener('animationend', e => { if (e.animationName === 'boing') b.classList.remove('boing'); });
         zoo.appendChild(b);

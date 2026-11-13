@@ -298,21 +298,19 @@
   press(slowBtn, () => setSpeed(speedIdx - 1));
   press(fastBtn, () => setSpeed(speedIdx + 1));
 
-  // Full screen (hidden where the browser can't do it, e.g. iPhone Safari)
-  const root = document.documentElement;
-  const canFS = !!(root.requestFullscreen || root.webkitRequestFullscreen);
-  const inFS = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
-  if (!canFS) fsBtn.hidden = true;
-  press(fsBtn, () => {
-    if (inFS()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
-    else (root.requestFullscreen || root.webkitRequestFullscreen).call(root);
-  });
-  function showFS() {
-    fsBtn.textContent = inFS() ? '🗗' : '⛶';
-    fsBtn.setAttribute('aria-label', inFS() ? 'Exit full screen' : 'Full screen');
+  // Full screen: Fullscreen API on Android/desktop/iPad, a "Add to Home Screen" tip
+  // on iPhone, and hidden when already opened full screen from the home screen.
+  if (window.Pienipeli) {
+    Pienipeli.fullscreenButton(fsBtn, {
+      onChange(full) {
+        fsBtn.textContent = full ? '🗗' : '⛶';
+        fsBtn.setAttribute('aria-label', full ? 'Exit full screen' : 'Full screen');
+      }
+    });
+    fsBtn.addEventListener('click', () => { ensureAudio(); fsBtn.blur(); });
+  } else {
+    fsBtn.hidden = true;
   }
-  document.addEventListener('fullscreenchange', showFS);
-  document.addEventListener('webkitfullscreenchange', showFS);
 
   // ---------- Endless loop ----------
   function fillBalloons(initial) {

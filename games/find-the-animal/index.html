@@ -10,7 +10,13 @@
   <meta name="theme-color" content="#c9ecff">
   <link rel="icon" href="../../assets/img/logo.svg" type="image/svg+xml">
   <link rel="icon" href="../../assets/img/favicon-32.png" sizes="32x32" type="image/png">
-  <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <!-- Add to Home Screen: opens straight into this game, full screen (see manifest.webmanifest) -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Find Animal">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Pienipeli">
   <meta property="og:title" content="Find the Animal! Free talking animal game for toddlers">
@@ -70,6 +76,7 @@
     <div class="corner-btns">
       <button class="icon-btn" data-act="sound" data-aria="soundOff"><span class="i-sound" aria-hidden="true">🔊</span></button>
       <button class="icon-btn" data-act="music" data-aria="musicOn"><span aria-hidden="true">🎵</span></button>
+      <button class="icon-btn fs-btn" data-aria="fullscreen" hidden><span aria-hidden="true">⛶</span></button>
     </div>
 
     <div class="parade" id="parade" aria-hidden="true"></div>
@@ -91,6 +98,7 @@
       <div class="top-btns">
         <button class="icon-btn" data-act="sound" data-aria="soundOff"><span class="i-sound" aria-hidden="true">🔊</span></button>
         <button class="icon-btn" data-act="music" data-aria="musicOn"><span aria-hidden="true">🎵</span></button>
+        <button class="icon-btn fs-btn" data-aria="fullscreen" hidden><span aria-hidden="true">⛶</span></button>
       </div>
     </header>
 
@@ -132,6 +140,7 @@
 
   <canvas id="confetti" aria-hidden="true"></canvas>
 
+  <script src="../../assets/js/app.js"></script>
   <script src="strings.js"></script>
   <script src="animals.js"></script>
   <script src="sounds.js"></script>

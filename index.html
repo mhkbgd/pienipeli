@@ -13,6 +13,9 @@
   <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Pienipeli">
 
   <!-- Social sharing previews -->
   <meta property="og:type" content="website">
@@ -89,7 +92,7 @@
         "@id": "https://pienipeli.fi/games/feed-the-animals/#game",
         "name": "Feed the Animals!",
         "url": "https://pienipeli.fi/games/feed-the-animals/",
-        "description": "A free, ad-free feeding game for toddlers. A hungry monkey, rabbit, cat, dog, elephant or cow waits with its mouth open and the child taps the right food of three. No reading, no timer, no losing.",
+        "description": "A free, ad-free feeding game for toddlers. One of 21 hungry animals waits with its mouth open and the child taps the right food of three. No reading, no timer, no losing.",
         "image": "https://pienipeli.fi/assets/img/og-image.png",
         "genre": ["Educational", "Casual", "Kids"],
         "gamePlatform": ["Web browser", "Mobile", "Tablet", "Desktop"],
@@ -116,7 +119,9 @@
           { "@type": "Question", "name": "Do you collect any data about my child?",
             "acceptedAnswer": { "@type": "Answer", "text": "No. There are no accounts, analytics, cookies or trackers. Small settings like sound on or off stay on your own device." } },
           { "@type": "Question", "name": "How can I stop my toddler from leaving the game?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Tap the full-screen button in the game. On iPhone and iPad you can also use Guided Access (Settings, Accessibility, Guided Access) to lock the screen to the game." } }
+            "acceptedAnswer": { "@type": "Answer", "text": "Tap the full-screen button in the game. On iPhone and iPad you can also use Guided Access (Settings, Accessibility, Guided Access) to lock the screen to the game." } },
+          { "@type": "Question", "name": "Can I put a game on my home screen like an app?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Open the game, then on iPhone or iPad tap Share and Add to Home Screen; on Android tap the browser menu and Add to Home screen or Install app. Each game gets its own icon, opens straight into the game in full screen, and works without internet once it has been opened." } }
         ]
       }
     ]
@@ -261,7 +266,7 @@
               </div>
               <p class="game-sub">Feeding game for toddlers</p>
               <p>
-                A hungry monkey, rabbit, cat, dog, elephant or cow opens its mouth wide. Tap the right snack
+                21 hungry animals, from a monkey and a panda to a lion and a penguin, open their mouths wide. Tap the right snack
                 and watch it fly in, get munched up, and turn into a happy dance with hearts and stars.
               </p>
               <ul class="tags" aria-label="Features">
@@ -356,6 +361,15 @@
             <summary>How can I stop my toddler from leaving the game?</summary>
             <p>Tap the full-screen button in the game. On iPhone and iPad you can also use Guided Access (Settings → Accessibility → Guided Access) to lock the screen to the game.</p>
           </details>
+          <details>
+            <summary>Can I put a game on my home screen like an app?</summary>
+            <p>Yes! Open the game, then:</p>
+            <ul>
+              <li><b>iPhone &amp; iPad:</b> tap <b>Share</b> in Safari, then <b>Add to Home Screen</b>.</li>
+              <li><b>Android:</b> tap the browser menu <b>⋮</b>, then <b>Add to Home screen</b> or <b>Install app</b>.</li>
+            </ul>
+            <p>Each game gets its own icon, opens straight into the game in full screen, and works without internet once it has been opened. On iPhone this is the way to get full screen, because Safari can't make web pages full screen by itself.</p>
+          </details>
         </div>
       </div>
     </section>
@@ -406,6 +420,10 @@
 
   <script src="games/find-the-animal/sounds.js" defer></script>
   <script src="games/find-the-animal/animals.js" defer></script>
+  <script src="games/find-the-animal/strings.js" defer></script>
+  <script src="games/find-the-animal/narration/manifest.js" defer></script>
+  <script src="games/find-the-animal/narrator.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
   <script src="assets/js/site.js" defer></script>
 </body>
 </html>

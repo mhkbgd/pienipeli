@@ -14,7 +14,7 @@ HTML, CSS and JavaScript with **no build step and no dependencies**.
 | --- | --- | --- |
 | **Baby Pop!** | [`games/baby-pop/`](games/baby-pop/) | Pop smiley balloons by tapping, swiping or pressing any key. Includes gentle generated sounds, speed control, full screen and rare rainbow balloons. |
 | **Find the Animal!** | [`games/find-the-animal/`](games/find-the-animal/) | The game asks "Where is the cat?" out loud and the child taps the right one of three animals. 40 animals, English / Finnish / Bengali, spoken questions, animal sounds, confetti, no losing. |
-| **Feed the Animals!** | [`games/feed-the-animals/`](games/feed-the-animals/) | A hungry monkey, rabbit, cat, dog, elephant or cow opens its mouth and the child taps the right one of three foods. The food flies in, the animal chews and dances, hearts and stars float up. Any other food just gets a silly head shake. Generated munching, animal and celebration sounds, no text, no losing. |
+| **Feed the Animals!** | [`games/feed-the-animals/`](games/feed-the-animals/) | One of 21 hungry animals (monkey, panda, lion, penguin, giraffe and more) opens its mouth and the child taps the right one of three foods. The food flies in, the animal chews and dances, hearts and stars float up. Any other food just gets a silly head shake. Generated munching, animal and celebration sounds, no text, no losing. |
 
 ## Project structure
 
@@ -26,6 +26,7 @@ HTML, CSS and JavaScript with **no build step and no dependencies**.
 ├── assets/
 │   ├── css/site.css      Styles for the landing, privacy and 404 pages
 │   ├── js/site.js        Landing page play: balloons, pop counter, animal playground, reveals
+│   ├── js/app.js         Shared by all games: offline (service worker) + full screen / home-screen tip
 │   ├── fonts/            Self-hosted Fredoka + Noto Sans Bengali fonts and their licences (OFL)
 │   └── img/              Logo (SVG), favicons, app icons, social share image
 ├── games/
@@ -35,6 +36,7 @@ HTML, CSS and JavaScript with **no build step and no dependencies**.
 ├── site.webmanifest      Web app manifest (name, icons, colours)
 ├── robots.txt            Search engine rules + sitemap location
 ├── sitemap.xml           List of public pages for search engines
+├── sw.js                 Service worker: saves the games for offline use
 └── _headers              Security & caching headers (read by Cloudflare Pages)
 ```
 
@@ -78,7 +80,7 @@ games/find-the-animal/
 games/feed-the-animals/
 ├── index.html     Page markup: animal stage, food plates, effects layer
 ├── style.css      Layout (portrait, landscape phone, desktop) and every animation/mood
-├── animals.js     Foods (emoji + plate colour) and the 6 animal drawings (inline SVG)
+├── animals.js     Foods (emoji + plate colour) and the 21 animal drawings (inline SVG)
 ├── sounds.js      All sounds, generated live with the Web Audio API (no audio files)
 ├── script.js      Rounds, tap handling, flying food, hearts/stars/confetti, hints
 └── card-art.svg   Picture for the game card on the landing page (made from animals.js)
@@ -89,7 +91,8 @@ games/feed-the-animals/
   `style.css` shows the right mouth and eyes and runs the animation.
 - **Adding an animal:** add an entry to `ANIMALS` in `animals.js`: what it `eats` (the first
   one is its favourite and comes up most often), which clearly wrong foods to offer
-  (`avoid`), its colours and its drawing (head centred near 120, 112 in a 240 × 290 box).
+  (`avoid`), its colours and its drawing (head centred near 120, 112 in a 240 × 290 box). Birds use
+  `beak` instead of `mouth`. Give it a call in `CALLS` in `sounds.js` (same `id`).
 - **Sounds:** animal calls, hops, whoosh, gulp, munching, a silly "blblbl" for unwanted food
   and a happy chime, all made in `sounds.js`. Tapping the animal plays its call. The 🔊 button
   mutes everything and the choice is remembered on the device. Browsers allow sound only after
@@ -98,6 +101,32 @@ games/feed-the-animals/
 - **Taps:** food plates react on touch-down. While food is flying or the animal is
   reacting, taps are ignored, so double taps can't skip anything. After 6 seconds without
   a tap, the right food gives a little wiggle as a hint.
+
+## Home screen, full screen & offline
+
+Every game can be added to a phone or tablet home screen and then works like an app.
+
+- **Each game has its own app:** `games/<game>/manifest.webmanifest` (name, `start_url`
+  pointing at the game, `display: fullscreen`) and its own icons in `games/<game>/icons/`
+  (192, 512 + maskable, and a 180 px `apple-touch-icon.png` for iOS). The game pages also
+  carry the iOS tags (`apple-mobile-web-app-capable`, `black-translucent` status bar,
+  `apple-mobile-web-app-title`).
+- **Android (Chrome):** menu ⋮ → *Install app* / *Add to Home screen*. The icon opens
+  straight into the game, full screen (status and navigation bars hidden). In a normal
+  browser tab, the game's ⛶ button uses the Fullscreen API.
+- **iPhone / iPad (Safari):** Share → *Add to Home Screen*. The icon opens straight into the
+  game with no Safari bars, drawn edge to edge under the status bar. iPhone Safari has no
+  Fullscreen API for web pages, so on iPhone the ⛶ button shows grown-ups a short
+  "Add to Home Screen" tip instead. iPad Safari uses the Fullscreen API.
+- When a game is opened from its home-screen icon, the ⛶ button hides itself.
+- **Offline:** `sw.js` (registered by `assets/js/app.js`) saves every game file on the first
+  visit, so home-screen icons open without internet. It always tries the network first,
+  so updates show up straight away. **When you add a game or a file, add it to `FILES` in
+  `sw.js` and bump `VERSION`.** `_headers` keeps `sw.js` from being cached.
+- `assets/js/app.js` is the shared helper every game loads: service worker registration and
+  `Pienipeli.fullscreenButton(button, { onChange })`.
+- Home-screen installs and offline only work from a real web address (https, or
+  `http://localhost` for testing), not from a file opened from disk.
 
 ## Running locally
 

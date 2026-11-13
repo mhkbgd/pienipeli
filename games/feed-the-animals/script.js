@@ -351,15 +351,15 @@
   showSound();
 
   /* ---------- Full screen (grown-up button) ---------- */
+  // Fullscreen API on Android/desktop/iPad, an "Add to Home Screen" tip on iPhone,
+  // hidden when the game was opened full screen from its home-screen icon.
   const fullBtn = $("fullBtn");
-  const root = document.documentElement;
-  const canFull = root.requestFullscreen || root.webkitRequestFullscreen;
-  if (canFull && (document.fullscreenEnabled || document.webkitFullscreenEnabled)) {
-    fullBtn.hidden = false;
-    fullBtn.addEventListener("click", () => {
-      const isFull = document.fullscreenElement || document.webkitFullscreenElement;
-      if (isFull) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
-      else canFull.call(root);
+  if (window.Pienipeli) {
+    Pienipeli.fullscreenButton(fullBtn, {
+      onChange(full) {
+        fullBtn.firstElementChild.textContent = full ? "🗗" : "⛶";
+        fullBtn.setAttribute("aria-label", full ? "Exit full screen" : "Full screen");
+      }
     });
   }
 
