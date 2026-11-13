@@ -461,7 +461,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.
 :where(.js) .reveal { opacity: 0; transform: translateY(26px) scale(.98); transition: opacity .7s ease, transform .7s cubic-bezier(.2, .9, .3, 1.15); }
 :where(.js) .reveal.in { opacity: 1; transform: none; }
 .promises .reveal:nth-child(2), .games-grid .reveal:nth-child(2) { transition-delay: .1s; }
-.promises .reveal:nth-child(3) { transition-delay: .2s; }
+.promises .reveal:nth-child(3), .games-grid .reveal:nth-child(3) { transition-delay: .2s; }
 .promises .reveal:nth-child(4) { transition-delay: .3s; }
 
 /* Game cards: lift + tilt + glare */

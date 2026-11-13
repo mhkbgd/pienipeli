@@ -152,6 +152,7 @@ svg { overflow: hidden; }
   gap: clamp(10px, 2.4vh, 24px);
   text-align: center;
 }
+.site-home { position: absolute; top: calc(14px + var(--safe-t)); left: calc(14px + var(--safe-l)); text-decoration: none; }
 .corner-btns { position: absolute; top: calc(14px + var(--safe-t)); right: calc(14px + var(--safe-r)); display: flex; gap: 10px; }
 .parade { display: flex; gap: 2vmin; justify-content: center; }
 .p-animal {

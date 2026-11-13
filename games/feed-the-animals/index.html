@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport-fit + no zoom keeps toddler taps from zooming the page -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Feed the Animals! Free Feeding Game for Toddlers | Pienipeli</title>
+  <meta name="description" content="Play Feed the Animals free online: a hungry monkey, rabbit, cat, dog, elephant or cow waits for food and your toddler taps the right snack. No reading, no ads, no losing.">
+  <link rel="canonical" href="https://pienipeli.fi/games/feed-the-animals/">
+  <meta name="theme-color" content="#c9ecff">
+  <link rel="icon" href="../../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pienipeli">
+  <meta property="og:title" content="Feed the Animals! Free feeding game for toddlers">
+  <meta property="og:description" content="Tap the right snack to feed a hungry animal and hear it munch, then watch it smile and dance. No reading, no ads, no losing.">
+  <meta property="og:url" content="https://pienipeli.fi/games/feed-the-animals/">
+  <meta property="og:image" content="https://pienipeli.fi/assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "VideoGame",
+        "@id": "https://pienipeli.fi/games/feed-the-animals/#game",
+        "name": "Feed the Animals!",
+        "url": "https://pienipeli.fi/games/feed-the-animals/",
+        "description": "A free, ad-free feeding game for toddlers. A hungry animal waits with its mouth open and the child taps the right food of three. No reading, no timer, no losing.",
+        "image": "https://pienipeli.fi/assets/img/og-image.png",
+        "genre": ["Educational", "Casual", "Kids"],
+        "gamePlatform": ["Web browser", "Mobile", "Tablet", "Desktop"],
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+        "audience": { "@type": "PeopleAudience", "suggestedMinAge": 2, "suggestedMaxAge": 4 },
+        "publisher": { "@type": "Organization", "name": "Pienipeli", "url": "https://pienipeli.fi/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Pienipeli", "item": "https://pienipeli.fi/" },
+          { "@type": "ListItem", "position": 2, "name": "Feed the Animals!", "item": "https://pienipeli.fi/games/feed-the-animals/" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <!-- Sky + meadow decoration -->
+  <div class="sky" aria-hidden="true">
+    <div class="sun"></div>
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="hill h1"></div>
+    <div class="hill h2"></div>
+  </div>
+
+  <h1 class="sr-only">Feed the Animals!</h1>
+
+  <!-- Grown-up corner buttons (kept small and out of the way) -->
+  <a class="corner-btn home" href="../../index.html" aria-label="More games"><span aria-hidden="true">🏠</span></a>
+  <button class="corner-btn sound" id="soundBtn" type="button" aria-label="Sound off" aria-pressed="true"><span aria-hidden="true">🔊</span></button>
+  <button class="corner-btn full" id="fullBtn" type="button" aria-label="Full screen" hidden><span aria-hidden="true">⛶</span></button>
+
+  <main class="stage" id="stage">
+    <!-- The hungry animal is drawn here by script.js -->
+    <div class="animal-zone" id="animalZone">
+      <div class="glow" id="glow" aria-hidden="true"></div>
+      <div class="animal" id="animal" role="img" aria-label="A hungry animal"></div>
+      <div class="shadow" aria-hidden="true"></div>
+    </div>
+
+    <!-- Three food plates -->
+    <div class="foods" id="foods" role="group" aria-label="Food"></div>
+  </main>
+
+  <!-- Hearts, stars, crumbs and confetti go here -->
+  <div class="fx" id="fx" aria-hidden="true"></div>
+
+  <noscript><p class="noscript">This game needs JavaScript turned on.</p></noscript>
+
+  <script src="sounds.js"></script>
+  <script src="animals.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

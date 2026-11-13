@@ -14,6 +14,7 @@ HTML, CSS and JavaScript with **no build step and no dependencies**.
 | --- | --- | --- |
 | **Baby Pop!** | [`games/baby-pop/`](games/baby-pop/) | Pop smiley balloons by tapping, swiping or pressing any key. Includes gentle generated sounds, speed control, full screen and rare rainbow balloons. |
 | **Find the Animal!** | [`games/find-the-animal/`](games/find-the-animal/) | The game asks "Where is the cat?" out loud and the child taps the right one of three animals. 40 animals, English / Finnish / Bengali, spoken questions, animal sounds, confetti, no losing. |
+| **Feed the Animals!** | [`games/feed-the-animals/`](games/feed-the-animals/) | A hungry monkey, rabbit, cat, dog, elephant or cow opens its mouth and the child taps the right one of three foods. The food flies in, the animal chews and dances, hearts and stars float up. Any other food just gets a silly head shake. Generated munching, animal and celebration sounds, no text, no losing. |
 
 ## Project structure
 
@@ -29,7 +30,8 @@ HTML, CSS and JavaScript with **no build step and no dependencies**.
 │   └── img/              Logo (SVG), favicons, app icons, social share image
 ├── games/
 │   ├── baby-pop/         Baby Pop! (index.html, script.js, style.css)
-│   └── find-the-animal/  Find the Animal! (see below)
+│   ├── find-the-animal/  Find the Animal! (see below)
+│   └── feed-the-animals/ Feed the Animals! (see below)
 ├── site.webmanifest      Web app manifest (name, icons, colours)
 ├── robots.txt            Search engine rules + sitemap location
 ├── sitemap.xml           List of public pages for search engines
@@ -69,6 +71,33 @@ games/find-the-animal/
   Settings → Accessibility → Spoken Content → Voices).
 - **Animal sounds** are playful synthesized imitations made in `sounds.js`, so the game
   needs no audio files and no network.
+
+## Feed the Animals!
+
+```
+games/feed-the-animals/
+├── index.html     Page markup: animal stage, food plates, effects layer
+├── style.css      Layout (portrait, landscape phone, desktop) and every animation/mood
+├── animals.js     Foods (emoji + plate colour) and the 6 animal drawings (inline SVG)
+├── sounds.js      All sounds, generated live with the Web Audio API (no audio files)
+├── script.js      Rounds, tap handling, flying food, hearts/stars/confetti, hints
+└── card-art.svg   Picture for the game card on the landing page (made from animals.js)
+```
+
+- **Moods:** each animal is one SVG with a mouth and eyes for every mood. `script.js` only
+  sets `data-mood` on `#animal` (`idle`, `hungry`, `ready`, `chew`, `happy`, `yuck`) and
+  `style.css` shows the right mouth and eyes and runs the animation.
+- **Adding an animal:** add an entry to `ANIMALS` in `animals.js`: what it `eats` (the first
+  one is its favourite and comes up most often), which clearly wrong foods to offer
+  (`avoid`), its colours and its drawing (head centred near 120, 112 in a 240 × 290 box).
+- **Sounds:** animal calls, hops, whoosh, gulp, munching, a silly "blblbl" for unwanted food
+  and a happy chime, all made in `sounds.js`. Tapping the animal plays its call. The 🔊 button
+  mutes everything and the choice is remembered on the device. Browsers allow sound only after
+  the first tap, so the first animal's call is replayed on that tap.
+- **Adding a food:** add it to `FOODS` with an emoji, a plate colour and two crumb colours.
+- **Taps:** food plates react on touch-down. While food is flying or the animal is
+  reacting, taps are ignored, so double taps can't skip anything. After 6 seconds without
+  a tap, the right food gives a little wiggle as a hint.
 
 ## Running locally
 

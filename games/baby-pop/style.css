@@ -269,6 +269,14 @@ html, body {
 .dots i { width: 10px; height: 10px; border-radius: 50%; background: #dcd0f7; transition: background .2s, transform .2s; }
 .dots i.on { background: #b995ff; transform: scale(1.25); }
 .round-btn[hidden] { display: none; }
+a.round-btn { display: inline-grid; place-items: center; text-decoration: none; }
+/* Narrow phones: keep the whole control pill on screen */
+@media (max-width: 400px) {
+  .controls { gap: 6px; padding: 6px 8px; }
+  .controls .round-btn { width: 46px; height: 46px; font-size: 22px; }
+  .dots { gap: 4px; }
+  .dots i { width: 8px; height: 8px; }
+}
 
 /* Visible to screen readers only */
 .sr-only {
