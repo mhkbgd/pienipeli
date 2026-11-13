@@ -72,13 +72,13 @@
         "@id": "https://pienipeli.fi/games/find-the-animal/#game",
         "name": "Find the Animal!",
         "url": "https://pienipeli.fi/games/find-the-animal/",
-        "description": "A free, ad-free talking animal game for toddlers. The game asks for an animal out loud and the child taps the right one of three. 40 animals in English, Finnish and Bengali.",
+        "description": "A free, ad-free talking animal game for toddlers. The game asks for an animal out loud and the child taps the right one of three. 40 friendly animals with animal sounds.",
         "image": "https://pienipeli.fi/assets/img/og-image.png",
         "genre": ["Educational", "Casual", "Kids"],
         "gamePlatform": ["Web browser", "Mobile", "Tablet", "Desktop"],
         "applicationCategory": "Game",
         "operatingSystem": "Any",
-        "inLanguage": ["en", "fi", "bn"],
+        "inLanguage": "en",
         "isAccessibleForFree": true,
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
         "audience": { "@type": "PeopleAudience", "suggestedMinAge": 2, "suggestedMaxAge": 4 },
@@ -118,18 +118,22 @@
       <nav aria-label="Main">
         <ul class="nav">
           <li><a href="#games">Games</a></li>
-          <li><a href="#parents">For parents</a></li>
+          <li><a href="#play">Animals</a></li>
+          <li><a href="#parents">Parents</a></li>
           <li><a href="#about">About</a></li>
         </ul>
       </nav>
+      <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="true" aria-label="Sound on" title="Sound on/off" hidden>
+        <span class="on" aria-hidden="true">🔊</span><span class="off" aria-hidden="true">🔇</span>
+      </button>
     </div>
   </header>
 
   <main id="main">
     <!-- ============ Hero ============ -->
-    <section class="hero">
+    <section class="hero" id="hero">
       <div class="hero-sky" aria-hidden="true">
-        <div class="sun"></div>
+        <div class="sun"><i class="sun-face"></i></div>
         <div class="cloud c1"></div>
         <div class="cloud c2"></div>
         <div class="cloud c3"></div>
@@ -138,32 +142,40 @@
       </div>
       <!-- Floating balloons are added here by site.js. Go on, pop one. -->
       <div class="hero-balloons" id="heroBalloons" aria-hidden="true"></div>
+      <div class="pop-count" id="popCount" aria-live="polite" hidden><span aria-hidden="true">🎈</span> <b>0</b> <span class="pop-label">popped!</span></div>
 
       <div class="wrap hero-content">
         <h1>
-          <span class="eyebrow">Free baby &amp; toddler games online · No ads</span>
-          <span class="h1-main">Little games<br>for little hands.</span>
+          <span class="eyebrow"><span class="dot" aria-hidden="true"></span> Free baby &amp; toddler games · No ads</span>
+          <span class="h1-main"><span class="wobble">Little games</span><br><span class="wobble">for <span class="hl">little hands.</span></span></span>
         </h1>
         <p class="lead">
           Gentle, joyful games for babies and toddlers that play right in your browser.
-          Free, with no ads, no downloads and no losing. Just bright colours, happy sounds and lots of giggles.
+          No ads, no downloads, no losing. Just bright colours, happy sounds and lots of giggles.
         </p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="games/baby-pop/index.html">🎈 Play Baby Pop</a>
-          <a class="btn btn-ghost" href="#games">See our games</a>
+          <a class="btn btn-primary btn-big" href="games/baby-pop/index.html"><span class="btn-emoji" aria-hidden="true">🎈</span> Play Baby Pop</a>
+          <a class="btn btn-ghost btn-big" href="games/find-the-animal/index.html"><span class="btn-emoji" aria-hidden="true">🦁</span> Find the Animal</a>
         </div>
+        <ul class="stats" aria-label="Pienipeli at a glance">
+          <li><b data-count="0">0</b> ads</li>
+          <li><b data-count="40">40</b> animals</li>
+          <li><b data-count="100" data-suffix="%">100%</b> free</li>
+        </ul>
+        <p class="hint" aria-hidden="true">Psst… try popping a balloon ☝️</p>
       </div>
     </section>
 
     <!-- ============ Games ============ -->
     <section id="games" class="section">
       <div class="wrap">
-        <h2 class="section-title">Free games for babies &amp; toddlers</h2>
-        <p class="section-lead">Free to play online in any web browser on phones, tablets, iPad and computers. No ads, nothing to install.</p>
+        <p class="kicker reveal">Our games</p>
+        <h2 class="section-title reveal">Free games for babies &amp; toddlers</h2>
+        <p class="section-lead reveal">Play in any web browser on phones, tablets, iPad and computers. Nothing to install.</p>
 
         <div class="games-grid">
           <!-- Game #1: Baby Pop -->
-          <article class="game-card">
+          <article class="game-card reveal" data-tilt>
             <a class="game-art babypop-art" href="games/baby-pop/index.html" tabindex="-1" aria-hidden="true">
               <span class="art-sun"></span>
               <span class="art-hill"></span>
@@ -171,6 +183,7 @@
               <span class="art-balloon b2"></span>
               <span class="art-balloon b3 rainbow"></span>
               <span class="art-word">Pop!</span>
+              <span class="art-play">▶</span>
             </a>
             <div class="game-body">
               <div class="game-head">
@@ -193,24 +206,25 @@
           </article>
 
           <!-- Game #2: Find the Animal -->
-          <article class="game-card">
+          <article class="game-card reveal" data-tilt>
             <a class="game-art" href="games/find-the-animal/index.html" tabindex="-1" aria-hidden="true">
               <img class="game-art-img" src="games/find-the-animal/card-art.svg" alt="" width="640" height="400" loading="lazy">
+              <span class="art-play">▶</span>
             </a>
             <div class="game-body">
               <div class="game-head">
                 <h3>Find the Animal!</h3>
-                <span class="badge">Ages 2–4</span>
+                <span class="badge badge-mint">Ages 2–4</span>
               </div>
-              <p class="game-sub">Talking animal game in English, Finnish &amp; Bengali</p>
+              <p class="game-sub">Talking animal game for toddlers</p>
               <p>
                 The game asks "Where is the cat?" out loud and your little one taps the right animal.
                 40 friendly animals, happy animal sounds and confetti, and a wrong tap only ever gets a gentle "try again".
               </p>
               <ul class="tags" aria-label="Features">
                 <li>🗣️ Speaks the question</li>
-                <li>🌍 3 languages</li>
                 <li>🐘 40 animals</li>
+                <li>🔊 Animal sounds</li>
                 <li>🎉 No losing</li>
               </ul>
               <a class="btn btn-primary btn-block" href="games/find-the-animal/index.html">Play Find the Animal</a>
@@ -220,34 +234,49 @@
       </div>
     </section>
 
+    <!-- ============ Animal playground (built by site.js; stays hidden without JavaScript) ============ -->
+    <section id="play" class="section section-play" hidden>
+      <div class="wrap">
+        <p class="kicker reveal">Try it here</p>
+        <h2 class="section-title reveal">Say hi to the animals!</h2>
+        <p class="section-lead reveal">Tap a friend to hear them. These are a few of the 40 animals in Find the Animal.</p>
+        <div class="zoo" id="zoo" role="group" aria-label="Animals"></div>
+        <div class="zoo-actions">
+          <button class="btn btn-ghost" id="zooShuffle" type="button"><span class="btn-emoji" aria-hidden="true">🔀</span> New friends</button>
+          <a class="btn btn-primary" href="games/find-the-animal/index.html">Play Find the Animal</a>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ For parents ============ -->
     <section id="parents" class="section section-tint">
       <div class="wrap">
-        <h2 class="section-title">Made with parents in mind</h2>
-        <p class="section-lead">Our promise for every Pienipeli game.</p>
+        <p class="kicker reveal">For grown-ups</p>
+        <h2 class="section-title reveal">Made with parents in mind</h2>
+        <p class="section-lead reveal">Our promise for every Pienipeli game.</p>
         <ul class="promises">
-          <li>
+          <li class="reveal" style="--c:#ffe3ef">
             <span class="p-icon" aria-hidden="true">🚫</span>
             <h3>No ads, no purchases</h3>
             <p>Nothing to buy and nothing to tap by accident. Just the game.</p>
           </li>
-          <li>
+          <li class="reveal" style="--c:#e0f2ff">
             <span class="p-icon" aria-hidden="true">🔒</span>
             <h3>No tracking</h3>
             <p>No accounts, no analytics, no cookies. We don't collect anything about your child.</p>
           </li>
-          <li>
+          <li class="reveal" style="--c:#fffbd0">
             <span class="p-icon" aria-hidden="true">💛</span>
             <h3>No losing</h3>
             <p>No timers, levels or game-over screens. Every tap is a little win.</p>
           </li>
-          <li>
+          <li class="reveal" style="--c:#dcfbec">
             <span class="p-icon" aria-hidden="true">🧸</span>
             <h3>Toddler-proof</h3>
             <p>Big targets, no accidental zooming, and full-screen mode so little fingers stay in the game.</p>
           </li>
         </ul>
-        <p class="tip">
+        <p class="tip reveal">
           <strong>Tip:</strong> Play with your little one. Name the colours together, count the pops,
           and keep sessions short and sweet.
         </p>
@@ -257,8 +286,9 @@
     <!-- ============ FAQ (mirrors the FAQPage structured data in <head>; keep both in sync) ============ -->
     <section id="faq" class="section">
       <div class="wrap faq-wrap">
-        <h2 class="section-title">Questions parents ask</h2>
-        <div class="faq">
+        <p class="kicker reveal">FAQ</p>
+        <h2 class="section-title reveal">Questions parents ask</h2>
+        <div class="faq reveal">
           <details>
             <summary>Are Pienipeli baby games really free?</summary>
             <p>Yes. All our games are completely free to play online. There are no in-app purchases, subscriptions or hidden costs.</p>
@@ -288,9 +318,10 @@
     </section>
 
     <!-- ============ About ============ -->
-    <section id="about" class="section">
+    <section id="about" class="section section-about">
       <div class="wrap about">
-        <div>
+        <div class="reveal">
+          <p class="kicker">About</p>
           <h2 class="section-title">About Pienipeli</h2>
           <p>
             <em>Pieni peli</em> means "little game" in Finnish, and that's exactly what we make:
@@ -301,9 +332,10 @@
             sounds, cause and effect, and nothing that pushes a child to keep playing.
           </p>
         </div>
-        <div class="contact-card">
+        <div class="contact-card reveal">
+          <span class="contact-wave" aria-hidden="true">👋</span>
           <h3>Say hello</h3>
-          <p>Ideas, feedback or just a funny story about your toddler and Baby Pop? We'd love to hear it.</p>
+          <p>Ideas, feedback or just a funny story about your toddler and our games? We'd love to hear it.</p>
           <p class="email"><a href="mailto:hello@pienipeli.fi">hello@pienipeli.fi</a></p>
         </div>
       </div>
@@ -311,6 +343,7 @@
   </main>
 
   <footer class="site-footer">
+    <svg class="footer-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 30 C 240 70 480 -10 720 30 S 1200 70 1440 30 V60 H0 Z"/></svg>
     <div class="wrap footer-inner">
       <a class="brand brand-small" href="index.html">
         <img src="assets/img/logo.svg" alt="" width="28" height="28">
@@ -327,6 +360,8 @@
     </div>
   </footer>
 
+  <script src="games/find-the-animal/sounds.js" defer></script>
+  <script src="games/find-the-animal/animals.js" defer></script>
   <script src="assets/js/site.js" defer></script>
 </body>
 </html>

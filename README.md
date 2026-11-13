@@ -24,7 +24,7 @@ HTML, CSS and JavaScript with **no build step and no dependencies**.
 ├── 404.html              "Page not found" page (uses absolute paths)
 ├── assets/
 │   ├── css/site.css      Styles for the landing, privacy and 404 pages
-│   ├── js/site.js        Poppable hero balloons + footer year
+│   ├── js/site.js        Landing page play: balloons, pop counter, animal playground, reveals
 │   ├── fonts/            Self-hosted Fredoka + Noto Sans Bengali fonts and their licences (OFL)
 │   └── img/              Logo (SVG), favicons, app icons, social share image
 ├── games/
