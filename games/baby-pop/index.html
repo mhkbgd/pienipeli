@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <!-- viewport-fit + no zoom keeps toddler taps from zooming the page -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-  <title>Baby Pop! · Pienipeli</title>
-  <meta name="description" content="Baby Pop! A gentle balloon-popping game for babies and toddlers. Tap, swipe or press any key. No ads, no scores, no losing.">
+  <title>Baby Pop! Free Balloon Popping Game for Babies &amp; Toddlers, No Ads | Pienipeli</title>
+  <meta name="description" content="Play Baby Pop free online: a gentle balloon popping game for babies and toddlers (ages 1–4). No ads, no download, works on phone, tablet and computer. Tap, swipe or press any key!">
   <link rel="canonical" href="https://pienipeli.fi/games/baby-pop/">
   <meta name="theme-color" content="#bfe6ff">
   <link rel="icon" href="../../assets/img/logo.svg" type="image/svg+xml">
@@ -13,15 +13,54 @@
   <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Pienipeli">
-  <meta property="og:title" content="Baby Pop! · Pienipeli">
-  <meta property="og:description" content="A gentle balloon-popping game for babies and toddlers.">
+  <meta property="og:title" content="Baby Pop! Free balloon popping game for babies, no ads">
+  <meta property="og:description" content="A gentle, free balloon popping game for babies and toddlers. No ads, no download.">
   <meta property="og:url" content="https://pienipeli.fi/games/baby-pop/">
   <meta property="og:image" content="https://pienipeli.fi/assets/img/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" href="../../assets/fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "VideoGame",
+        "@id": "https://pienipeli.fi/games/baby-pop/#game",
+        "name": "Baby Pop!",
+        "url": "https://pienipeli.fi/games/baby-pop/",
+        "description": "A free, ad-free balloon popping game for babies and toddlers. Tap, swipe or press any key to pop smiley balloons into sparkles and happy sounds.",
+        "image": "https://pienipeli.fi/assets/img/og-image.png",
+        "genre": ["Educational", "Casual", "Kids"],
+        "gamePlatform": ["Web browser", "Mobile", "Tablet", "Desktop"],
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+        "audience": { "@type": "PeopleAudience", "suggestedMinAge": 1, "suggestedMaxAge": 4 },
+        "publisher": { "@type": "Organization", "name": "Pienipeli", "url": "https://pienipeli.fi/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Pienipeli", "item": "https://pienipeli.fi/" },
+          { "@type": "ListItem", "position": 2, "name": "Baby Pop!", "item": "https://pienipeli.fi/games/baby-pop/" }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
+  <!-- Page heading + description for screen readers (and search engines); the game itself is visual -->
+  <h1 class="sr-only">Baby Pop! A free balloon popping game for babies and toddlers</h1>
+  <p class="sr-only">
+    Tap, swipe or press any key to pop smiley balloons into sparkles, hearts and happy sounds.
+    Free to play online, no ads, nothing to download. From <a href="../../index.html">Pienipeli</a>.
+  </p>
+
   <!-- Sky decoration: sun, rainbow, stars, clouds, hills -->
   <div class="sky" aria-hidden="true">
     <div id="stars"></div>

@@ -270,6 +270,12 @@ html, body {
 .dots i.on { background: #b995ff; transform: scale(1.25); }
 .round-btn[hidden] { display: none; }
 
+/* Visible to screen readers only */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
 /* Pop counter: top centre, taps pass straight through to balloons */
 .counter {
   position: fixed; left: 50%; top: max(14px, env(safe-area-inset-top));

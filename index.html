@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Pienipeli · Little games for little hands</title>
-  <meta name="description" content="Pienipeli makes gentle, joyful games for babies and toddlers. No ads, no scores, no losing. Just play. Start with Baby Pop!">
+  <title>Free Baby Games Online, No Ads · Toddler Games | Pienipeli</title>
+  <meta name="description" content="Free online games for babies and toddlers with no ads, no in-app purchases and no tracking. Play in your browser on phone, tablet or computer, nothing to download. Try Baby Pop!">
   <link rel="canonical" href="https://pienipeli.fi/">
   <meta name="theme-color" content="#bfe6ff">
 
@@ -17,8 +17,8 @@
   <!-- Social sharing previews -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Pienipeli">
-  <meta property="og:title" content="Pienipeli · Little games for little hands">
-  <meta property="og:description" content="Gentle, joyful games for babies and toddlers. No ads, no scores, no losing.">
+  <meta property="og:title" content="Free baby games online, no ads · Pienipeli">
+  <meta property="og:description" content="Gentle, free browser games for babies and toddlers. No ads, no purchases, no tracking, no losing.">
   <meta property="og:url" content="https://pienipeli.fi/">
   <meta property="og:image" content="https://pienipeli.fi/assets/img/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -28,13 +28,64 @@
   <link rel="preload" href="assets/fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/site.css">
 
+  <!-- Structured data: tells search engines who we are and what the games are -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Pienipeli",
-    "url": "https://pienipeli.fi/",
-    "logo": "https://pienipeli.fi/assets/img/apple-touch-icon.png"
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://pienipeli.fi/#org",
+        "name": "Pienipeli",
+        "url": "https://pienipeli.fi/",
+        "logo": "https://pienipeli.fi/assets/img/icon-512.png",
+        "email": "hello@pienipeli.fi"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://pienipeli.fi/#website",
+        "name": "Pienipeli",
+        "alternateName": "Pienipeli: free baby games online",
+        "url": "https://pienipeli.fi/",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://pienipeli.fi/#org" }
+      },
+      {
+        "@type": "VideoGame",
+        "@id": "https://pienipeli.fi/games/baby-pop/#game",
+        "name": "Baby Pop!",
+        "url": "https://pienipeli.fi/games/baby-pop/",
+        "description": "A free, ad-free balloon popping game for babies and toddlers. Tap, swipe or press any key to pop smiley balloons into sparkles and happy sounds.",
+        "image": "https://pienipeli.fi/assets/img/og-image.png",
+        "genre": ["Educational", "Casual", "Kids"],
+        "gamePlatform": ["Web browser", "Mobile", "Tablet", "Desktop"],
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+        "audience": { "@type": "PeopleAudience", "suggestedMinAge": 1, "suggestedMaxAge": 4 },
+        "publisher": { "@id": "https://pienipeli.fi/#org" }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://pienipeli.fi/#faq",
+        "mainEntity": [
+          { "@type": "Question", "name": "Are Pienipeli baby games really free?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. All our games are completely free to play online. There are no in-app purchases, subscriptions or hidden costs." } },
+          { "@type": "Question", "name": "Do the games have ads?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Pienipeli games have no ads at all, so there is nothing for little fingers to tap by accident." } },
+          { "@type": "Question", "name": "What age are the games for?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Our games are made for babies and toddlers, roughly ages 1 to 4. They need no reading, and every tap does something fun." } },
+          { "@type": "Question", "name": "Do I need to download or install anything?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. The games run right in your web browser on phones, tablets (including iPad), laptops and computers. There is no app to download and no account to create." } },
+          { "@type": "Question", "name": "Do you collect any data about my child?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. There are no accounts, analytics, cookies or trackers. Small settings like sound on or off stay on your own device." } },
+          { "@type": "Question", "name": "How can I stop my toddler from leaving the game?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Tap the full-screen button in the game. On iPhone and iPad you can also use Guided Access (Settings, Accessibility, Guided Access) to lock the screen to the game." } }
+        ]
+      }
+    ]
   }
   </script>
 </head>
@@ -72,11 +123,13 @@
       <div class="hero-balloons" id="heroBalloons" aria-hidden="true"></div>
 
       <div class="wrap hero-content">
-        <p class="eyebrow">Pieni peli · Finnish for "little game"</p>
-        <h1>Little games<br>for little hands.</h1>
+        <h1>
+          <span class="eyebrow">Free baby &amp; toddler games online · No ads</span>
+          <span class="h1-main">Little games<br>for little hands.</span>
+        </h1>
         <p class="lead">
-          Gentle, joyful games for babies and toddlers. No ads, no scores, no losing.
-          Just bright colours, happy sounds and lots of giggles.
+          Gentle, joyful games for babies and toddlers that play right in your browser.
+          Free, with no ads, no downloads and no losing. Just bright colours, happy sounds and lots of giggles.
         </p>
         <div class="cta-row">
           <a class="btn btn-primary" href="games/baby-pop/index.html">🎈 Play Baby Pop</a>
@@ -88,8 +141,8 @@
     <!-- ============ Games ============ -->
     <section id="games" class="section">
       <div class="wrap">
-        <h2 class="section-title">Our games</h2>
-        <p class="section-lead">Free to play in any web browser on phones, tablets and computers. Nothing to install.</p>
+        <h2 class="section-title">Free games for babies &amp; toddlers</h2>
+        <p class="section-lead">Free to play online in any web browser on phones, tablets, iPad and computers. No ads, nothing to install.</p>
 
         <div class="games-grid">
           <!-- Game #1: Baby Pop -->
@@ -107,6 +160,7 @@
                 <h3>Baby Pop!</h3>
                 <span class="badge">Ages 1–4</span>
               </div>
+              <p class="game-sub">Balloon popping game for babies</p>
               <p>
                 Smiley balloons float up into a pastel sky. Tap, swipe or press any key to pop them
                 into sparkles, hearts and happy little notes. Keep an eye out for the rare rainbow balloon!
@@ -155,7 +209,7 @@
           <li>
             <span class="p-icon" aria-hidden="true">💛</span>
             <h3>No losing</h3>
-            <p>No timers, scores or game-over screens. Every tap is a little win.</p>
+            <p>No timers, levels or game-over screens. Every tap is a little win.</p>
           </li>
           <li>
             <span class="p-icon" aria-hidden="true">🧸</span>
@@ -167,6 +221,39 @@
           <strong>Tip:</strong> Play with your little one. Name the colours together, count the pops,
           and keep sessions short and sweet.
         </p>
+      </div>
+    </section>
+
+    <!-- ============ FAQ (mirrors the FAQPage structured data in <head>; keep both in sync) ============ -->
+    <section id="faq" class="section">
+      <div class="wrap faq-wrap">
+        <h2 class="section-title">Questions parents ask</h2>
+        <div class="faq">
+          <details>
+            <summary>Are Pienipeli baby games really free?</summary>
+            <p>Yes. All our games are completely free to play online. There are no in-app purchases, subscriptions or hidden costs.</p>
+          </details>
+          <details>
+            <summary>Do the games have ads?</summary>
+            <p>No. Pienipeli games have no ads at all, so there is nothing for little fingers to tap by accident.</p>
+          </details>
+          <details>
+            <summary>What age are the games for?</summary>
+            <p>Our games are made for babies and toddlers, roughly ages 1 to 4. They need no reading, and every tap does something fun.</p>
+          </details>
+          <details>
+            <summary>Do I need to download or install anything?</summary>
+            <p>No. The games run right in your web browser on phones, tablets (including iPad), laptops and computers. There is no app to download and no account to create.</p>
+          </details>
+          <details>
+            <summary>Do you collect any data about my child?</summary>
+            <p>No. There are no accounts, analytics, cookies or trackers. Small settings like sound on or off stay on your own device. See our <a href="privacy.html">privacy page</a>.</p>
+          </details>
+          <details>
+            <summary>How can I stop my toddler from leaving the game?</summary>
+            <p>Tap the full-screen button in the game. On iPhone and iPad you can also use Guided Access (Settings → Accessibility → Guided Access) to lock the screen to the game.</p>
+          </details>
+        </div>
       </div>
     </section>
 
@@ -201,6 +288,7 @@
       </a>
       <nav aria-label="Footer">
         <a href="games/baby-pop/index.html">Baby Pop</a>
+        <a href="#faq">FAQ</a>
         <a href="privacy.html">Privacy</a>
         <a href="mailto:hello@pienipeli.fi">Contact</a>
       </nav>
