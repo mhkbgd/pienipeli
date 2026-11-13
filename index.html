@@ -2,45 +2,212 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- viewport-fit + no zoom keeps toddler taps from zooming the page -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-  <title>Baby Pop!</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Pienipeli · Little games for little hands</title>
+  <meta name="description" content="Pienipeli makes gentle, joyful games for babies and toddlers. No ads, no scores, no losing. Just play. Start with Baby Pop!">
+  <link rel="canonical" href="https://pienipeli.fi/">
+  <meta name="theme-color" content="#bfe6ff">
+
+  <!-- Icons & app manifest -->
+  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <!-- Social sharing previews -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pienipeli">
+  <meta property="og:title" content="Pienipeli · Little games for little hands">
+  <meta property="og:description" content="Gentle, joyful games for babies and toddlers. No ads, no scores, no losing.">
+  <meta property="og:url" content="https://pienipeli.fi/">
+  <meta property="og:image" content="https://pienipeli.fi/assets/img/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preload" href="assets/fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/site.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Pienipeli",
+    "url": "https://pienipeli.fi/",
+    "logo": "https://pienipeli.fi/assets/img/apple-touch-icon.png"
+  }
+  </script>
 </head>
 <body>
-  <!-- Sky decoration: sun, rainbow, stars, clouds, hills -->
-  <div class="sky" aria-hidden="true">
-    <div id="stars"></div>
-    <div class="sun"><i></i></div>
-    <div class="rainbow-arc"></div>
-    <div class="cloud c1"></div>
-    <div class="cloud c2"></div>
-    <div class="cloud c3"></div>
-    <div class="cloud c4"></div>
-    <div class="hill h1"></div>
-    <div class="hill h2"></div>
-  </div>
+  <a class="skip" href="#main">Skip to content</a>
 
-  <!-- Balloons live here -->
-  <main id="stage" aria-label="Baby Pop! Tap the balloons"></main>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html" aria-label="Pienipeli home">
+        <img src="assets/img/logo.svg" alt="" width="40" height="40">
+        <span>Pienipeli</span>
+      </a>
+      <nav aria-label="Main">
+        <ul class="nav">
+          <li><a href="#games">Games</a></li>
+          <li><a href="#parents">For parents</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-  <!-- Sparkles, hearts and words live here -->
-  <div id="fx" aria-hidden="true"></div>
+  <main id="main">
+    <!-- ============ Hero ============ -->
+    <section class="hero">
+      <div class="hero-sky" aria-hidden="true">
+        <div class="sun"></div>
+        <div class="cloud c1"></div>
+        <div class="cloud c2"></div>
+        <div class="cloud c3"></div>
+        <div class="hill h1"></div>
+        <div class="hill h2"></div>
+      </div>
+      <!-- Floating balloons are added here by site.js. Go on, pop one. -->
+      <div class="hero-balloons" id="heroBalloons" aria-hidden="true"></div>
 
-  <!-- Corner buttons -->
-  <button id="muteBtn" class="round-btn left" aria-label="Mute sound" title="Sound on/off">🔊</button>
-  <button id="restartBtn" class="round-btn right" aria-label="Restart" title="Restart">🔄</button>
+      <div class="wrap hero-content">
+        <p class="eyebrow">Pieni peli · Finnish for "little game"</p>
+        <h1>Little games<br>for little hands.</h1>
+        <p class="lead">
+          Gentle, joyful games for babies and toddlers. No ads, no scores, no losing.
+          Just bright colours, happy sounds and lots of giggles.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="games/baby-pop/index.html">🎈 Play Baby Pop</a>
+          <a class="btn btn-ghost" href="#games">See our games</a>
+        </div>
+      </div>
+    </section>
 
-  <!-- Bottom control pill: speed + full screen -->
-  <div class="controls">
-    <button id="slowBtn" class="round-btn" aria-label="Slower" title="Slower">🐢</button>
-    <div class="dots" id="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-    <button id="fastBtn" class="round-btn" aria-label="Faster" title="Faster">🐇</button>
-    <button id="fsBtn" class="round-btn" aria-label="Full screen" title="Full screen">⛶</button>
-  </div>
+    <!-- ============ Games ============ -->
+    <section id="games" class="section">
+      <div class="wrap">
+        <h2 class="section-title">Our games</h2>
+        <p class="section-lead">Free to play in any web browser on phones, tablets and computers. Nothing to install.</p>
 
-  <script src="script.js"></script>
+        <div class="games-grid">
+          <!-- Game #1: Baby Pop -->
+          <article class="game-card">
+            <a class="game-art babypop-art" href="games/baby-pop/index.html" tabindex="-1" aria-hidden="true">
+              <span class="art-sun"></span>
+              <span class="art-hill"></span>
+              <span class="art-balloon b1"></span>
+              <span class="art-balloon b2"></span>
+              <span class="art-balloon b3 rainbow"></span>
+              <span class="art-word">Pop!</span>
+            </a>
+            <div class="game-body">
+              <div class="game-head">
+                <h3>Baby Pop!</h3>
+                <span class="badge">Ages 1–4</span>
+              </div>
+              <p>
+                Smiley balloons float up into a pastel sky. Tap, swipe or press any key to pop them
+                into sparkles, hearts and happy little notes. Keep an eye out for the rare rainbow balloon!
+              </p>
+              <ul class="tags" aria-label="Features">
+                <li>👆 Tap &amp; swipe</li>
+                <li>⌨️ Every key plays</li>
+                <li>🎵 Gentle sounds</li>
+                <li>🐢 Speed control</li>
+              </ul>
+              <a class="btn btn-primary btn-block" href="games/baby-pop/index.html">Play Baby Pop</a>
+            </div>
+          </article>
+
+          <!-- Placeholder for the next game -->
+          <article class="game-card coming-soon">
+            <div class="game-art soon-art" aria-hidden="true"><span>✨</span></div>
+            <div class="game-body">
+              <div class="game-head">
+                <h3>Next game</h3>
+                <span class="badge badge-soft">Coming soon</span>
+              </div>
+              <p>We're busy making something new for tiny players. Check back soon!</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ For parents ============ -->
+    <section id="parents" class="section section-tint">
+      <div class="wrap">
+        <h2 class="section-title">Made with parents in mind</h2>
+        <p class="section-lead">Our promise for every Pienipeli game.</p>
+        <ul class="promises">
+          <li>
+            <span class="p-icon" aria-hidden="true">🚫</span>
+            <h3>No ads, no purchases</h3>
+            <p>Nothing to buy and nothing to tap by accident. Just the game.</p>
+          </li>
+          <li>
+            <span class="p-icon" aria-hidden="true">🔒</span>
+            <h3>No tracking</h3>
+            <p>No accounts, no analytics, no cookies. We don't collect anything about your child.</p>
+          </li>
+          <li>
+            <span class="p-icon" aria-hidden="true">💛</span>
+            <h3>No losing</h3>
+            <p>No timers, scores or game-over screens. Every tap is a little win.</p>
+          </li>
+          <li>
+            <span class="p-icon" aria-hidden="true">🧸</span>
+            <h3>Toddler-proof</h3>
+            <p>Big targets, no accidental zooming, and full-screen mode so little fingers stay in the game.</p>
+          </li>
+        </ul>
+        <p class="tip">
+          <strong>Tip:</strong> Play with your little one. Name the colours together, count the pops,
+          and keep sessions short and sweet.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ About ============ -->
+    <section id="about" class="section">
+      <div class="wrap about">
+        <div>
+          <h2 class="section-title">About Pienipeli</h2>
+          <p>
+            <em>Pieni peli</em> means "little game" in Finnish, and that's exactly what we make:
+            small, calm, happy games that are a baby's first steps into play.
+          </p>
+          <p>
+            We believe early screen time, when there is any, should be gentle: soft colours, kind
+            sounds, cause and effect, and nothing that pushes a child to keep playing.
+          </p>
+        </div>
+        <div class="contact-card">
+          <h3>Say hello</h3>
+          <p>Ideas, feedback or just a funny story about your toddler and Baby Pop? We'd love to hear it.</p>
+          <p class="email"><a href="mailto:hello@pienipeli.fi">hello@pienipeli.fi</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <a class="brand brand-small" href="index.html">
+        <img src="assets/img/logo.svg" alt="" width="28" height="28">
+        <span>Pienipeli</span>
+      </a>
+      <nav aria-label="Footer">
+        <a href="games/baby-pop/index.html">Baby Pop</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="mailto:hello@pienipeli.fi">Contact</a>
+      </nav>
+      <p class="copy">© <span id="year">2026</span> Pienipeli · pienipeli.fi</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/site.js" defer></script>
 </body>
 </html>

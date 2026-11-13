@@ -1,5 +1,14 @@
 /* ============ Baby Pop! styles ============ */
 
+/* Fredoka is self-hosted (no requests to third-party servers) */
+@font-face {
+  font-family: "Fredoka";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("../../assets/fonts/fredoka-latin.woff2") format("woff2");
+}
+
 :root {
   --sky-top: #bfe6ff;
   --sky-bottom: #fff0f8;

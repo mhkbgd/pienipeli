@@ -1,0 +1,337 @@
+/* ============ Pienipeli: site styles ============
+   Shared by the landing page, privacy page and 404 page.
+   The games keep their own stylesheets. */
+
+@font-face {
+  font-family: "Fredoka";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("../fonts/fredoka-latin.woff2") format("woff2");
+}
+
+:root {
+  color-scheme: light;
+  --sky-top: #bfe6ff;
+  --sky-bottom: #fff0f8;
+  --ink: #3f3552;          /* main text: deep plum */
+  --ink-soft: #6b5b7b;     /* secondary text */
+  --pink: #ffa6cb;
+  --pink-deep: #f06aa3;
+  --blue: #8ecbff;
+  --yellow: #ffe27a;
+  --purple: #c6a8ff;
+  --purple-deep: #8a63e6;
+  --mint: #9fe8c3;
+  --card: #ffffff;
+  --tint: #f6f0ff;
+  --radius: 28px;
+  --shadow: 0 10px 30px rgba(110, 140, 190, .22);
+  --font-display: "Fredoka", "Baloo 2", "Nunito", "Segoe UI Rounded", system-ui, sans-serif;
+  --font-body: "Fredoka", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background: #fff;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--purple-deep); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.15; margin: 0 0 .5em; }
+
+.wrap {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-inline: max(20px, env(safe-area-inset-left));
+}
+
+.skip {
+  position: absolute; left: 12px; top: -60px; z-index: 100;
+  background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 12px;
+}
+.skip:focus { top: 12px; }
+
+:focus-visible { outline: 4px solid var(--purple); outline-offset: 3px; border-radius: 8px; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: rgba(255, 255, 255, .78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(198, 168, 255, .25);
+}
+.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 68px; }
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-display); font-weight: 600; font-size: 1.5rem;
+  color: var(--ink); text-decoration: none;
+}
+.brand-small { font-size: 1.15rem; }
+.nav { display: flex; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.nav a {
+  display: block; padding: 8px 14px; border-radius: 999px;
+  color: var(--ink); text-decoration: none; font-weight: 500;
+}
+.nav a:hover { background: var(--tint); }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px 26px; border-radius: 999px;
+  font-family: var(--font-display); font-weight: 600; font-size: 1.125rem;
+  text-decoration: none; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: scale(.97); }
+.btn-primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--pink-deep), var(--purple-deep));
+  box-shadow: 0 8px 20px rgba(200, 100, 190, .35);
+}
+.btn-ghost { color: var(--ink); background: rgba(255, 255, 255, .85); box-shadow: var(--shadow); }
+.btn-block { width: 100%; }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative; overflow: hidden;
+  min-height: min(88vh, 760px);
+  display: flex; align-items: center;
+  background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
+  padding-block: 80px 140px;
+}
+.hero-sky, .hero-balloons { position: absolute; inset: 0; }
+.hero-sky { pointer-events: none; }
+.hero-balloons { z-index: 1; overflow: hidden; pointer-events: none; }
+.hero-content { position: relative; z-index: 2; pointer-events: none; }
+.hero-content a { pointer-events: auto; }
+
+.eyebrow {
+  display: inline-block; margin: 0 0 18px; padding: 6px 14px; border-radius: 999px;
+  background: rgba(255, 255, 255, .75); color: var(--ink-soft); font-weight: 500; font-size: .95rem;
+}
+.hero h1 { font-size: clamp(2.6rem, 7vw, 4.8rem); letter-spacing: -.01em; }
+.lead { font-size: clamp(1.1rem, 2.2vw, 1.3rem); max-width: 34ch; color: var(--ink-soft); margin: 0 0 28px; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* Sky decoration (same look as Baby Pop) */
+.sun {
+  position: absolute; right: 12%; top: 12%;
+  width: clamp(70px, 12vw, 130px); aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fffbd0, var(--yellow) 60%, #ffd05a);
+  box-shadow: 0 0 0 18px rgba(255, 236, 150, .35), 0 0 0 36px rgba(255, 236, 150, .16), 0 0 60px rgba(255, 220, 110, .7);
+}
+.cloud {
+  position: absolute; left: -200px; width: 160px; height: 52px;
+  background: #fff; border-radius: 60px; opacity: .9;
+  animation: drift linear infinite;
+}
+.cloud::before, .cloud::after { content: ""; position: absolute; background: #fff; border-radius: 50%; }
+.cloud::before { width: 72px; height: 72px; left: 20px; top: -36px; }
+.cloud::after  { width: 92px; height: 92px; left: 64px; top: -52px; }
+.c1 { top: 18%; animation-duration: 90s; animation-delay: -20s; }
+.c2 { top: 48%; animation-duration: 120s; animation-delay: -70s; transform: scale(.75); }
+.c3 { top: 70%; animation-duration: 105s; animation-delay: -45s; transform: scale(.6); opacity: .7; }
+@keyframes drift { to { left: 110%; } }
+.hill { position: absolute; border-radius: 50%; }
+.h1 { left: -15%; bottom: -90px; width: 70%; height: 220px; background: linear-gradient(#c9f5dc, #a9ecc8); }
+.h2 { right: -20%; bottom: -110px; width: 80%; height: 220px; background: linear-gradient(#d8fae6, #b9f0d2); }
+
+/* Poppable hero balloons (same drawing as in the game) */
+.hb {
+  position: absolute; top: 100%;
+  animation: rise var(--dur) linear forwards;
+  animation-delay: var(--delay);
+}
+@keyframes rise { to { transform: translateY(calc(-1 * (var(--h) + 100%) - 40px)); } }
+.hb .sway { transform-origin: 50% 100%; animation: sway 4s ease-in-out infinite alternate; animation-delay: var(--sd); }
+@keyframes sway { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
+.hb .balloon {
+  position: relative;
+  width: var(--size); height: calc(var(--size) * 1.2);
+  border-radius: 50% 50% 48% 48% / 56% 56% 44% 44%;
+  background: radial-gradient(circle at 32% 28%, var(--c1) 0%, var(--c2) 50%, var(--c3) 100%);
+  box-shadow: 0 12px 22px rgba(90, 120, 170, .22);
+  pointer-events: auto; cursor: pointer;
+}
+.hb .balloon::before {
+  content: ""; position: absolute; left: 18%; top: 12%; width: 22%; height: 16%;
+  background: rgba(255, 255, 255, .75); border-radius: 50%; transform: rotate(-35deg);
+}
+.hb .face { position: absolute; left: 50%; top: 52%; width: 40%; height: 20%; transform: translateX(-50%); }
+.hb .face::before {
+  content: ""; position: absolute; left: 12%; top: 0; width: 14%; aspect-ratio: 1; border-radius: 50%;
+  background: #6b5b7b; box-shadow: calc(var(--size) * .24) 0 0 #6b5b7b;
+}
+.hb .face::after {
+  content: ""; position: absolute; left: 32%; top: 34%; width: 36%; height: 40%;
+  border: calc(var(--size) * .025) solid #6b5b7b; border-top: 0; border-radius: 0 0 100px 100px;
+}
+.hb .string { display: block; margin: 0 auto; width: 2px; height: calc(var(--size) * .8); background: rgba(255, 255, 255, .85); }
+.hb.popped { animation-play-state: paused; }
+.hb.popped .sway { animation-play-state: paused; }
+.hb.popped .balloon { animation: pop .28s ease-out forwards; }
+.hb.popped .string { opacity: 0; }
+@keyframes pop { 40% { transform: scale(1.25, 1.15); } 100% { transform: scale(1.5); opacity: 0; } }
+.spark {
+  position: absolute; z-index: 3; pointer-events: none; font-size: 26px; line-height: 1;
+  animation: spark .8s ease-out forwards;
+}
+@keyframes spark {
+  from { transform: translate(-50%, -50%) scale(.3); opacity: 1; }
+  to   { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1); opacity: 0; }
+}
+
+/* ---------- Sections ---------- */
+.section { padding-block: 88px; }
+.section-tint { background: var(--tint); }
+.section-title { font-size: clamp(2rem, 4.5vw, 2.8rem); }
+.section-lead { color: var(--ink-soft); font-size: 1.15rem; margin: 0 0 40px; }
+
+/* ---------- Game cards ---------- */
+.games-grid {
+  display: grid; gap: 28px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+}
+.game-card {
+  display: flex; flex-direction: column;
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow); overflow: hidden;
+  border: 1px solid rgba(198, 168, 255, .25);
+}
+.game-body { padding: 24px 26px 28px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.game-body p { margin: 0 0 14px; color: var(--ink-soft); }
+.game-body .btn { margin-top: auto; }
+.game-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.game-head h3 { font-size: 1.6rem; margin: 0; }
+.badge {
+  font-size: .85rem; font-weight: 600; padding: 4px 12px; border-radius: 999px;
+  background: #ffe3ef; color: #b23c76;
+}
+.badge-soft { background: var(--tint); color: var(--purple-deep); }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0 0 20px; }
+.tags li { font-size: .9rem; padding: 4px 12px; border-radius: 999px; background: #f2f8ff; color: var(--ink-soft); }
+
+/* Baby Pop card art: a mini sky scene drawn in CSS */
+.game-art {
+  position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden;
+  background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
+}
+.art-sun {
+  position: absolute; right: 12%; top: 12%; width: 16%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fffbd0, var(--yellow) 60%, #ffd05a);
+  box-shadow: 0 0 0 10px rgba(255, 236, 150, .3);
+}
+.art-hill {
+  position: absolute; left: -10%; right: -10%; bottom: -30%; height: 55%; border-radius: 50%;
+  background: linear-gradient(#c9f5dc, #a9ecc8);
+}
+.art-balloon {
+  position: absolute; width: 20%; aspect-ratio: 1 / 1.2;
+  border-radius: 50% 50% 48% 48% / 56% 56% 44% 44%;
+  box-shadow: 0 8px 16px rgba(90, 120, 170, .25);
+  animation: bob 3.5s ease-in-out infinite alternate;
+}
+.art-balloon::before {
+  content: ""; position: absolute; left: 18%; top: 12%; width: 22%; height: 16%;
+  background: rgba(255, 255, 255, .75); border-radius: 50%; transform: rotate(-35deg);
+}
+.art-balloon::after {
+  content: ""; position: absolute; left: 50%; top: 100%; width: 2px; height: 70%;
+  background: rgba(255, 255, 255, .85);
+}
+.b1 { left: 12%; top: 30%; background: radial-gradient(circle at 32% 28%, #ffe3ef, #ffa6cb 50%, #f77fb0); }
+.b2 { left: 40%; top: 14%; width: 22%; background: radial-gradient(circle at 32% 28%, #e0f2ff, #8ecbff 50%, #62aef0); animation-delay: -1.2s; }
+.b3 { left: 68%; top: 40%; width: 17%; animation-delay: -2.1s; }
+.b3.rainbow {
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255,255,255,.65), transparent 38%),
+    linear-gradient(160deg, #ffa6cb, #ffe27a 28%, #9fe8c3 52%, #8ecbff 76%, #c6a8ff);
+}
+@keyframes bob { to { transform: translateY(-8px) rotate(3deg); } }
+.art-word {
+  position: absolute; left: 6%; top: 8%;
+  font-family: var(--font-display); font-weight: 600; font-size: clamp(1.4rem, 4vw, 2rem); color: #fff;
+  text-shadow: 0 3px 0 var(--pink), 0 0 12px var(--pink);
+  transform: rotate(-8deg);
+}
+.soon-art { display: grid; place-items: center; background: linear-gradient(135deg, #f6f0ff, #fff0f8); }
+.soon-art span { font-size: 4rem; animation: bob 3s ease-in-out infinite alternate; }
+.coming-soon { border-style: dashed; border-width: 2px; box-shadow: none; }
+
+/* ---------- Parent promises ---------- */
+.promises {
+  display: grid; gap: 22px; list-style: none; padding: 0; margin: 0 0 32px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+}
+.promises li { background: #fff; border-radius: var(--radius); padding: 26px; box-shadow: 0 6px 18px rgba(138, 99, 230, .08); }
+.promises h3 { font-size: 1.25rem; margin: 12px 0 6px; }
+.promises p { margin: 0; color: var(--ink-soft); }
+.p-icon { font-size: 2rem; }
+.tip {
+  margin: 0; padding: 18px 22px; border-radius: 20px;
+  background: #fffbd0; color: var(--ink); border: 1px dashed #f5c94a;
+}
+
+/* ---------- About & contact ---------- */
+.about { display: grid; gap: 40px; grid-template-columns: 1.4fr 1fr; align-items: start; }
+.about p { color: var(--ink-soft); }
+.contact-card {
+  background: linear-gradient(135deg, #ffe3ef, #efe4ff);
+  border-radius: var(--radius); padding: 28px;
+}
+.contact-card p { color: var(--ink); }
+.email { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; margin-bottom: 0; overflow-wrap: anywhere; }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background: var(--ink); color: #e9e2f5;
+  padding-block: 36px calc(36px + env(safe-area-inset-bottom, 0px));
+}
+.footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 28px; }
+.site-footer .brand { color: #fff; }
+.site-footer nav { display: flex; flex-wrap: wrap; gap: 20px; }
+.site-footer a { color: #e9e2f5; }
+.copy { margin: 0; font-size: .95rem; opacity: .8; }
+
+/* ---------- Simple content pages (privacy, 404) ---------- */
+.page { padding-block: 64px 96px; }
+.page .wrap { max-width: 760px; }
+.page h1 { font-size: clamp(2.2rem, 5vw, 3rem); }
+.page h2 { font-size: 1.5rem; margin-top: 1.8em; }
+.page p, .page li { color: var(--ink-soft); }
+.page-404 {
+  min-height: 80vh; display: grid; place-items: center; text-align: center;
+  background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
+  padding-block: 64px;
+}
+.page-404 .big { font-size: 5rem; margin: 0; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 760px) {
+  .nav a { padding: 8px 10px; font-size: .95rem; }
+  .about { grid-template-columns: 1fr; }
+  .section { padding-block: 64px; }
+  .hero { padding-block: 48px 110px; min-height: 0; }
+  .hero-balloons .hb { opacity: .6; } /* stay behind the headline without hurting readability */
+}
+@media (max-width: 480px) {
+  .nav li:nth-child(3) { display: none; } /* keep header tidy on tiny screens */
+  .brand { font-size: 1.3rem; }
+  .brand img { width: 34px; height: 34px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .cloud, .art-balloon, .soon-art span, .hb .sway { animation: none; }
+}
