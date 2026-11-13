@@ -269,3 +269,27 @@ html, body {
 .dots i { width: 10px; height: 10px; border-radius: 50%; background: #dcd0f7; transition: background .2s, transform .2s; }
 .dots i.on { background: #b995ff; transform: scale(1.25); }
 .round-btn[hidden] { display: none; }
+
+/* Pop counter: top centre, taps pass straight through to balloons */
+.counter {
+  position: fixed; left: 50%; top: max(14px, env(safe-area-inset-top));
+  transform: translateX(-50%);
+  z-index: 10; pointer-events: none;
+  display: flex; align-items: center; gap: 8px;
+  height: 64px; min-width: 120px; padding: 0 22px 0 16px;
+  justify-content: center;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, .8);
+  box-shadow: 0 6px 16px rgba(110, 140, 190, .3);
+  font-family: var(--font); font-weight: 600; font-size: 34px; line-height: 1;
+  color: #8a63e6;
+  font-variant-numeric: tabular-nums;
+}
+.counter-icon { font-size: 30px; }
+.counter.bump { animation: bump .35s ease-out; }
+@keyframes bump {
+  0%   { transform: translateX(-50%) scale(1); }
+  40%  { transform: translateX(-50%) scale(1.18); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) { .counter.bump { animation: none; } }

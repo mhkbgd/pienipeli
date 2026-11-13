@@ -12,6 +12,7 @@
   const muteBtn = $('muteBtn'), restartBtn = $('restartBtn');
   const slowBtn = $('slowBtn'), fastBtn = $('fastBtn'), fsBtn = $('fsBtn');
   const dots = [...$('dots').children];
+  const counterEl = $('counter'), countEl = $('count');
 
   // Soft pastel palettes: [highlight, main, shade]
   const PALETTES = [
@@ -111,6 +112,18 @@
     chime.stop(t + 0.4);
   }
 
+  // ---------- Pop counter ----------
+  let popCount = 0;
+  function showCount(bump) {
+    countEl.textContent = popCount;
+    counterEl.setAttribute('aria-label', 'Balloons popped: ' + popCount);
+    if (bump) { // restart the little "boing" animation on every pop
+      counterEl.classList.remove('bump');
+      void counterEl.offsetWidth;
+      counterEl.classList.add('bump');
+    }
+  }
+
   // ---------- Balloons ----------
   function spawnBalloon(startMidFlight = false) {
     const base = Math.max(90, Math.min(170, Math.min(innerWidth, innerHeight) * 0.22));
@@ -154,6 +167,9 @@
 
     wrap.classList.add('popped');
     setTimeout(() => wrap.remove(), 320);
+
+    popCount++;
+    showCount(true);
 
     playPop(noteIdx);
     if (navigator.vibrate) navigator.vibrate(15);
@@ -273,7 +289,11 @@
   }
   press(muteBtn, () => { muted = !muted; store.set('muted', muted); showMute(); if (!muted) playPop(); });
 
-  press(restartBtn, () => { stage.innerHTML = ''; fx.innerHTML = ''; fillBalloons(true); });
+  press(restartBtn, () => {
+    stage.innerHTML = ''; fx.innerHTML = '';
+    popCount = 0; showCount(false);
+    fillBalloons(true);
+  });
 
   press(slowBtn, () => setSpeed(speedIdx - 1));
   press(fastBtn, () => setSpeed(speedIdx + 1));
