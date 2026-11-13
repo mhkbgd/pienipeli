@@ -1,0 +1,262 @@
+/* ============ Baby Pop! styles ============ */
+
+:root {
+  --sky-top: #bfe6ff;
+  --sky-bottom: #fff0f8;
+  --font: "Fredoka", "Baloo 2", "Nunito", "Segoe UI Rounded", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;                 /* never scroll */
+  overscroll-behavior: none;
+  font-family: var(--font);
+  background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
+  touch-action: none;               /* smooth touch: no scroll/zoom gestures */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* ---------- Sky: stars & clouds ---------- */
+.sky { position: fixed; inset: 0; pointer-events: none; }
+
+.star {
+  position: absolute;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, .9);
+  animation: twinkle 3s ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: .3; transform: scale(.8); }
+  50%      { opacity: 1;  transform: scale(1.2); }
+}
+
+.cloud {
+  position: absolute;
+  left: -30vmin;
+  width: 24vmin; height: 8vmin;
+  background: #fff;
+  border-radius: 8vmin;
+  opacity: .85;
+  filter: drop-shadow(0 1vmin 1.5vmin rgba(120, 160, 210, .2));
+  animation: drift linear infinite;
+}
+.cloud::before, .cloud::after {
+  content: ""; position: absolute; background: #fff; border-radius: 50%;
+}
+.cloud::before { width: 11vmin; height: 11vmin; left: 3vmin;  top: -5.5vmin; }
+.cloud::after  { width: 14vmin; height: 14vmin; left: 10vmin; top: -8vmin; }
+.c1 { top: 12%; animation-duration: 140s; }
+.c2 { top: 38%; animation-duration: 190s; animation-delay: -80s; transform: scale(.8); }
+.c3 { top: 62%; animation-duration: 160s; animation-delay: -40s; transform: scale(1.1); opacity: .7; }
+.c4 { top: 82%; animation-duration: 210s; animation-delay: -120s; transform: scale(.7); }
+@keyframes drift { to { margin-left: calc(100vw + 60vmin); } }
+
+/* ---------- Balloons ---------- */
+#stage { position: fixed; inset: 0; overflow: hidden; }
+
+/* .float handles the slow rise; it starts just below the screen */
+.float {
+  position: absolute;
+  top: 100%;
+  pointer-events: none;
+  animation: rise var(--dur, 20s) linear forwards;
+  animation-delay: var(--delay, 0s);
+  will-change: transform;
+}
+@keyframes rise {
+  to { transform: translateY(calc(-100vh - 100% - 40px)); }
+}
+
+/* .sway gently rocks balloon + string together */
+.sway {
+  transform-origin: 50% 100%;
+  animation: sway 4s ease-in-out infinite alternate;
+  animation-delay: var(--sway-delay, 0s);
+}
+@keyframes sway {
+  from { transform: rotate(-3.5deg); }
+  to   { transform: rotate(3.5deg); }
+}
+
+.balloon {
+  position: relative;
+  width: var(--size);
+  height: calc(var(--size) * 1.2);
+  border-radius: 50% 50% 48% 48% / 56% 56% 44% 44%;
+  background: radial-gradient(circle at 32% 28%, var(--c1) 0%, var(--c2) 50%, var(--c3) 100%);
+  box-shadow:
+    inset -6px -10px 18px rgba(255, 255, 255, .25),
+    inset 6px 8px 14px rgba(255, 255, 255, .15),
+    0 12px 22px rgba(90, 120, 170, .22);
+  pointer-events: auto;             /* only the balloon itself is tappable */
+  cursor: pointer;
+}
+/* shiny highlight */
+.balloon::before {
+  content: ""; position: absolute;
+  left: 18%; top: 12%; width: 22%; height: 16%;
+  background: rgba(255, 255, 255, .75);
+  border-radius: 50%;
+  transform: rotate(-35deg);
+}
+/* little knot */
+.balloon::after {
+  content: ""; position: absolute;
+  left: 50%; bottom: -5%; width: 12%; height: 8%;
+  background: var(--c3);
+  border-radius: 4px 4px 50% 50%;
+  transform: translateX(-50%);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+/* cute face */
+.face { position: absolute; left: 50%; top: 52%; width: 40%; height: 20%; transform: translateX(-50%); }
+.face::before { /* eyes */
+  content: ""; position: absolute; left: 12%; top: 0;
+  width: 14%; aspect-ratio: 1; border-radius: 50%;
+  background: #6b5b7b;
+  box-shadow: calc(var(--size) * .24) 0 0 #6b5b7b;
+}
+.face::after { /* smile */
+  content: ""; position: absolute; left: 32%; top: 34%;
+  width: 36%; height: 40%;
+  border: calc(var(--size) * .022) solid #6b5b7b;
+  border-top: 0; border-radius: 0 0 100px 100px;
+}
+
+.string {
+  display: block; margin: -2px auto 0;
+  width: 2px; height: calc(var(--size) * .9);
+  background: linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,.4));
+  border-radius: 2px;
+}
+
+/* Popping: freeze, puff up, vanish */
+.float.popped, .float.popped .sway { animation-play-state: paused; }
+.float.popped .balloon { animation: pop .28s ease-out forwards; }
+.float.popped .string  { opacity: 0; transition: opacity .15s; }
+@keyframes pop {
+  0%   { transform: scale(1); opacity: 1; }
+  40%  { transform: scale(1.25, 1.15); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* ---------- Pop particles ---------- */
+#fx { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 5; }
+.bit {
+  position: absolute;
+  font-size: var(--s, 28px);
+  line-height: 1;
+  animation: burst .9s ease-out forwards;
+}
+.dot { border-radius: 50%; width: var(--s); height: var(--s); }
+@keyframes burst {
+  0%   { transform: translate(-50%, -50%) scale(.3); opacity: 1; }
+  70%  { opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.1) rotate(var(--rot)); opacity: 0; }
+}
+
+/* ---------- Buttons ---------- */
+.round-btn {
+  position: fixed; top: max(14px, env(safe-area-inset-top));
+  z-index: 10;
+  width: 64px; height: 64px;
+  border: 0; border-radius: 50%;
+  font-size: 30px; line-height: 1;
+  background: rgba(255, 255, 255, .8);
+  box-shadow: 0 6px 16px rgba(110, 140, 190, .3);
+  cursor: pointer;
+  transition: transform .15s;
+}
+.round-btn:active { transform: scale(.88); }
+.controls .round-btn:active { transform: scale(.88); }
+.round-btn:focus-visible { outline: 4px solid #b995ff; outline-offset: 3px; }
+.round-btn.left  { left:  max(14px, env(safe-area-inset-left)); }
+.round-btn.right { right: max(14px, env(safe-area-inset-right)); }
+
+/* Respect reduced-motion: calmer sky, balloons still float */
+@media (prefers-reduced-motion: reduce) {
+  .cloud, .star, .sway { animation: none; }
+}
+
+/* ============ v2 additions ============ */
+
+/* Sun with a happy face */
+.sun {
+  position: absolute; right: 20vw; top: 7vh;
+  width: 15vmin; height: 15vmin; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fffbd0, #ffe27a 60%, #ffd05a);
+  box-shadow: 0 0 0 2.5vmin rgba(255, 236, 150, .35), 0 0 0 5vmin rgba(255, 236, 150, .18), 0 0 8vmin rgba(255, 220, 110, .7);
+  animation: sunPulse 6s ease-in-out infinite;
+}
+.sun i { position: absolute; left: 50%; top: 52%; width: 50%; height: 26%; transform: translateX(-50%); }
+.sun i::before { content: ""; position: absolute; left: 12%; top: 0; width: 14%; aspect-ratio: 1; border-radius: 50%; background: #c98a3b; box-shadow: 6.5vmin 0 0 #c98a3b; }
+.sun i::after  { content: ""; position: absolute; left: 30%; top: 40%; width: 40%; height: 50%; border: .5vmin solid #c98a3b; border-top: 0; border-radius: 0 0 100px 100px; }
+@keyframes sunPulse { 50% { transform: scale(1.06); } }
+
+/* Pastel rainbow */
+.rainbow-arc {
+  position: absolute; left: 6vw; bottom: 9vh;
+  width: 80vmin; height: 40vmin; opacity: .55;
+  border-radius: 80vmin 80vmin 0 0;
+  background: radial-gradient(circle at 50% 100%, transparent 0 46%,
+    #ffb3c7 46% 54%, #ffe29a 54% 62%, #b8f0d4 62% 70%, #a8d8ff 70% 78%, #d4bcff 78% 86%, transparent 86%);
+}
+
+/* Soft rolling hills */
+.hill { position: absolute; bottom: -12vh; border-radius: 50%; }
+.h1 { left: -20vw; width: 85vw; height: 30vh; background: linear-gradient(#c9f5dc, #a9ecc8); }
+.h2 { right: -25vw; width: 95vw; height: 26vh; background: linear-gradient(#d8fae6, #b9f0d2); bottom: -14vh; }
+
+/* Rare rainbow balloon */
+.float.rainbow .balloon {
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255,255,255,.65), transparent 38%),
+    linear-gradient(160deg, #ffa6cb, #ffe27a 28%, #9fe8c3 52%, #8ecbff 76%, #c6a8ff);
+  animation: shimmer 2.5s ease-in-out infinite alternate;
+}
+.float.rainbow.popped .balloon { animation: pop .28s ease-out forwards; }
+@keyframes shimmer { to { filter: hue-rotate(40deg) brightness(1.05); } }
+
+/* Pop ripple ring and words */
+.ring {
+  position: absolute; width: 20px; height: 20px; border-radius: 50%;
+  border: 6px solid var(--rc, #fff); transform: translate(-50%, -50%);
+  animation: ring .55s ease-out forwards;
+}
+@keyframes ring { to { width: var(--rs, 200px); height: var(--rs, 200px); opacity: 0; border-width: 1px; } }
+
+.word {
+  position: absolute; transform: translate(-50%, -50%);
+  font-family: var(--font); font-size: clamp(28px, 7vmin, 56px); color: #fff;
+  text-shadow: 0 3px 0 var(--rc, #b995ff), 0 0 12px var(--rc, #b995ff);
+  animation: wordUp 1s ease-out forwards; white-space: nowrap;
+}
+@keyframes wordUp {
+  0%   { transform: translate(-50%, -50%) scale(.3); opacity: 0; }
+  25%  { transform: translate(-50%, -90%) scale(1.15); opacity: 1; }
+  100% { transform: translate(-50%, -260%) scale(1); opacity: 0; }
+}
+
+/* Bottom control pill */
+.controls {
+  position: fixed; left: 50%; transform: translateX(-50%);
+  bottom: max(14px, env(safe-area-inset-bottom));
+  z-index: 10; display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px; border-radius: 40px;
+  background: rgba(255, 255, 255, .75);
+  box-shadow: 0 6px 16px rgba(110, 140, 190, .3);
+}
+.controls .round-btn {
+  position: static; width: 54px; height: 54px; font-size: 26px;
+  background: #fff; box-shadow: 0 3px 8px rgba(110, 140, 190, .25);
+}
+.dots { display: flex; gap: 6px; }
+.dots i { width: 10px; height: 10px; border-radius: 50%; background: #dcd0f7; transition: background .2s, transform .2s; }
+.dots i.on { background: #b995ff; transform: scale(1.25); }
+.round-btn[hidden] { display: none; }
