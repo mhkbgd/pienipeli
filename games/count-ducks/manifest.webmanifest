@@ -1,0 +1,42 @@
+{
+  "id": "/games/count-ducks/",
+  "name": "Count the Ducks!",
+  "short_name": "Count the Ducks",
+  "description": "Tap the pond, ducks swim in one by one: 1, 2, 3!",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": [
+    "fullscreen",
+    "standalone"
+  ],
+  "orientation": "any",
+  "background_color": "#bfeaff",
+  "theme_color": "#bfeaff",
+  "categories": [
+    "games",
+    "kids",
+    "education"
+  ],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport-fit + no zoom keeps toddler taps from zooming the page -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Trace the Letter! Free Letter Tracing Game for Toddlers | Pienipeli</title>
+  <meta name="description" content="Play Trace the Letter free online: follow a big dotted letter with your finger, leave a trail of colour, and watch the letter come alive. Uppercase A to Z. No ads, no losing.">
+  <link rel="canonical" href="https://pienipeli.fi/games/trace-letter/">
+  <meta name="theme-color" content="#fff4e0">
+  <link rel="icon" href="../../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <!-- Add to Home Screen: opens straight into this game, full screen (see manifest.webmanifest) -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Trace the Letter">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pienipeli">
+  <meta property="og:title" content="Trace the Letter! Free game for toddlers">
+  <meta property="og:description" content="Follow the dotted letter with a finger and watch it come alive. No ads, no losing.">
+  <meta property="og:url" content="https://pienipeli.fi/games/trace-letter/">
+  <meta property="og:image" content="https://pienipeli.fi/assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" href="../../assets/fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../assets/css/kit.css">
+  <link rel="stylesheet" href="style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "VideoGame",
+        "@id": "https://pienipeli.fi/games/trace-letter/#game",
+        "name": "Trace the Letter!",
+        "url": "https://pienipeli.fi/games/trace-letter/",
+        "description": "A free, ad-free letter tracing game for toddlers and preschoolers. Follow a big dotted letter with a finger to fill it with colour, then a matching picture pops out.",
+        "image": "https://pienipeli.fi/assets/img/og-image.png",
+        "genre": [
+          "Educational",
+          "Casual",
+          "Kids"
+        ],
+        "gamePlatform": [
+          "Web browser",
+          "Mobile",
+          "Tablet",
+          "Desktop"
+        ],
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        },
+        "audience": {
+          "@type": "PeopleAudience",
+          "suggestedMinAge": 3,
+          "suggestedMaxAge": 4
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Pienipeli",
+          "url": "https://pienipeli.fi/"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Pienipeli",
+            "item": "https://pienipeli.fi/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Games",
+            "item": "https://pienipeli.fi/games/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Trace the Letter!",
+            "item": "https://pienipeli.fi/games/trace-letter/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <h1 class="sr-only">Trace the Letter!</h1>
+
+  <!-- Grown-up corner buttons (kept small and out of the way) -->
+  <a class="corner-btn home" href="../index.html" aria-label="All games"><span aria-hidden="true">🏠</span></a>
+  <button class="corner-btn sound" id="soundBtn" type="button" aria-label="Sound off" aria-pressed="true"><span aria-hidden="true">🔊</span></button>
+  <button class="corner-btn full" id="fullBtn" type="button" aria-label="Full screen" hidden><span aria-hidden="true">⛶</span></button>
+
+  <main class="stage">
+    <div class="board" id="board">
+      <svg class="trace" id="trace" viewBox="0 0 100 100" aria-label="Letter to trace" role="img"></svg>
+      <div class="reward" id="reward" aria-hidden="true"></div>
+    </div>
+    <div class="trace-nav">
+      <button class="nav-arrow" id="prev" type="button" aria-label="Previous letter"><span aria-hidden="true">‹</span></button>
+      <button class="nav-arrow" id="next" type="button" aria-label="Next letter"><span aria-hidden="true">›</span></button>
+    </div>
+  </main>
+
+  <div class="fx" id="fx" aria-hidden="true"></div>
+
+  <noscript><p class="noscript">This game needs JavaScript turned on.</p></noscript>
+
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/kit.js"></script>
+  <script src="../../assets/js/alphabet.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

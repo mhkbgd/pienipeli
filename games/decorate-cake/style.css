@@ -1,0 +1,67 @@
+/* ============ Decorate the Cake! styles (base styles in assets/css/kit.css) ============ */
+
+:root { --item: min(16vw, 10vh, 84px); }
+html, body {
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, .35) 0 18px, transparent 18px 36px),
+    linear-gradient(#ffe1ef, #ffd0e6 64%, #f2c58d 64%, #e9b77c);
+}
+
+.stage {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 1.6vh;
+  padding: calc(66px + var(--safe-t)) calc(10px + var(--safe-r)) calc(12px + var(--safe-b)) calc(10px + var(--safe-l));
+}
+.table-zone { flex: 1 1 auto; min-height: 0; width: 100%; display: flex; justify-content: center; align-items: flex-end; }
+.cake { height: 100%; max-width: 96vw; max-height: 520px; overflow: visible; touch-action: none; transition: transform .35s ease, opacity .35s; }
+.cake.swap { transform: translateX(-80vw) rotate(-14deg); opacity: 0; }
+.cake.party { animation: partyBob .5s ease-in-out infinite alternate; }
+@keyframes partyBob { to { transform: translateY(-2%) rotate(1deg); } }
+
+/* Decorations on the cake */
+.deco .squish { animation: squish .4s cubic-bezier(.3, 1.8, .5, 1); transform-box: fill-box; transform-origin: 50% 100%; }
+@keyframes squish { 0% { transform: scale(1.5, .5); } 60% { transform: scale(.9, 1.15); } }
+.deco-candle .flame { opacity: 0; transition: opacity .2s; }
+.deco-candle.lit .flame { opacity: 1; animation: flicker .14s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: 50% 100%; }
+@keyframes flicker { to { transform: scale(.9, 1.15) rotate(3deg); } }
+.item .flame { opacity: 1; }
+
+/* Tray */
+.tray {
+  flex: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+  max-width: min(96vw, 900px);
+  padding: 10px 14px; border-radius: 26px;
+  background: #fff; border: 4px solid #2b1d5c; box-shadow: 5px 6px 0 #2b1d5c;
+  touch-action: none;
+}
+.item {
+  width: var(--item); height: var(--item); border-radius: 20px;
+  background: #fff6fb; border: 3px solid #f2d3e4;
+  display: grid; place-items: center; cursor: grab;
+}
+.item svg { width: 82%; height: 82%; pointer-events: none; overflow: visible; }
+.item.pick { animation: pick .35s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes pick { 40% { transform: scale(1.18) rotate(-6deg); } }
+.drag-ghost {
+  position: fixed; left: 0; top: 0; z-index: 40; pointer-events: none;
+  width: calc(var(--item) * 1.3); height: calc(var(--item) * 1.3);
+  filter: drop-shadow(0 10px 6px rgba(0, 0, 0, .25));
+}
+.drag-ghost svg { width: 100%; height: 100%; overflow: visible; }
+.drag-ghost.drop { transition: transform .45s ease-in, opacity .45s; opacity: 0; transform: translateY(40vh) !important; }
+
+/* Big round buttons: party and new cake */
+.cake-btns { position: fixed; right: calc(12px + var(--safe-r)); top: calc(12px + var(--safe-t)); z-index: 20; display: flex; gap: 10px; }
+.big-btn {
+  width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; font-size: 32px;
+  background: #ffd23d; border: 3px solid #2b1d5c; box-shadow: 3px 4px 0 #2b1d5c;
+}
+.big-btn.fresh { background: #fff; }
+.big-btn:active { transform: translate(2px, 3px); box-shadow: none; }
+
+@media (orientation: landscape) and (max-height: 620px) {
+  .stage { flex-direction: row; align-items: center; }
+  .table-zone { height: 100%; align-items: center; }
+  .tray { max-width: 40vw; }
+}
+@media (prefers-reduced-motion: reduce) { .cake.party, .deco-candle.lit .flame { animation: none; } }

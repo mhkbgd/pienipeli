@@ -1,0 +1,42 @@
+{
+  "id": "/games/decorate-cake/",
+  "name": "Decorate the Cake!",
+  "short_name": "Decorate the Cake",
+  "description": "Drag strawberries, candles and sprinkles onto the cake, then light the candles!",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": [
+    "fullscreen",
+    "standalone"
+  ],
+  "orientation": "any",
+  "background_color": "#ffe1ef",
+  "theme_color": "#ffe1ef",
+  "categories": [
+    "games",
+    "kids",
+    "education"
+  ],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

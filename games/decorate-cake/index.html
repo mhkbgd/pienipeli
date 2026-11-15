@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport-fit + no zoom keeps toddler taps from zooming the page -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Decorate the Cake! Free Creative Game for Toddlers | Pienipeli</title>
+  <meta name="description" content="Play Decorate the Cake free online: drag strawberries, candles, sprinkles and stars onto a big cake, then light the candles for a birthday song. No wrong way, no ads.">
+  <link rel="canonical" href="https://pienipeli.fi/games/decorate-cake/">
+  <meta name="theme-color" content="#ffe1ef">
+  <link rel="icon" href="../../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <!-- Add to Home Screen: opens straight into this game, full screen (see manifest.webmanifest) -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Decorate the Cake">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pienipeli">
+  <meta property="og:title" content="Decorate the Cake! Free game for toddlers">
+  <meta property="og:description" content="Drag strawberries, candles and sprinkles onto the cake, then light the candles! No ads, no losing.">
+  <meta property="og:url" content="https://pienipeli.fi/games/decorate-cake/">
+  <meta property="og:image" content="https://pienipeli.fi/assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" href="../../assets/fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../assets/css/kit.css">
+  <link rel="stylesheet" href="style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "VideoGame",
+        "@id": "https://pienipeli.fi/games/decorate-cake/#game",
+        "name": "Decorate the Cake!",
+        "url": "https://pienipeli.fi/games/decorate-cake/",
+        "description": "A free, ad-free creative game for toddlers. Drag decorations onto a cake anywhere they like, then light the candles for a birthday song.",
+        "image": "https://pienipeli.fi/assets/img/og-image.png",
+        "genre": [
+          "Educational",
+          "Casual",
+          "Kids"
+        ],
+        "gamePlatform": [
+          "Web browser",
+          "Mobile",
+          "Tablet",
+          "Desktop"
+        ],
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        },
+        "audience": {
+          "@type": "PeopleAudience",
+          "suggestedMinAge": 2,
+          "suggestedMaxAge": 4
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Pienipeli",
+          "url": "https://pienipeli.fi/"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Pienipeli",
+            "item": "https://pienipeli.fi/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Games",
+            "item": "https://pienipeli.fi/games/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Decorate the Cake!",
+            "item": "https://pienipeli.fi/games/decorate-cake/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <h1 class="sr-only">Decorate the Cake!</h1>
+
+  <!-- Grown-up corner buttons (kept small and out of the way) -->
+  <a class="corner-btn home" href="../index.html" aria-label="All games"><span aria-hidden="true">🏠</span></a>
+  <button class="corner-btn sound" id="soundBtn" type="button" aria-label="Sound off" aria-pressed="true"><span aria-hidden="true">🔊</span></button>
+  <button class="corner-btn full" id="fullBtn" type="button" aria-label="Full screen" hidden><span aria-hidden="true">⛶</span></button>
+
+  <main class="stage" id="stage">
+    <div class="table-zone">
+      <svg class="cake" id="cake" viewBox="0 0 400 340" role="img" aria-label="A cake to decorate"></svg>
+    </div>
+    <div class="tray" id="tray" role="group" aria-label="Decorations"></div>
+    <div class="cake-btns">
+      <button class="big-btn party" id="partyBtn" type="button" aria-label="Light the candles"><span class="emoji" aria-hidden="true">🎉</span></button>
+      <button class="big-btn fresh" id="newBtn" type="button" aria-label="New cake"><span class="emoji" aria-hidden="true">🔄</span></button>
+    </div>
+  </main>
+
+  <div class="fx" id="fx" aria-hidden="true"></div>
+
+  <noscript><p class="noscript">This game needs JavaScript turned on.</p></noscript>
+
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/kit.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

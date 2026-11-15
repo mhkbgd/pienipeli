@@ -1,0 +1,28 @@
+/* ============ Tilt Track! styles (base styles in assets/css/kit.css) ============ */
+
+html, body { background: #8fe0a3; }
+.stage { position: fixed; inset: 0; }
+#road { position: absolute; inset: 0; display: block; touch-action: none; }
+
+.stars-count {
+  position: fixed; z-index: 10; top: calc(12px + var(--safe-t)); right: calc(12px + var(--safe-r));
+  padding: 6px 16px; border-radius: 999px;
+  background: #fff; border: 3px solid #2b1d5c; box-shadow: 3px 4px 0 #2b1d5c;
+  font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 26px; color: #2b1d5c;
+}
+.stars-count.bump { animation: bump .35s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes bump { 40% { transform: scale(1.25) rotate(-6deg); } }
+
+.start {
+  position: fixed; z-index: 12; left: 50%; top: 50%; translate: -50% -50%;
+  width: min(60vw, 260px); aspect-ratio: 1; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  background: #ffd23d; border: 5px solid #2b1d5c; box-shadow: 8px 10px 0 #2b1d5c;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+.start .emoji { font-size: min(18vw, 84px); }
+.start .go { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: min(12vw, 56px); color: #ff5e4d; -webkit-text-stroke: 2.5px #2b1d5c; paint-order: stroke fill; }
+.start:active { transform: translate(3px, 4px); box-shadow: 2px 2px 0 #2b1d5c; }
+@keyframes pulse { 50% { scale: 1.06; } }
+
+@media (prefers-reduced-motion: reduce) { .start { animation: none; } }

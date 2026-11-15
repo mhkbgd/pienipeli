@@ -1,0 +1,83 @@
+/* ============ Trace the Letter! styles (base styles in assets/css/kit.css) ============ */
+
+:root { --board: min(92vw, calc(100vh - 190px), 640px); }
+@media (orientation: landscape) { :root { --board: min(70vw, calc(100vh - 100px), 640px); } }
+
+html, body {
+  background:
+    radial-gradient(circle at 10% 20%, rgba(255, 126, 182, .18) 0 9vmin, transparent 9.2vmin),
+    radial-gradient(circle at 90% 85%, rgba(79, 195, 247, .18) 0 12vmin, transparent 12.2vmin),
+    radial-gradient(circle at 88% 12%, rgba(255, 201, 60, .22) 0 7vmin, transparent 7.2vmin),
+    #fff4e0;
+}
+
+.stage {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  padding: calc(70px + var(--safe-t)) calc(10px + var(--safe-r)) calc(14px + var(--safe-b)) calc(10px + var(--safe-l));
+}
+@media (orientation: landscape) { .stage { flex-direction: row; gap: 24px; padding-top: calc(64px + var(--safe-t)); } }
+
+.board {
+  --c: #ff5e4d;
+  position: relative;
+  width: var(--board); height: var(--board);
+  background: #fff;
+  border: 4px solid #2b1d5c; border-radius: 34px; box-shadow: 8px 10px 0 #2b1d5c;
+  background-image: linear-gradient(#eef6ff 2px, transparent 2px);
+  background-size: 100% 25%; background-position: 0 12%;
+}
+.board.enter { animation: boardIn .45s cubic-bezier(.3, 1.5, .5, 1); }
+@keyframes boardIn { from { transform: scale(.7) rotate(-6deg); opacity: 0; } }
+.trace { display: block; width: 100%; height: 100%; touch-action: none; cursor: crosshair; overflow: visible; }
+
+.trace path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.road-edge { stroke: #2b1d5c; stroke-width: 15; }
+.road { stroke: #f1ecff; stroke-width: 11.5; }
+.mid { stroke: #b9a8e8; stroke-width: 1.6; stroke-dasharray: 1.2 3.2; }
+.fill { stroke-width: 11.5; transition: stroke-dashoffset .12s linear; }
+.fill.pop { animation: strokePop .5s cubic-bezier(.3, 1.6, .5, 1); transform-box: fill-box; transform-origin: center; }
+@keyframes strokePop { 40% { stroke-width: 15; } }
+.trail { stroke-width: 4.2; opacity: .9; }
+.trail.fade { opacity: 0; transition: opacity 1.1s ease; }
+.start { fill: #3dd68c; stroke: #2b1d5c; stroke-width: 1.4; }
+.start.first { animation: pulse 1.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes pulse { 50% { transform: scale(1.35); } }
+.guide { fill: #ffc93c; stroke: #2b1d5c; stroke-width: 1.2; filter: drop-shadow(0 0 2px #fff); }
+
+/* Finished: the letter bounces */
+.board.done .trace { animation: hooray .5s ease-in-out 3 alternate; }
+.board.done .dots { opacity: 0; transition: opacity .3s; }
+@keyframes hooray { to { transform: scale(1.06) rotate(-3deg); } }
+
+/* The picture that pops out */
+.reward {
+  position: absolute; right: -4%; bottom: -6%;
+  width: 42%; display: flex; flex-direction: column; align-items: center;
+  scale: 0; transform-origin: 80% 80%;
+  transition: scale .55s cubic-bezier(.3, 1.7, .5, 1);
+  pointer-events: none;
+}
+.reward.show { scale: 1; }
+.reward img { width: 100%; height: auto; filter: drop-shadow(0 6px 4px rgba(0, 0, 0, .2)); }
+.reward .w {
+  margin-top: -8px; padding: 4px 14px; border-radius: 14px;
+  background: #fff; border: 3px solid #2b1d5c;
+  font-family: "Fredoka", sans-serif; font-weight: 600; font-size: calc(var(--board) * .06); color: #2b1d5c;
+}
+.reward .w b { color: var(--c); -webkit-text-stroke: 1.2px #2b1d5c; paint-order: stroke fill; }
+
+/* Arrows */
+.trace-nav { display: flex; gap: 24px; }
+@media (orientation: landscape) { .trace-nav { flex-direction: column; } }
+.nav-arrow {
+  width: 64px; height: 64px; border-radius: 50%;
+  display: grid; place-items: center; padding-bottom: 6px;
+  font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 46px; line-height: 1; color: #2b1d5c;
+  background: #ffd23d; border: 3px solid #2b1d5c; box-shadow: 3px 4px 0 #2b1d5c;
+}
+.nav-arrow:active { transform: translate(2px, 3px); box-shadow: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .start.first, .board.done .trace { animation: none; }
+}

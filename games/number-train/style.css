@@ -1,0 +1,99 @@
+/* ============ Number Train! styles (base styles in assets/css/kit.css) ============ */
+
+:root {
+  /* One carriage: the engine + up to 5 cars must fit across the screen */
+  --car: min(calc((100vw - 40px) / 6.6), 22vh, 170px);
+  --rider: min(calc((100vw - 40px) / 5.6), 20vh, 150px);
+}
+
+.stage {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: space-evenly;
+  padding: calc(70px + var(--safe-t)) calc(10px + var(--safe-r)) calc(14px + var(--safe-b)) calc(10px + var(--safe-l));
+}
+
+/* ---------- Passengers ---------- */
+.riders { display: flex; flex-wrap: wrap; justify-content: center; gap: 2vw; position: relative; z-index: 6; }
+.rider {
+  position: relative; width: var(--rider); height: calc(var(--rider) * 1.1);
+  touch-action: none; cursor: grab;
+  animation: riderIn .55s cubic-bezier(.3, 1.6, .5, 1) backwards; animation-delay: calc(var(--k) * .1s);
+}
+.rider img { width: 100%; height: auto; display: block; pointer-events: none; filter: drop-shadow(0 5px 3px rgba(0, 0, 0, .18)); }
+.rider .sign {
+  position: absolute; left: 50%; bottom: -2%; translate: -50% 0;
+  min-width: 46%; padding: 0 8%;
+  font-family: "Fredoka", sans-serif; font-weight: 700; font-size: calc(var(--rider) * .34); line-height: 1.15; text-align: center;
+  color: #fff; background: var(--cc); border: 3px solid #2b1d5c; border-radius: 14px; box-shadow: 2px 3px 0 #2b1d5c;
+  -webkit-text-stroke: 1.5px #2b1d5c; paint-order: stroke fill;
+}
+.rider.held { z-index: 30; cursor: grabbing; }
+.rider.picked { animation: picked .5s ease-in-out infinite alternate; filter: drop-shadow(0 0 12px #fff6b8); }
+.rider.gone { visibility: hidden; }
+.rider.nudge { animation: nudge 1s ease-in-out; }
+@keyframes riderIn { from { transform: translateY(-40vh) scale(.5); } }
+@keyframes picked { to { translate: 0 -10%; } }
+@keyframes nudge { 20%, 60% { transform: rotate(-10deg) scale(1.1); } 40%, 80% { transform: rotate(10deg) scale(1.1); } }
+
+/* ---------- Train ---------- */
+.track-zone { position: relative; width: 100%; display: flex; justify-content: center; padding-bottom: 18px; }
+.rails {
+  position: absolute; left: -10px; right: -10px; bottom: 0; height: 22px;
+  background:
+    linear-gradient(#8a6a4a, #8a6a4a) 0 4px / 100% 5px no-repeat,
+    repeating-linear-gradient(90deg, #a87848 0 14px, transparent 14px 34px) 0 9px / 100% 13px no-repeat;
+}
+.train { display: flex; align-items: flex-end; gap: 6px; position: relative; z-index: 2; }
+.train.arrive { animation: arrive 1.2s cubic-bezier(.2, .8, .3, 1) both; }
+.train.leave { animation: leave 1.6s cubic-bezier(.6, 0, .9, .5) forwards; }
+@keyframes arrive { from { transform: translateX(-110vw); } }
+@keyframes leave { to { transform: translateX(120vw); } }
+
+.engine { position: relative; order: 99; width: calc(var(--car) * 1.25); }
+.engine-art { width: 100%; height: auto; display: block; }
+.steam { position: absolute; left: 10%; top: -18%; width: 22%; aspect-ratio: 1; border-radius: 50%; background: #fff; opacity: 0; }
+.train.arrive .steam, .train.leave .steam { animation: puff .8s ease-out infinite; }
+.steam.s2 { animation-delay: .4s !important; }
+@keyframes puff { from { transform: translate(0, 0) scale(.4); opacity: .9; } to { transform: translate(-40%, -120%) scale(1.4); opacity: 0; } }
+
+.car {
+  --cc: #ff5e4d;
+  position: relative; width: var(--car); height: calc(var(--car) * .9);
+  border-radius: 14px 14px 10px 10px;
+  background: var(--cc); border: 3.5px solid #2b1d5c; box-shadow: inset 0 -10px 0 rgba(0, 0, 0, .12);
+  margin-bottom: calc(var(--car) * .14);
+}
+.car::after { /* coupling */
+  content: ""; position: absolute; right: -11px; bottom: 18%; width: 12px; height: 6px; background: #2b1d5c;
+}
+.car .num {
+  position: absolute; left: 50%; bottom: 10%; translate: -50% 0;
+  font-family: "Fredoka", sans-serif; font-weight: 700; font-size: calc(var(--car) * .42); line-height: 1; color: #fff;
+  -webkit-text-stroke: 2px #2b1d5c; paint-order: stroke fill; text-shadow: 2px 3px 0 #2b1d5c;
+}
+.car .seat { position: absolute; left: 6%; right: 6%; bottom: 52%; height: 95%; pointer-events: none; }
+.car .seat img { width: 100%; height: 100%; object-fit: contain; object-position: bottom; display: block; }
+.wheel {
+  position: absolute; bottom: calc(var(--car) * -.2); width: calc(var(--car) * .3); aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle, #ffc93c 0 22%, #4a4a6a 24%); border: 3px solid #2b1d5c;
+}
+.wheel.w1 { left: 10%; } .wheel.w2 { right: 10%; }
+.train.arrive .wheel, .train.leave .wheel { animation: spin .4s linear infinite; }
+@keyframes spin { to { rotate: 360deg; } }
+.car.over { transform: translateY(-6px) scale(1.06); filter: brightness(1.1); }
+.car.glow { animation: carGlow 1.4s ease-in-out; }
+@keyframes carGlow { 25%, 75% { box-shadow: 0 0 0 6px #fff, 0 0 26px 8px #fff6b8, inset 0 -10px 0 rgba(0, 0, 0, .12); } }
+.car.nope { animation: nope .45s ease-in-out; }
+@keyframes nope { 25% { transform: rotate(-4deg); } 75% { transform: rotate(4deg); } }
+.car.bounce { animation: bounce .45s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes bounce { 40% { transform: translateY(-10%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .train.arrive, .train.leave, .rider { animation-duration: .01s !important; }
+}
+
+.engine-art { transform: scaleX(-1); }   /* face the way the train goes */
+
+/* Carriages size themselves by how many there are, so short trains are big on phones */
+.train { --car: min(calc((100vw - 50px) / (var(--n) + 1.7)), 22vh, 170px); }
+@media (orientation: portrait) { :root { --rider: min(27vw, 17vh, 150px); } }

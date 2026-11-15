@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport-fit + no zoom keeps toddler taps from zooming the page -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Number Train! Free Number Matching Game for Toddlers | Pienipeli</title>
+  <meta name="description" content="Play Number Train free online: animals with numbers hop into the train carriage with the same number. Drag or tap, then the train goes choo-choo. No ads, no losing.">
+  <link rel="canonical" href="https://pienipeli.fi/games/number-train/">
+  <meta name="theme-color" content="#c9ecff">
+  <link rel="icon" href="../../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <!-- Add to Home Screen: opens straight into this game, full screen (see manifest.webmanifest) -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Number Train">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pienipeli">
+  <meta property="og:title" content="Number Train! Free game for toddlers">
+  <meta property="og:description" content="Help the animals find their numbered seats, then choo-choo! No ads, no losing.">
+  <meta property="og:url" content="https://pienipeli.fi/games/number-train/">
+  <meta property="og:image" content="https://pienipeli.fi/assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" href="../../assets/fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../assets/css/kit.css">
+  <link rel="stylesheet" href="style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "VideoGame",
+        "@id": "https://pienipeli.fi/games/number-train/#game",
+        "name": "Number Train!",
+        "url": "https://pienipeli.fi/games/number-train/",
+        "description": "A free, ad-free number matching game for toddlers. Drag each animal to the carriage with its number; when the train is full it toots and drives away.",
+        "image": "https://pienipeli.fi/assets/img/og-image.png",
+        "genre": [
+          "Educational",
+          "Casual",
+          "Kids"
+        ],
+        "gamePlatform": [
+          "Web browser",
+          "Mobile",
+          "Tablet",
+          "Desktop"
+        ],
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        },
+        "audience": {
+          "@type": "PeopleAudience",
+          "suggestedMinAge": 2,
+          "suggestedMaxAge": 4
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Pienipeli",
+          "url": "https://pienipeli.fi/"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Pienipeli",
+            "item": "https://pienipeli.fi/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Games",
+            "item": "https://pienipeli.fi/games/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Number Train!",
+            "item": "https://pienipeli.fi/games/number-train/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <div class="sun"></div>
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="hill h1"></div>
+    <div class="hill h2"></div>
+  </div>
+
+  <h1 class="sr-only">Number Train!</h1>
+
+  <!-- Grown-up corner buttons (kept small and out of the way) -->
+  <a class="corner-btn home" href="../index.html" aria-label="All games"><span aria-hidden="true">🏠</span></a>
+  <button class="corner-btn sound" id="soundBtn" type="button" aria-label="Sound off" aria-pressed="true"><span aria-hidden="true">🔊</span></button>
+  <button class="corner-btn full" id="fullBtn" type="button" aria-label="Full screen" hidden><span aria-hidden="true">⛶</span></button>
+
+  <main class="stage" id="stage">
+    <div class="riders" id="riders" role="group" aria-label="Animals waiting"></div>
+    <div class="track-zone"><div class="train" id="train"></div><div class="rails" aria-hidden="true"></div></div>
+  </main>
+
+  <div class="fx" id="fx" aria-hidden="true"></div>
+
+  <noscript><p class="noscript">This game needs JavaScript turned on.</p></noscript>
+
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/kit.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

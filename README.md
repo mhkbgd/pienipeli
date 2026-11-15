@@ -20,8 +20,18 @@ HTML, CSS and JavaScript with **no build step and no dependencies**.
 | **Color Splash!** | [`games/color-splash/`](games/color-splash/) | Pick one of six paint pots and tap a part of the picture to fill it. Every colour plays its own note (pentatonic), so colouring makes music. Eight pictures. Babies who only tap the picture get a new colour each tap. |
 | **Animal Band!** | [`games/animal-band/`](games/animal-band/) | Six singing animals on a C major pentatonic scale, so any mash sounds nice. 🥁 adds a soft backing beat; 🎵 is song time, where every tap plays the next note of a nursery tune. Number and letter keys play too. |
 | **Bedtime!** | [`games/bedtime/`](games/bedtime/) | Drag small, middle and big animals into the bed that fits (or tap the animal, then the bed). Each tuck-in plays a phrase of Brahms' Lullaby; when all three sleep, the lights dim and the whole lullaby plays, then morning comes. |
+| **Alphabet Zoo!** | [`games/alphabet-zoo/`](games/alphabet-zoo/) | A big letter card (Bb). Tap it and its picture pops out (B is for Bear) with the letter's note and the animal's call. Arrows, swipes and an A–Z strip; keyboard letters jump to that letter. |
+| **Trace the Letter!** | [`games/trace-letter/`](games/trace-letter/) | Follow a big dotted capital letter with a finger: a rainbow trail follows, each stroke fills with colour and plays notes; done, the picture pops out. Any order or direction counts. |
+| **Letter Pop!** | [`games/letter-pop/`](games/letter-pop/) | Letter balloons float up; pop one to see its letter and picture big. Every keyboard letter pops its own balloon. |
+| **Count the Ducks!** | [`games/count-ducks/`](games/count-ducks/) | Faint duck shapes show how many; each tap brings a duck with its number and a note that climbs the scale. Counts up to 10. |
+| **Feed the Numbers!** | [`games/feed-numbers/`](games/feed-numbers/) | A monster shows a number (1–6) and that many dots. Drag or tap apples into its mouth; extra apples just roll back. |
+| **Number Train!** | [`games/number-train/`](games/number-train/) | Drag animals holding numbers into the carriage with the same number (or tap animal, then carriage). All aboard: choo-choo. |
+| **Tap Tap Race!** | [`games/tap-race/`](games/tap-race/) | Pick an animal racer, 3-2-1, then every tap zooms it forward. Your racer always wins first, then everybody gets a gold medal. |
+| **Tilt Track!** | [`games/tilt-track/`](games/tilt-track/) | Tilt the device (or hold left/right, or arrow keys) to steer a car down a winding road collecting musical stars. Grass only slows you; a gentle auto-steer helps. |
+| **Build a House!** | [`games/build-house/`](games/build-house/) | Drag pieces onto dashed outlines (or tap to place). Builds a house (lights on, family moves in), a barn (animals come out) and a rocket (blast off). |
+| **Decorate the Cake!** | [`games/decorate-cake/`](games/decorate-cake/) | Drag strawberries, candles, sprinkles and more onto a cake anywhere. 🎉 lights the candles and plays Happy Birthday; tap to blow them out. 🔄 new flavour. |
 
-The five newer games use **no words at all**: no speech and no text to read. Everything you
+The fifteen newer games use **no speech at all**. The ABC games show letters and a short word for grown-ups to read aloud. Everything you
 hear is music, chimes and playful synthesized animal calls.
 
 ## Project structure
@@ -40,6 +50,9 @@ hear is music, chimes and playful synthesized animal calls.
 │   ├── js/app.js         Shared by all games: offline (service worker) + full screen / home-screen tip
 │   ├── js/kit.js         Shared by the five newer games: sounds + music, effects, corner buttons
 │   ├── css/kit.css       Base styles for those games (reset, sky, corner buttons, effects)
+│   ├── js/alphabet.js    A–Z: word, picture, colour and note for every letter
+│   ├── animals/          Shared animal pictures (one SVG per animal)
+│   ├── things/           Pictures for letters without an animal
 │   ├── fonts/            Self-hosted Fredoka + Noto Sans Bengali fonts and their licences (OFL)
 │   └── img/              Logo (SVG), favicons, app icons, social share image
 ├── games/
@@ -159,10 +172,15 @@ the same on every phone (no emoji that change from device to device), and it wor
 - `Kit.Sound.call(id)` plays the animal's call. Animals without their own call borrow a close
   cousin's (zebra uses the horse, goat the sheep, chicken the chick, …): see `CALL_ALIAS` in `kit.js`.
 - New picture files must also be added to `FILES` in `sw.js` (and bump `VERSION`) so they work offline.
+- Letters without an animal (A apple, I ice cream, J jellyfish, N nest, Q queen, U umbrella,
+  V van, X xylophone, Y yo-yo) have hand-drawn pictures in **`assets/things/`**, in the same style.
+- **`assets/js/alphabet.js`** (`window.ABC`) lists every letter's word, picture, colour, note and
+  animal call. Alphabet Zoo, Trace the Letter and Letter Pop all read it; `Kit.picImg('things/apple')`
+  shows any library picture.
 
-## The toddler kit (Peekaboo, Bubble Bath, Color Splash, Animal Band, Bedtime)
+## The toddler kit (the fifteen newer games)
 
-These five games share `assets/js/kit.js` and `assets/css/kit.css`, so each game's own
+These games share `assets/js/kit.js` and `assets/css/kit.css`, so each game's own
 `script.js` is only its game logic. Load order in each page: `app.js`, `kit.js`, then the game.
 
 - **`Kit.Sound`**: every sound and tune is generated live with the Web Audio API (no audio

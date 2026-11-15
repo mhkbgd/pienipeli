@@ -2,6 +2,14 @@
    Reset, no-zoom/no-scroll rules, sky + meadow, grown-up corner buttons, effects layer.
    Each game adds its own style.css after this file.                                    */
 
+@font-face {
+  font-family: "Fredoka";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("../fonts/fredoka-latin.woff2") format("woff2");
+}
+
 :root {
   --sky-top: #c9ecff;
   --sky-bottom: #fff3fa;

@@ -1,0 +1,111 @@
+/* ============ Alphabet Zoo! styles (base styles in assets/css/kit.css) ============ */
+
+:root { --card: min(84vw, 58vh, 520px); }
+@media (orientation: landscape) { :root { --card: min(56vw, 66vh, 520px); } }
+
+.stage {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center; gap: clamp(8px, 2vw, 30px);
+  padding: calc(70px + var(--safe-t)) calc(10px + var(--safe-r)) calc(96px + var(--safe-b)) calc(10px + var(--safe-l));
+}
+.card-zone { position: relative; }
+
+/* ---------- The letter card ---------- */
+.letter-card {
+  --c: #ff5e4d;
+  position: relative; display: block;
+  width: var(--card); height: var(--card);
+  border-radius: 34px;
+  background: #fff;
+  border: 4px solid #2b1d5c;
+  box-shadow: 8px 10px 0 #2b1d5c;
+  overflow: hidden;
+  transition: transform .3s cubic-bezier(.3, 1.4, .5, 1), opacity .25s;
+}
+.letter-card::before { /* coloured top band */
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 120%, color-mix(in srgb, var(--c) 18%, #fff) 0 60%, transparent 61%),
+              linear-gradient(color-mix(in srgb, var(--c) 30%, #fff), #fff 70%);
+}
+.letter-card:active { transform: scale(.97); }
+
+.big-letter {
+  position: absolute; left: 50%; top: 50%;
+  translate: -50% -52%;
+  display: flex; align-items: baseline; gap: .04em;
+  font-family: "Fredoka", sans-serif; font-weight: 700; line-height: 1;
+  color: var(--c);
+  -webkit-text-stroke: calc(var(--card) * .012) #2b1d5c; paint-order: stroke fill;
+  text-shadow: calc(var(--card) * .014) calc(var(--card) * .016) 0 #2b1d5c;
+  transition: all .45s cubic-bezier(.3, 1.4, .5, 1);
+}
+.big-letter .up { font-size: calc(var(--card) * .56); }
+.big-letter .low { font-size: calc(var(--card) * .36); }
+.letter-card[data-state="closed"] .big-letter { animation: breathe 2.4s ease-in-out infinite; }
+@keyframes breathe { 50% { scale: 1.05; rotate: -2deg; } }
+
+.pic {
+  position: absolute; left: 50%; top: 47%;
+  width: calc(var(--card) * .58); height: calc(var(--card) * .58);
+  translate: -50% -50%;
+  scale: .2; opacity: 0;
+  transition: scale .55s cubic-bezier(.3, 1.7, .5, 1) .12s, opacity .2s .12s;
+}
+.pic img { width: 100%; height: 100%; display: block; filter: drop-shadow(0 6px 4px rgba(0, 0, 0, .15)); }
+.word {
+  position: absolute; left: 0; right: 0; bottom: 6%;
+  text-align: center;
+  font-family: "Fredoka", sans-serif; font-weight: 600; font-size: calc(var(--card) * .1); color: #2b1d5c;
+  opacity: 0; translate: 0 20px; transition: all .35s ease .3s;
+}
+.word .first { color: var(--c); font-weight: 700; -webkit-text-stroke: 1.5px #2b1d5c; paint-order: stroke fill; }
+
+/* Open: the letter hops into the corner, the picture pops out */
+.letter-card[data-state="open"] .big-letter { left: 8%; top: 8%; translate: 0 0; scale: .38; transform-origin: 0 0; }
+.letter-card[data-state="open"] .pic { scale: 1; opacity: 1; animation: wiggle 1.6s ease-in-out .7s infinite; }
+.letter-card[data-state="open"] .word { opacity: 1; translate: 0 0; }
+@keyframes wiggle { 0%, 100% { rotate: -4deg; } 50% { rotate: 4deg; } }
+
+/* Changing letters: slide */
+.letter-card.out-left  { transform: translateX(-30%) rotate(-8deg); opacity: 0; }
+.letter-card.out-right { transform: translateX(30%) rotate(8deg); opacity: 0; }
+.letter-card.in-right  { animation: inRight .32s cubic-bezier(.3, 1.4, .5, 1); }
+.letter-card.in-left   { animation: inLeft .32s cubic-bezier(.3, 1.4, .5, 1); }
+@keyframes inRight { from { transform: translateX(30%) rotate(8deg); opacity: 0; } }
+@keyframes inLeft  { from { transform: translateX(-30%) rotate(-8deg); opacity: 0; } }
+
+/* ---------- Arrows ---------- */
+.nav-arrow {
+  flex: none; width: 64px; height: 64px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 46px; line-height: 1; color: #2b1d5c;
+  background: #ffd23d; border: 3px solid #2b1d5c; box-shadow: 3px 4px 0 #2b1d5c;
+  padding-bottom: 6px;
+}
+.nav-arrow:active { transform: translate(2px, 3px); box-shadow: 0 0 0 #2b1d5c; }
+@media (orientation: portrait) {
+  .nav-arrow { position: fixed; bottom: calc(96px + var(--safe-b)); z-index: 5; width: 58px; height: 58px; }
+  .nav-arrow.prev { left: calc(14px + var(--safe-l)); }
+  .nav-arrow.next { right: calc(14px + var(--safe-r)); }
+  .stage { padding-bottom: calc(170px + var(--safe-b)); }
+}
+
+/* ---------- A–Z strip ---------- */
+.abc-strip {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 4;
+  display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
+  padding: 12px calc(14px + var(--safe-r)) calc(14px + var(--safe-b)) calc(14px + var(--safe-l));
+  background: rgba(255, 255, 255, .7);
+  border-top: 3px solid #2b1d5c;
+}
+.abc-strip::-webkit-scrollbar { display: none; }
+.abc-strip .chip {
+  flex: none; width: 52px; height: 52px; border-radius: 16px;
+  font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 28px; color: #2b1d5c;
+  background: color-mix(in srgb, var(--c) 35%, #fff); border: 2.5px solid #2b1d5c;
+}
+.abc-strip .chip.on { background: var(--c); transform: translateY(-4px); box-shadow: 0 4px 0 #2b1d5c; }
+
+@media (prefers-reduced-motion: reduce) {
+  .letter-card[data-state="closed"] .big-letter, .letter-card[data-state="open"] .pic { animation: none; }
+}

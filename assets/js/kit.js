@@ -320,6 +320,9 @@
   const here = document.currentScript && document.currentScript.src;
   const ANIMAL_DIR = here ? new URL('../animals/', here).href : '../../assets/animals/';
   const animalSrc = (id) => ANIMAL_DIR + id + '.svg';
+  // Any picture from the library: 'animals/bear' or 'things/apple'
+  const picSrc = (path) => new URL('../' + path + '.svg', ANIMAL_DIR).href;
+  const picImg = (path, cls = '') => `<img class="${cls}" src="${picSrc(path)}" alt="" draggable="false" decoding="async">`;
   // <img> markup for an animal (alt text for screen readers, never spoken aloud)
   const animalImg = (id, cls = '', alt = '') =>
     `<img class="${cls}" src="${animalSrc(id)}" alt="${alt}" draggable="false" decoding="async">`;
@@ -482,5 +485,5 @@
     document.addEventListener('dblclick', (e) => e.preventDefault());
   }
 
-  window.Kit = { Sound, fx, setup, store, rand, pick, shuffle, bag, later, centerOf, reduceMotion, hz, animalSrc, animalImg, loadAnimal };
+  window.Kit = { Sound, fx, setup, store, rand, pick, shuffle, bag, later, centerOf, reduceMotion, hz, animalSrc, animalImg, loadAnimal, picSrc, picImg };
 })();

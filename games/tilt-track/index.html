@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport-fit + no zoom keeps toddler taps from zooming the page -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Tilt Track! Free Tilt Driving Game for Kids | Pienipeli</title>
+  <meta name="description" content="Play Tilt Track free online: tilt your phone or tablet (or tap left and right) to drive a little car down a winding road and collect musical stars. No crashing, no losing, no ads.">
+  <link rel="canonical" href="https://pienipeli.fi/games/tilt-track/">
+  <meta name="theme-color" content="#9be38f">
+  <link rel="icon" href="../../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <!-- Add to Home Screen: opens straight into this game, full screen (see manifest.webmanifest) -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Tilt Track">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pienipeli">
+  <meta property="og:title" content="Tilt Track! Free game for toddlers">
+  <meta property="og:description" content="Tilt to steer a little car and collect musical stars. No crashing, no losing. No ads, no losing.">
+  <meta property="og:url" content="https://pienipeli.fi/games/tilt-track/">
+  <meta property="og:image" content="https://pienipeli.fi/assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" href="../../assets/fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../assets/css/kit.css">
+  <link rel="stylesheet" href="style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "VideoGame",
+        "@id": "https://pienipeli.fi/games/tilt-track/#game",
+        "name": "Tilt Track!",
+        "url": "https://pienipeli.fi/games/tilt-track/",
+        "description": "A free, ad-free driving game for small kids. Tilt the phone or tap left and right to steer down a winding road and collect stars that play notes; there is no crashing.",
+        "image": "https://pienipeli.fi/assets/img/og-image.png",
+        "genre": [
+          "Educational",
+          "Casual",
+          "Kids"
+        ],
+        "gamePlatform": [
+          "Web browser",
+          "Mobile",
+          "Tablet",
+          "Desktop"
+        ],
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        },
+        "audience": {
+          "@type": "PeopleAudience",
+          "suggestedMinAge": 3,
+          "suggestedMaxAge": 4
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Pienipeli",
+          "url": "https://pienipeli.fi/"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Pienipeli",
+            "item": "https://pienipeli.fi/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Games",
+            "item": "https://pienipeli.fi/games/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Tilt Track!",
+            "item": "https://pienipeli.fi/games/tilt-track/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <h1 class="sr-only">Tilt Track!</h1>
+
+  <!-- Grown-up corner buttons (kept small and out of the way) -->
+  <a class="corner-btn home" href="../index.html" aria-label="All games"><span aria-hidden="true">🏠</span></a>
+  <button class="corner-btn sound" id="soundBtn" type="button" aria-label="Sound off" aria-pressed="true"><span aria-hidden="true">🔊</span></button>
+  <button class="corner-btn full" id="fullBtn" type="button" aria-label="Full screen" hidden><span aria-hidden="true">⛶</span></button>
+
+  <main class="stage" id="stage">
+    <canvas id="road" aria-label="A winding road with a little car" role="img"></canvas>
+    <div class="stars-count" id="starsCount" aria-live="polite"><span class="emoji" aria-hidden="true">⭐</span> <b>0</b></div>
+    <button class="start" id="startBtn" type="button"><span class="emoji" aria-hidden="true">🚗</span><span class="go">GO!</span></button>
+  </main>
+
+  <div class="fx" id="fx" aria-hidden="true"></div>
+
+  <noscript><p class="noscript">This game needs JavaScript turned on.</p></noscript>
+
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/kit.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+<!-- Umbrella: drawn in the same style as assets/animals -->
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="200" height="200" stroke="#4a3434" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><path d="M100 96 V168 Q100 186 84 186 Q70 186 70 172" fill="none" stroke-width="8"/>
+    <path d="M18 104 C24 50 64 24 100 24 C136 24 176 50 182 104 Q162 90 141 104 Q121 88 100 104 Q79 88 59 104 Q38 90 18 104 Z" fill="#ff7eb6"/>
+    <path d="M100 24 Q80 60 79 100 M100 24 Q120 60 121 100" fill="none" stroke-width="3"/><path d="M100 24 Q76 50 59 102 L79 100 Q80 60 100 24 Z" fill="#fff" opacity=".35" stroke="none"/>
+    <circle cx="87" cy="62" r="6" fill="#2d2323" stroke="none"/><circle cx="88.92" cy="59.72" r="2.2800000000000002" fill="#fff" stroke="none"/><circle cx="113" cy="62" r="6" fill="#2d2323" stroke="none"/><circle cx="114.92" cy="59.72" r="2.2800000000000002" fill="#fff" stroke="none"/><ellipse cx="76" cy="76" rx="8" ry="5" fill="#ff8fab" opacity=".5" stroke="none"/><ellipse cx="124" cy="76" rx="8" ry="5" fill="#ff8fab" opacity=".5" stroke="none"/><path d="M91 74 Q100 83 109 74" fill="none"/></svg>

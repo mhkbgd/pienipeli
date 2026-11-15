@@ -1,0 +1,50 @@
+/* ============ Build a House! styles (base styles in assets/css/kit.css) ============ */
+
+.stage {
+  position: fixed; inset: 0;
+  display: grid; place-items: center;
+  padding: calc(66px + var(--safe-t)) calc(8px + var(--safe-r)) calc(8px + var(--safe-b)) calc(8px + var(--safe-l));
+}
+.build { width: 100%; height: 100%; overflow: visible; touch-action: none; }
+
+/* Outlines where pieces go */
+.ghost { opacity: .35; }
+.ghost * { fill: rgba(255, 255, 255, .55) !important; stroke: #2b1d5c !important; stroke-dasharray: 8 7; stroke-width: 3 !important; }
+.ghost.near { opacity: .9; }
+.ghost.near * { fill: rgba(255, 246, 184, .9) !important; }
+
+/* Pieces */
+.piece { cursor: grab; outline: none; }
+.piece.held { cursor: grabbing; filter: drop-shadow(0 10px 6px rgba(0, 0, 0, .25)); }
+.piece:focus-visible { filter: drop-shadow(0 0 6px #b995ff); }
+.piece.snap > * { animation: snap .35s cubic-bezier(.3, 1.8, .5, 1); transform-box: fill-box; transform-origin: center; }
+@keyframes snap { 40% { transform: scale(1.08); } }
+.piece.nudge > * { animation: nudge 1s ease-in-out; transform-box: fill-box; transform-origin: center; }
+@keyframes nudge { 20%, 60% { transform: rotate(-8deg) scale(1.1); } 40%, 80% { transform: rotate(8deg) scale(1.1); } }
+
+/* House: lights on */
+.lit .win .glass { fill: #fff3a0; transition: fill .4s; }
+.puff { animation: puff 2s ease-out forwards; }
+@keyframes puff { from { transform: translate(0, 0) scale(.6); opacity: .95; } to { transform: translate(-30px, -120px) scale(2.4); opacity: 0; } }
+.puff { transform-box: fill-box; transform-origin: center; }
+.resident { animation: popIn .5s cubic-bezier(.3, 1.8, .5, 1) both, wave 1s ease-in-out .5s infinite alternate; transform-box: fill-box; transform-origin: 50% 100%; }
+@keyframes popIn { from { transform: scale(0); } }
+@keyframes wave { from { transform: rotate(-6deg); } to { transform: rotate(6deg); } }
+
+/* Barn: doors swing */
+.open .barn-door { opacity: .25; transition: opacity .4s; }
+
+/* Rocket: blast off */
+.flame { animation: flicker .12s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: 50% 0; }
+@keyframes flicker { to { transform: scaleY(1.3) scaleX(.9); } }
+.launch .placed { animation: blast 2.6s cubic-bezier(.6, 0, .9, .6) forwards; }
+@keyframes blast {
+  0% { transform: translate(0, 0); }
+  15% { transform: translate(-3px, 2px); }
+  25% { transform: translate(3px, -2px); }
+  100% { transform: translate(0, -900px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resident, .flame { animation: none; }
+}

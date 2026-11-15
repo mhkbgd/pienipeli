@@ -1,0 +1,42 @@
+{
+  "id": "/games/feed-numbers/",
+  "name": "Feed the Numbers!",
+  "short_name": "Feed the Numbers",
+  "description": "A hungry monster wants 3 apples. Count them in, munch munch munch!",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": [
+    "fullscreen",
+    "standalone"
+  ],
+  "orientation": "any",
+  "background_color": "#e6dcff",
+  "theme_color": "#e6dcff",
+  "categories": [
+    "games",
+    "kids",
+    "education"
+  ],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

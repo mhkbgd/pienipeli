@@ -5,7 +5,7 @@
      is refreshed); offline the saved copy is used.
    When you add a game or a file, add it to FILES below and bump VERSION.        */
 
-const VERSION = 'v4';
+const VERSION = 'v5';
 const CACHE = 'pienipeli-' + VERSION;
 
 const FILES = [
@@ -19,6 +19,16 @@ const FILES = [
   '/assets/js/app.js',
   '/assets/js/kit.js',
   '/assets/css/kit.css',
+  '/assets/js/alphabet.js',
+  '/assets/things/apple.svg',
+  '/assets/things/crown.svg',
+  '/assets/things/icecream.svg',
+  '/assets/things/jellyfish.svg',
+  '/assets/things/nest.svg',
+  '/assets/things/umbrella.svg',
+  '/assets/things/van.svg',
+  '/assets/things/xylophone.svg',
+  '/assets/things/yoyo.svg',
   // Shared animal pictures (made by tools/build-animal-pictures.mjs)
   '/assets/animals/bear.svg',
   '/assets/animals/bee.svg',
@@ -147,7 +157,97 @@ const FILES = [
   '/games/bedtime/manifest.webmanifest',
   '/games/bedtime/icons/icon-192.png',
   '/games/bedtime/icons/icon-512.png',
-  '/games/bedtime/icons/apple-touch-icon.png'
+  '/games/bedtime/icons/apple-touch-icon.png',
+
+  '/games/alphabet-zoo/',
+  '/games/alphabet-zoo/style.css',
+  '/games/alphabet-zoo/script.js',
+  '/games/alphabet-zoo/card-art.svg',
+  '/games/alphabet-zoo/manifest.webmanifest',
+  '/games/alphabet-zoo/icons/icon-192.png',
+  '/games/alphabet-zoo/icons/icon-512.png',
+  '/games/alphabet-zoo/icons/apple-touch-icon.png',
+
+  '/games/trace-letter/',
+  '/games/trace-letter/style.css',
+  '/games/trace-letter/script.js',
+  '/games/trace-letter/card-art.svg',
+  '/games/trace-letter/manifest.webmanifest',
+  '/games/trace-letter/icons/icon-192.png',
+  '/games/trace-letter/icons/icon-512.png',
+  '/games/trace-letter/icons/apple-touch-icon.png',
+
+  '/games/letter-pop/',
+  '/games/letter-pop/style.css',
+  '/games/letter-pop/script.js',
+  '/games/letter-pop/card-art.svg',
+  '/games/letter-pop/manifest.webmanifest',
+  '/games/letter-pop/icons/icon-192.png',
+  '/games/letter-pop/icons/icon-512.png',
+  '/games/letter-pop/icons/apple-touch-icon.png',
+
+  '/games/count-ducks/',
+  '/games/count-ducks/style.css',
+  '/games/count-ducks/script.js',
+  '/games/count-ducks/card-art.svg',
+  '/games/count-ducks/manifest.webmanifest',
+  '/games/count-ducks/icons/icon-192.png',
+  '/games/count-ducks/icons/icon-512.png',
+  '/games/count-ducks/icons/apple-touch-icon.png',
+
+  '/games/feed-numbers/',
+  '/games/feed-numbers/style.css',
+  '/games/feed-numbers/script.js',
+  '/games/feed-numbers/card-art.svg',
+  '/games/feed-numbers/manifest.webmanifest',
+  '/games/feed-numbers/icons/icon-192.png',
+  '/games/feed-numbers/icons/icon-512.png',
+  '/games/feed-numbers/icons/apple-touch-icon.png',
+
+  '/games/number-train/',
+  '/games/number-train/style.css',
+  '/games/number-train/script.js',
+  '/games/number-train/card-art.svg',
+  '/games/number-train/manifest.webmanifest',
+  '/games/number-train/icons/icon-192.png',
+  '/games/number-train/icons/icon-512.png',
+  '/games/number-train/icons/apple-touch-icon.png',
+
+  '/games/tap-race/',
+  '/games/tap-race/style.css',
+  '/games/tap-race/script.js',
+  '/games/tap-race/card-art.svg',
+  '/games/tap-race/manifest.webmanifest',
+  '/games/tap-race/icons/icon-192.png',
+  '/games/tap-race/icons/icon-512.png',
+  '/games/tap-race/icons/apple-touch-icon.png',
+
+  '/games/tilt-track/',
+  '/games/tilt-track/style.css',
+  '/games/tilt-track/script.js',
+  '/games/tilt-track/card-art.svg',
+  '/games/tilt-track/manifest.webmanifest',
+  '/games/tilt-track/icons/icon-192.png',
+  '/games/tilt-track/icons/icon-512.png',
+  '/games/tilt-track/icons/apple-touch-icon.png',
+
+  '/games/build-house/',
+  '/games/build-house/style.css',
+  '/games/build-house/script.js',
+  '/games/build-house/card-art.svg',
+  '/games/build-house/manifest.webmanifest',
+  '/games/build-house/icons/icon-192.png',
+  '/games/build-house/icons/icon-512.png',
+  '/games/build-house/icons/apple-touch-icon.png',
+
+  '/games/decorate-cake/',
+  '/games/decorate-cake/style.css',
+  '/games/decorate-cake/script.js',
+  '/games/decorate-cake/card-art.svg',
+  '/games/decorate-cake/manifest.webmanifest',
+  '/games/decorate-cake/icons/icon-192.png',
+  '/games/decorate-cake/icons/icon-512.png',
+  '/games/decorate-cake/icons/apple-touch-icon.png'
 ];
 
 self.addEventListener('install', (event) => {

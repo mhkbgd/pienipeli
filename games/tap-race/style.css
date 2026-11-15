@@ -1,0 +1,61 @@
+/* ============ Tap Tap Race! styles (base styles in assets/css/kit.css) ============ */
+
+:root { --carw: min(30vw, 24vh, 230px); }
+@media (orientation: landscape) { :root { --carw: min(22vw, 22vh, 230px); } }
+
+html, body { background: linear-gradient(#8fd8ff, #c9ecff 22%, #8fe0a3 22%, #7fd67a); }
+
+.stage {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: calc(76px + var(--safe-t)) calc(10px + var(--safe-r)) calc(16px + var(--safe-b)) calc(10px + var(--safe-l));
+  cursor: pointer;
+}
+
+/* ---------- Track ---------- */
+.track {
+  position: relative; display: flex; flex-direction: column; gap: 0;
+  background: #6b6b85; border-block: 6px solid #fff;
+  border-radius: 18px; padding: 0 calc(var(--carw) * .55) 0 8px;
+  box-shadow: 0 8px 0 rgba(0, 0, 0, .15);
+}
+.lane { position: relative; height: calc(var(--carw) * .8); display: flex; align-items: center; }
+.lane + .lane { border-top: 4px dashed rgba(255, 255, 255, .7); }
+.finish {
+  position: absolute; top: 0; bottom: 0; right: calc(var(--carw) * .32); width: calc(var(--carw) * .2);
+  background: conic-gradient(#fff 25%, #2b1d5c 0 50%, #fff 0 75%, #2b1d5c 0) 0 0 / 22px 22px;
+  border-inline: 3px solid #2b1d5c;
+}
+.finish::after { content: "🏁"; position: absolute; top: -52px; left: 50%; translate: -50% 0; font-family: var(--emoji); font-size: 44px; animation: wave 1s ease-in-out infinite alternate; }
+@keyframes wave { from { rotate: -10deg; } to { rotate: 10deg; } }
+
+/* ---------- Racers ---------- */
+.racer { position: relative; width: var(--carw); will-change: transform; transition: transform .25s cubic-bezier(.2, .8, .3, 1); }
+.racer .car-art { width: 100%; height: auto; display: block; filter: drop-shadow(0 5px 2px rgba(0, 0, 0, .25)); }
+.racer .driver { position: absolute; left: 37%; top: -30%; width: 34%; }
+.racer .driver img { width: 100%; height: auto; display: block; }
+.racer .medal { position: absolute; right: -6%; top: -36%; font-family: var(--emoji); font-size: calc(var(--carw) * .3); line-height: 1; }
+.track.countdown .racer, .stage .racer.zoom { animation: rev .25s ease-in-out; }
+@keyframes rev { 50% { translate: 0 -4px; rotate: -3deg; } }
+.racer.zoom .wheel { animation: spin .3s linear 1; transform-box: fill-box; transform-origin: center; }
+@keyframes spin { to { rotate: 360deg; } }
+.racer.mine { filter: drop-shadow(0 0 10px #fff6b8) drop-shadow(0 0 4px #fff); }
+.racer.mine::before { content: "👑"; position: absolute; left: 44%; top: -62%; font-family: var(--emoji); font-size: calc(var(--carw) * .18); }
+.racer.won .medal { animation: medal .6s cubic-bezier(.3, 1.8, .5, 1); }
+@keyframes medal { from { scale: 0; rotate: -40deg; } }
+.track.party .racer { animation: hop .35s ease-in-out infinite alternate; }
+@keyframes hop { to { translate: 0 -12%; } }
+
+/* "Pick your racer" pointer */
+.pick-hint {
+  position: fixed; left: calc(var(--carw) * .55 + 10px); top: 50%; margin: 0; z-index: 5;
+  font-size: 54px; pointer-events: none; animation: point 1s ease-in-out infinite alternate;
+}
+.pick-hint.gone { display: none; }
+@keyframes point { from { transform: translate(0, -40px); } to { transform: translate(0, 0); } }
+.track.countdown { animation: shake .6s ease-in-out 4; }
+@keyframes shake { 50% { transform: translateY(1px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .finish::after, .pick-hint, .track.party .racer { animation: none; }
+}

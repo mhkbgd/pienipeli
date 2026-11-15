@@ -1,0 +1,6 @@
+<!-- Nest: drawn in the same style as assets/animals -->
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="200" height="200" stroke="#4a3434" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><ellipse cx="100" cy="122" rx="74" ry="40" fill="#c98b5b"/>
+    <ellipse cx="78" cy="102" rx="20" ry="26" fill="#bfe8ff"/><ellipse cx="102" cy="96" rx="20" ry="26" fill="#fff3b0"/><ellipse cx="126" cy="102" rx="20" ry="26" fill="#ffd1e3"/>
+    <path d="M28 118 Q100 160 172 118 Q170 156 100 162 Q30 156 28 118 Z" fill="#a8693c"/>
+    <path d="M40 130 Q70 140 96 132 M104 140 Q130 146 160 130 M50 148 Q90 156 120 150" fill="none" stroke="#7a4b2a" stroke-width="3"/>
+    <circle cx="94" cy="96" r="4" fill="#2d2323" stroke="none"/><circle cx="95.28" cy="94.48" r="1.52" fill="#fff" stroke="none"/><circle cx="110" cy="96" r="4" fill="#2d2323" stroke="none"/><circle cx="111.28" cy="94.48" r="1.52" fill="#fff" stroke="none"/></svg>
