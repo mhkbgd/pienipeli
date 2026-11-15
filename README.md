@@ -50,6 +50,8 @@ hear is music, chimes and playful synthesized animal calls.
 │   ├── js/app.js         Shared by all games: offline (service worker) + full screen / home-screen tip
 │   ├── js/kit.js         Shared by the five newer games: sounds + music, effects, corner buttons
 │   ├── css/kit.css       Base styles for those games (reset, sky, corner buttons, effects)
+│   ├── css/pikku.css     Pikku the mascot: full body, face badge, speech bubble, game loader + cheer
+│   ├── mascot/           Pikku's pictures (WebP) + master artwork + character sheet (README.md)
 │   ├── js/alphabet.js    A–Z: word, picture, colour and note for every letter
 │   ├── animals/          Shared animal pictures (one SVG per animal)
 │   ├── things/           Pictures for letters without an animal
@@ -115,6 +117,13 @@ hear is music, chimes and playful synthesized animal calls.
   Find the Animal keeps its own home/restart bar).
 - Games with their own buttons (Animal Band 🥁🎵, the cake's 🎉, Tilt Track's stars) place them
   just below the toolbar so nothing overlaps.
+
+## Pikku, the mascot
+
+Pikku, a friendly lion cub, is the face of Pienipeli. He greets visitors in the home hero, puts a
+“Pikku’s pick” sticker on a few game cards, encourages on empty filters and the 404 page, and pops up
+to cheer when a child finishes a round in a game. Character sheet, colours, picture sizes and usage
+rules: [`assets/mascot/README.md`](assets/mascot/README.md).
 
 ## The website pages
 

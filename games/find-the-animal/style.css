@@ -380,6 +380,10 @@ svg { overflow: hidden; }
   animation: popIn .6s cubic-bezier(.3, 1.6, .5, 1);
 }
 .c-trophy { font-size: clamp(56px, 12vmin, 96px); line-height: 1; animation: bob 1.4s ease-in-out infinite; }
+/* Pikku, the Pienipeli mascot, cheers with the trophy */
+.c-trophy { display: flex; align-items: flex-end; justify-content: center; gap: 2px; }
+.c-pikku { width: clamp(90px, 18vmin, 140px); height: auto; -webkit-user-drag: none; }
+.c-cup { font-size: .7em; margin-bottom: .1em; }
 .c-card h2 { margin: 10px 0 14px; font-size: clamp(24px, 5vmin, 40px); color: #ff6f9f; line-height: var(--bn-lh, 1.2); }
 .c-animals { display: grid; grid-template-columns: repeat(5, auto); justify-content: center; gap: 4px 8px; margin-bottom: 18px; }
 .mini {

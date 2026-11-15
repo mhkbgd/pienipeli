@@ -312,6 +312,14 @@
     })
   };
 
+  // Finishing a round: Pikku pops up in a corner to cheer (PPChrome.cheer in
+  // assets/js/chrome.js). He cheers even with the sound off. Game logic is untouched.
+  const playFanfare = Sound.fanfare;
+  Sound.fanfare = (...args) => {
+    if (window.PPChrome && PPChrome.cheer) PPChrome.cheer();
+    return playFanfare(...args);
+  };
+
   /* =====================================================================
      Animal pictures
      One shared drawing per animal in assets/animals/<id>.svg (made from Find the

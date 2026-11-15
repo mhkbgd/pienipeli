@@ -175,5 +175,62 @@
     if (window.PP_I18N) PP_I18N.ready.then(() => PP_I18N.apply(right));
   }
 
-  window.PPChrome = { init, play, stop };
+  /* ---------- Pikku, the mascot (styles in assets/css/pikku.css) ---------- */
+  const here = document.currentScript && document.currentScript.src;
+  const MASCOT = here ? new URL('../mascot/', here).href : '../../assets/mascot/';
+
+  // Slow-loading screen: only if the game isn't ready after a moment (usually it is,
+  // and then nothing shows at all). Any tap, or a few seconds, lets the game through.
+  if (document.readyState !== 'complete') {
+    let loader = null;
+    const showT = setTimeout(() => {
+      loader = document.createElement('div');
+      loader.className = 'pikku-loader';
+      loader.setAttribute('role', 'status');
+      loader.innerHTML = `<span class="pikku-face"><img src="${MASCOT}pikku-face-192.webp" alt="" width="112" height="112" draggable="false"></span>` +
+        `<span class="pikku-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="pikku-sr">${t('pikku.loading', 'Loading…')}</span>`;
+      document.body.appendChild(loader);
+    }, 400);
+    const hide = () => {
+      clearTimeout(showT);
+      if (!loader) return;
+      const el = loader; loader = null;
+      el.classList.add('out');
+      setTimeout(() => el.remove(), reduced ? 0 : 350);
+    };
+    addEventListener('load', hide, { once: true });
+    addEventListener('pointerdown', hide, { once: true, capture: true });
+    setTimeout(hide, 8000);
+  }
+
+  // Cheer: Pikku pops up in the bottom-left corner for a moment when a round is
+  // finished. Never blocks a tap (pointer-events: none) and is hidden from screen
+  // readers (the game already announces its own celebration).
+  let cheerEl = null, cheerT = 0, lastCheer = 0;
+  function buildCheer() {
+    if (cheerEl) return;
+    cheerEl = document.createElement('div');
+    cheerEl.className = 'pikku-cheer';
+    cheerEl.setAttribute('aria-hidden', 'true');
+    cheerEl.innerHTML = `<span class="pikku"><span class="pikku-body"><img src="${MASCOT}pikku-240.webp" srcset="${MASCOT}pikku-240.webp 1x, ${MASCOT}pikku-480.webp 2x" alt="" width="240" height="271" decoding="async" draggable="false">` +
+      `<span class="pikku-lids"><i></i><i></i></span></span></span><span class="pikku-say tail-left"></span>`;
+    document.body.appendChild(cheerEl);
+  }
+  // Build it once the game has loaded, so the picture is ready before the first cheer
+  addEventListener('load', () => setTimeout(buildCheer, 1200), { once: true });
+
+  function cheer(text) {
+    const now = Date.now();
+    if (now - lastCheer < 3000) return;     // one cheer at a time
+    lastCheer = now;
+    buildCheer();
+    cheerEl.querySelector('.pikku-say').textContent = text || t('pikku.yay', 'Yay!');
+    cheerEl.classList.remove('show');
+    void cheerEl.offsetWidth;
+    cheerEl.classList.add('show');
+    clearTimeout(cheerT);
+    cheerT = setTimeout(() => cheerEl.classList.remove('show'), 2600);
+  }
+
+  window.PPChrome = { init, play, stop, cheer };
 })();

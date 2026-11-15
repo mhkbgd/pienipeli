@@ -30,6 +30,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" href="assets/fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/css/pikku.css">
   <script src="assets/js/i18n.js"></script>
   <script type="application/ld+json">
   {
@@ -112,10 +113,15 @@
           <p class="note hint" aria-hidden="true"><span data-i18n="home.hint">psst… try popping a balloon</span> <svg viewBox="0 0 60 44" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 38c10-2 22-8 30-18 4-5 8-10 18-14"/><path d="M42 4l10 2-5 9"/></svg></p>
         </div>
 
-        <div class="shelf" aria-hidden="true">
-          <a class="shelf-card" href="games/peekaboo/index.html" tabindex="-1"><span class="tape"></span><img src="games/peekaboo/card-art.svg" alt="" width="640" height="400"><b data-i18n="g.peekaboo.name">Peekaboo!</b></a>
-          <a class="shelf-card" href="games/animal-band/index.html" tabindex="-1"><span class="tape"></span><img src="games/animal-band/card-art.svg" alt="" width="640" height="400"><b data-i18n="g.animal-band.name">Animal Band!</b></a>
-          <a class="shelf-card" href="games/build-house/index.html" tabindex="-1"><span class="tape"></span><img src="games/build-house/card-art.svg" alt="" width="640" height="400"><b data-i18n="g.build-house.name">Build a House!</b></a>
+        <div class="hero-stage">
+          <div class="shelf" aria-hidden="true">
+            <a class="shelf-card" href="games/peekaboo/index.html" tabindex="-1"><span class="tape"></span><img src="games/peekaboo/card-art.svg" alt="" width="640" height="400"><b data-i18n="g.peekaboo.name">Peekaboo!</b></a>
+            <a class="shelf-card" href="games/animal-band/index.html" tabindex="-1"><span class="tape"></span><img src="games/animal-band/card-art.svg" alt="" width="640" height="400"><b data-i18n="g.animal-band.name">Animal Band!</b></a>
+          </div>
+          <div class="hero-pikku">
+            <p class="pikku-say tail-left" id="pikkuSay" aria-live="polite"><span class="say-greet" data-i18n-html="pikku.greet">Hei! I’m Pikku. <b>Let’s play!</b></span><span class="say-line" hidden></span></p>
+            <button class="pikku-btn" id="pikkuBtn" type="button" aria-label="Say hi to Pikku the lion cub" data-i18n-attr="aria-label:pikku.hi"><span class="pikku "><span class="pikku-body"><img src="assets/mascot/pikku-480.webp" srcset="assets/mascot/pikku-240.webp 240w, assets/mascot/pikku-480.webp 480w, assets/mascot/pikku-800.webp 800w" sizes="(max-width: 760px) 120px, (max-width: 980px) 210px, 250px" width="480" height="542" alt="" fetchpriority="high" decoding="async" draggable="false"><span class="pikku-lids" aria-hidden="true"><i></i><i></i></span></span></span></button>
+          </div>
         </div>
       </div>
     </section>
@@ -184,6 +190,7 @@
             <div class="art" aria-hidden="true">
               <img src="games/alphabet-zoo/card-art.svg" alt="" width="640" height="400" loading="lazy" decoding="async">
               <span class="play-dot"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+              <span class="pikku-pick"><span class="pikku-face " aria-hidden="true"><img src="assets/mascot/pikku-face-96.webp" srcset="assets/mascot/pikku-face-96.webp 1x, assets/mascot/pikku-face-192.webp 2x" alt="" width="96" height="96" loading="lazy" decoding="async" draggable="false"></span><span data-i18n="pikku.pick">Pikku’s pick</span></span>
             </div>
             <div class="body">
               <div class="top">
@@ -199,6 +206,7 @@
             <div class="art" aria-hidden="true">
               <img src="games/build-house/card-art.svg" alt="" width="640" height="400" loading="lazy" decoding="async">
               <span class="play-dot"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+              
             </div>
             <div class="body">
               <div class="top">
@@ -214,6 +222,7 @@
             <div class="art" aria-hidden="true">
               <img src="games/count-ducks/card-art.svg" alt="" width="640" height="400" loading="lazy" decoding="async">
               <span class="play-dot"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+              
             </div>
             <div class="body">
               <div class="top">
@@ -229,6 +238,7 @@
             <div class="art" aria-hidden="true">
               <img src="games/tap-race/card-art.svg" alt="" width="640" height="400" loading="lazy" decoding="async">
               <span class="play-dot"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+              
             </div>
             <div class="body">
               <div class="top">
@@ -244,6 +254,7 @@
             <div class="art" aria-hidden="true">
               <img src="games/decorate-cake/card-art.svg" alt="" width="640" height="400" loading="lazy" decoding="async">
               <span class="play-dot"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+              
             </div>
             <div class="body">
               <div class="top">
@@ -256,7 +267,7 @@
           </article>
           <a class="game-card more-card reveal" href="games/index.html" data-game="baby-pop">
             <div class="body more-body">
-              <span class="age-num" aria-hidden="true">+13</span>
+              <span class="more-top"><span class="age-num" aria-hidden="true">+13</span><span class="pikku-face more-pikku" aria-hidden="true"><img src="assets/mascot/pikku-face-96.webp" srcset="assets/mascot/pikku-face-96.webp 1x, assets/mascot/pikku-face-192.webp 2x" alt="" width="96" height="96" loading="lazy" decoding="async" draggable="false"></span></span>
               <h3 data-i18n="home.more.h">More games for you to discover</h3>
               <span class="link-arrow"><span data-i18n="home.allGames">See all games</span> <span>→</span></span>
             </div>

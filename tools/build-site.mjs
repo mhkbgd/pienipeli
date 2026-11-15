@@ -56,7 +56,7 @@ const ICON = {
    Games (newest first). tags: age-1 / age-2 / abc / music / build / calm
    ===================================================================== */
 const GAMES = [
-  { id: 'alphabet-zoo', name: 'Alphabet Zoo!', short: 'Alphabet Zoo', age: '2–4', isNew: true, tags: ['age-2', 'abc'],
+  { id: 'alphabet-zoo', pikku: true, name: 'Alphabet Zoo!', short: 'Alphabet Zoo', age: '2–4', isNew: true, tags: ['age-2', 'abc'],
     sub: 'Tap a big letter and an animal pops out of it. A is for Apple, B is for Bear, all the way to Zebra.',
     skills: ['abc', 'letters', 'words'], practise: 'Letter shapes and the sound each word starts with (say “B, bear!” together). Keyboard letters jump straight to that letter.',
     ld: 'A free, ad-free ABC game for toddlers. Tap a big colourful letter and a friendly animal or picture pops out of it, from A for Apple to Z for Zebra.' },
@@ -96,7 +96,7 @@ const GAMES = [
     sub: 'Tilt the phone (or tap left and right) to drive down a winding road and collect musical stars.',
     skills: ['steering', 'handEye'], practise: 'Steering and hand-eye coordination. No crashing: the grass just slows the car down.',
     ld: 'A free, ad-free driving game for small kids. Tilt the phone or tap left and right to steer down a winding road and collect stars that play notes; there is no crashing.' },
-  { id: 'peekaboo', name: 'Peekaboo!', short: 'Peekaboo', age: '1–3', tags: ['age-1'],
+  { id: 'peekaboo', pikku: true, name: 'Peekaboo!', short: 'Peekaboo', age: '1–3', tags: ['age-1'],
     sub: 'Animals hide behind bushes, curtains and gift boxes. One tap, and peekaboo!',
     skills: ['causeEffect', 'permanence'], practise: 'Cause and effect, and the idea that things are still there when hidden (object permanence). A perfect first game.',
     ld: 'A free, ad-free hide and seek game for babies and toddlers. Tap a bush, curtain or gift box and a friendly animal pops out with a peekaboo tune.' },
@@ -116,7 +116,7 @@ const GAMES = [
     sub: 'Tuck the small, middle and big animals into the bed that fits. Then lights out, and a lullaby.',
     skills: ['bigSmall', 'drag', 'windDown'], practise: 'Comparing sizes (small, middle, big) and dragging. Ends calm, nice before a nap.',
     ld: 'A free, ad-free size-sorting game for toddlers. Drag the small, middle and big animals into the beds that fit them, then the lights dim and a music-box lullaby plays.' },
-  { id: 'baby-pop', name: 'Baby Pop!', short: 'Baby Pop', age: '1–4', tags: ['age-1'],
+  { id: 'baby-pop', pikku: true, name: 'Baby Pop!', short: 'Baby Pop', age: '1–4', tags: ['age-1'],
     sub: 'Smiley balloons float up a pastel sky. Tap, swipe or bash any key to pop them.',
     skills: ['tapping', 'causeEffect'], practise: 'Tapping and swiping, cause and effect. Keyboard bashing counts too.',
     ld: 'A free, ad-free balloon popping game for babies and toddlers. Tap, swipe or press any key to pop smiley balloons into sparkles and happy sounds.' },
@@ -124,7 +124,7 @@ const GAMES = [
     sub: '“Where is the cat?” The game asks out loud and your little one taps the right animal.',
     skills: ['words', 'listening', 'animals40'], practise: 'Listening and first words: the game says an animal’s name and your child finds it among three.',
     ld: 'A free, ad-free talking animal game for toddlers. The game asks for an animal out loud and the child taps the right one of three. 40 friendly animals with animal sounds.' },
-  { id: 'feed-the-animals', name: 'Feed the Animals!', short: 'Feed the Animals', age: '2–3', tags: ['age-2'],
+  { id: 'feed-the-animals', pikku: true, name: 'Feed the Animals!', short: 'Feed the Animals', age: '2–3', tags: ['age-2'],
     sub: 'A hungry animal opens wide. Tap the right snack and watch it munch and dance.',
     skills: ['matching', 'foodWords'], practise: 'Matching (monkey and banana, rabbit and carrot) and food words.',
     ld: 'A free, ad-free feeding game for toddlers. One of 21 hungry animals waits with its mouth open and the child taps the right food of three. No reading, no timer, no losing.' }
@@ -201,6 +201,7 @@ function head({ p, titleKey, title, descKey, desc, canonical, ld, theme = '#fff8
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" href="${p}assets/fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="${p}assets/css/site.css">
+  <link rel="stylesheet" href="${p}assets/css/pikku.css">
   <script src="${p}assets/js/i18n.js"></script>
 ${ld ? `  <script type="application/ld+json">\n${JSON.stringify(ld, null, 2).replace(/^/gm, '  ')}\n  </script>\n` : ''}</head>`;
 }
@@ -274,7 +275,17 @@ ${scripts}  <script src="${p}assets/js/app.js" defer></script>
 }
 
 const pic = (p, id, cls = '') => `<img class="${cls}" src="${p}assets/animals/${id}.svg" alt="" width="200" height="200" loading="lazy" draggable="false">`;
+/* Pikku, the mascot (styles: assets/css/pikku.css, character sheet: assets/mascot/README.md).
+   pikku(): full body with a blink. sizes = the CSS width it is shown at, so the browser
+   downloads the smallest picture that is sharp enough. */
+function pikku(p, { cls = '', sizes = '200px', alt = '', eager = false } = {}) {
+  const m = `${p}assets/mascot/pikku`;
+  return `<span class="pikku ${cls}"><span class="pikku-body"><img src="${m}-480.webp" srcset="${m}-240.webp 240w, ${m}-480.webp 480w, ${m}-800.webp 800w" sizes="${sizes}" width="480" height="542" alt="${alt}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async" draggable="false"><span class="pikku-lids" aria-hidden="true"><i></i><i></i></span></span></span>`;
+}
+const pikkuFace = (p, cls = '', big = false) =>
+  `<span class="pikku-face ${cls}" aria-hidden="true"><img src="${p}assets/mascot/pikku-face-${big ? 192 : 96}.webp"${big ? '' : ` srcset="${p}assets/mascot/pikku-face-96.webp 1x, ${p}assets/mascot/pikku-face-192.webp 2x"`} alt="" width="96" height="96" loading="lazy" decoding="async" draggable="false"></span>`;
 const peek = (id, side = 'r', p = '') => `<span class="peek peek-${side}" aria-hidden="true">${pic(p, id)}</span>`;
+const peekPikku = (side = 'r', p = '') => `<span class="peek peek-${side} peek-pikku" aria-hidden="true">${pikkuFace(p, '', true)}</span>`;
 const DECO_COLORS = ['#ff8a7a', '#ffd166', '#7fd3f7', '#7fe0b0', '#c3a6ff', '#ffa6cf', '#ffbd7a'];
 const DECO_KINDS = ['star', 'dot', 'ring', 'plus', 'squig', 'tri'];
 function deco(seed, n = 7) {
@@ -297,6 +308,7 @@ function card(g, p, { showNew = true } = {}) {
             <div class="art" aria-hidden="true">
               <img src="${p}games/${g.id}/card-art.svg" alt="" width="640" height="400" loading="lazy" decoding="async">
               <span class="play-dot">${ICON.play}</span>
+              ${g.pikku ? `<span class="pikku-pick">${pikkuFace(p)}<span data-i18n="pikku.pick">${T('pikku.pick', 'Pikku’s pick')}</span></span>` : ''}
             </div>
             <div class="body">
               <div class="top">
@@ -359,8 +371,14 @@ const home = head({
           <p class="note hint" aria-hidden="true"><span ${X('home.hint', 'psst… try popping a balloon')}</span> ${ICON.arrowNote}</p>
         </div>
 
-        <div class="shelf" aria-hidden="true">
-          ${['peekaboo', 'animal-band', 'build-house'].map(id => `<a class="shelf-card" href="games/${id}/index.html" tabindex="-1"><span class="tape"></span><img src="games/${id}/card-art.svg" alt="" width="640" height="400"><b data-i18n="g.${id}.name">${byId[id].name}</b></a>`).join('\n          ')}
+        <div class="hero-stage">
+          <div class="shelf" aria-hidden="true">
+            ${['peekaboo', 'animal-band'].map(id => `<a class="shelf-card" href="games/${id}/index.html" tabindex="-1"><span class="tape"></span><img src="games/${id}/card-art.svg" alt="" width="640" height="400"><b data-i18n="g.${id}.name">${byId[id].name}</b></a>`).join('\n            ')}
+          </div>
+          <div class="hero-pikku">
+            <p class="pikku-say tail-left" id="pikkuSay" aria-live="polite"><span class="say-greet" ${XH('pikku.greet', 'Hei! I’m Pikku. <b>Let’s play!</b>')}</span><span class="say-line" hidden></span></p>
+            <button class="pikku-btn" id="pikkuBtn" type="button" ${A('aria-label', 'pikku.hi', 'Say hi to Pikku the lion cub')}>${pikku('', { sizes: '(max-width: 760px) 120px, (max-width: 980px) 210px, 250px', eager: true })}</button>
+          </div>
         </div>
       </div>
     </section>
@@ -403,7 +421,7 @@ const home = head({
           ${GAMES.filter(g => g.isNew).slice(0, 5).map(g => card(g, '')).join('\n          ')}
           <a class="game-card more-card reveal" href="games/index.html" data-game="baby-pop">
             <div class="body more-body">
-              <span class="age-num" aria-hidden="true">+${GAMES.length - 5}</span>
+              <span class="more-top"><span class="age-num" aria-hidden="true">+${GAMES.length - 5}</span>${pikkuFace('', 'more-pikku')}</span>
               <h3 ${X('home.more.h', 'More games for you to discover')}</h3>
               <span class="link-arrow"><span ${X('home.allGames', 'See all games')}</span> <span>→</span></span>
             </div>
@@ -502,11 +520,14 @@ const gamesPage = head({
       <div class="game-grid" id="gameGrid">
           ${GAMES.map(g => card(g, '../')).join('\n          ')}
       </div>
-      <p class="empty" id="empty" ${X('games.empty', 'No games here yet.')}</p>
+      <div class="empty" id="empty">
+        ${pikku('../', { cls: 'empty-pikku', sizes: '140px' })}
+        <p class="pikku-say"><span ${X('games.empty', 'No games here yet.')}</span> <span ${X('pikku.empty', 'Let’s try another button!')}</span></p>
+      </div>
     </div>
 ${promiseRibbon()}
     <section class="band band-sky wave" style="padding-bottom:70px">
-      ${deco(23)}${peek('frog', 'r', '../')}
+      ${deco(23)}${peekPikku('r', '../')}
       <div class="wrap wrap-narrow center">
         <h2 class="h-md" ${X('games.choose.h', 'Can’t choose?')}</h2>
         <p ${X('games.choose.p', 'Let the dice pick. Every game is safe to hand straight to a little one.')}</p>
@@ -707,6 +728,13 @@ const about = head({
               <li><b lang="fi">peli</b>: <span ${X('about.word.peli', 'game')}</span></li>
             </ol>
           </div>
+          <div class="pikku-card">
+            ${pikku('', { cls: 'about-pikku', sizes: '150px' })}
+            <div>
+              <h2 ${X('about.pikku.h', 'Meet Pikku')}</h2>
+              <p ${X('about.pikku.p', 'Pikku is a friendly little lion cub and the face of Pienipeli. He waves hello, cheers when a game is done, and never, ever says “wrong”.')}</p>
+            </div>
+          </div>
           <div class="contact-card">
             <h2 ${X('about.hello.h', 'Say hello')}</h2>
             <p ${X('about.hello.p', 'Ideas, bugs, or a funny story about your toddler and our games? We’d love to hear it.')}</p>
@@ -784,7 +812,7 @@ const notFound = abs(head({ p: '/', canonical: '404', titleKey: 'nf.title', titl
   <main id="main" class="page-404 hero-sky">
     ${sky()}
     <div class="wrap">
-      <p class="big" aria-hidden="true">🎈</p>
+      <div class="nf-pikku" aria-hidden="true">${pikku('/', { sizes: '170px', eager: true })}<span class="nf-balloon">🎈</span></div>
       <h1 ${X('nf.h1', 'Oops, this page floated away!')}</h1>
       <p class="lead" ${X('nf.p', 'We couldn’t find it. Let’s go somewhere fun instead.')}</p>
       <div class="cta-row">
@@ -806,7 +834,11 @@ const SCRIPT_STRINGS = {
   'chrome.full': 'Full screen', 'chrome.exitFull': 'Exit full screen', 'chrome.restart': 'Start again', 'chrome.help': 'How to play',
   'chrome.iosTitle': 'Full screen on iPhone', 'chrome.ios1': 'Tap the Share button in Safari.', 'chrome.ios2': 'Choose Add to Home Screen.',
   'chrome.ios3': 'Open the game from its new icon: it fills the whole screen.', 'chrome.ok': 'OK',
-  'chrome.noscript': 'This game needs JavaScript turned on.'
+  'chrome.noscript': 'This game needs JavaScript turned on.',
+  // Pikku (home hero taps, game cheers, slow-loading screen)
+  'pikku.tap.1': 'Roar! A tiny one.', 'pikku.tap.2': 'Pop a balloon with me!', 'pikku.tap.3': 'Hee hee, that tickles!',
+  'pikku.tap.4': 'High five!', 'pikku.tap.5': 'You’re my best friend!',
+  'pikku.yay': 'Yay!', 'pikku.loading': 'Loading…'
 };
 Object.entries(SCRIPT_STRINGS).forEach(([k, v]) => T(k, v));
 

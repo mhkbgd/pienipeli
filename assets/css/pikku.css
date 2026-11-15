@@ -1,0 +1,139 @@
+/* ============ Pikku: Pienipeli's mascot ============
+   One component for the website and every game (games get it through chrome.css).
+   Character sheet and usage rules: assets/mascot/README.md
+
+   Markup (full body):
+     <span class="pikku">
+       <span class="pikku-body">
+         <img src=".../pikku-480.webp" srcset="...-240.webp 240w, ...-480.webp 480w, ...-800.webp 800w" ...>
+         <span class="pikku-lids" aria-hidden="true"><i></i><i></i></span>
+       </span>
+     </span>
+   Face badge:   <span class="pikku-face"><img src=".../pikku-face-96.webp" ...></span>
+   Speech bubble: <span class="pikku-say">Hei!</span>
+
+   Motion is calm on purpose: slow breathing, a blink every few seconds, a wave or
+   a hop only when something happens. All of it switches off with reduced motion. */
+
+:root {
+  --pikku-ink: #2b1d5c;
+  --pikku-fur: #fdc23a;
+  --pikku-fur-deep: #fcb52a;
+  --pikku-mane: #f2832a;
+  --pikku-shirt: #1f7ae0;
+  --pikku-star: #ffd23d;
+}
+
+/* ---------- Full body ---------- */
+.pikku {
+  position: relative; display: inline-block; vertical-align: bottom;
+  width: var(--pikku-size, 200px); aspect-ratio: 1020 / 1150; line-height: 0;
+  -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent;
+}
+.pikku-body {
+  position: absolute; inset: 0; display: block;
+  transform-origin: 50% 96%;
+  animation: pikkuBreathe 4.8s ease-in-out infinite;
+}
+.pikku img { display: block; width: 100%; height: 100%; object-fit: contain; -webkit-user-drag: none; pointer-events: none; }
+
+/* Blink: two fur-coloured lids drop over the eyes for a moment */
+.pikku-lids i {
+  position: absolute; display: block; border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 30%, var(--pikku-fur) 55%, var(--pikku-fur-deep));
+  border-bottom: max(2px, calc(var(--pikku-size, 200px) * .014)) solid #4a2410;
+  transform: scaleY(0); transform-origin: 50% 0;
+  animation: pikkuBlink 5.6s infinite;
+}
+.pikku-lids i:nth-child(1) { left: 34.6%; top: 24.0%; width: 14.4%; height: 12.9%; rotate: -4deg; }
+.pikku-lids i:nth-child(2) { left: 57.8%; top: 29.3%; width: 14.2%; height: 12.4%; rotate: 6deg; }
+
+@keyframes pikkuBreathe { 50% { transform: scale(1.012, .99); } }
+@keyframes pikkuBlink { 0%, 93%, 100% { transform: scaleY(0); } 95.5% { transform: scaleY(1); } }
+
+/* One-off moves, added by script for a moment */
+.pikku.is-waving .pikku-body { animation: pikkuWave 1.1s ease-in-out; }
+.pikku.is-hopping .pikku-body { animation: pikkuHop .7s cubic-bezier(.3, .7, .4, 1.2); }
+@keyframes pikkuWave {
+  20% { transform: rotate(-5deg); } 45% { transform: rotate(4deg); }
+  70% { transform: rotate(-3deg); } 100% { transform: rotate(0); }
+}
+@keyframes pikkuHop {
+  0% { transform: translateY(0) scale(1, 1); }
+  20% { transform: translateY(0) scale(1.04, .94); }
+  50% { transform: translateY(-14%) scale(.98, 1.03); }
+  80% { transform: translateY(0) scale(1.03, .96); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+
+/* ---------- Face badge (cards, navigation, loader, cheers) ---------- */
+.pikku-face {
+  display: inline-grid; place-items: center; flex: none;
+  width: var(--pikku-size, 48px); height: var(--pikku-size, 48px);
+  border-radius: 50%; overflow: hidden;
+  background: radial-gradient(circle at 50% 40%, #fff6cf, #ffe27a);
+  border: 2.5px solid var(--pikku-ink);
+  box-shadow: 2px 3px 0 var(--pikku-ink);
+  line-height: 0;
+}
+.pikku-face img { width: 100%; height: 100%; object-fit: cover; translate: 0 6%; -webkit-user-drag: none; pointer-events: none; }
+
+/* ---------- Speech bubble ---------- */
+.pikku-say {
+  position: relative; display: inline-block;
+  padding: .5em .9em; max-width: 16em;
+  font-family: "Fredoka", "Nunito", "Segoe UI Rounded", system-ui, sans-serif;
+  font-weight: 600; font-size: 1.05rem; line-height: 1.2; color: var(--pikku-ink);
+  background: #fff; border: 2.5px solid var(--pikku-ink); border-radius: 18px;
+  box-shadow: 3px 4px 0 var(--pikku-ink);
+}
+.pikku-say::after {  /* tail, pointing down-left by default */
+  content: ""; position: absolute; left: 22px; bottom: -11px; width: 16px; height: 16px;
+  background: #fff; border: solid var(--pikku-ink); border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg) skew(8deg, 8deg); border-radius: 0 0 4px 0;
+}
+.pikku-say.tail-left::after { left: -10px; bottom: auto; top: 50%; margin-top: -8px; transform: rotate(135deg) skew(8deg, 8deg); }
+.pikku-say.tail-right::after { left: auto; right: 22px; }
+.pikku-say.pop { animation: pikkuSayPop .35s cubic-bezier(.3, .7, .4, 1.4); }
+@keyframes pikkuSayPop { from { transform: scale(.85); } }
+
+/* ---------- Loader (games, only when loading is slow) ---------- */
+.pikku-loader {
+  position: fixed; inset: 0; z-index: 60;
+  display: grid; place-content: center; justify-items: center; gap: 18px;
+  background: radial-gradient(circle at 50% 42%, #fffaf1 0%, #fff0d9 70%);
+  transition: opacity .3s ease;
+}
+.pikku-loader.out { opacity: 0; pointer-events: none; }
+.pikku-loader .pikku-face { --pikku-size: 112px; border-width: 3px; box-shadow: 3px 4px 0 var(--pikku-ink); animation: pikkuBounce 1s ease-in-out infinite alternate; }
+.pikku-dots { display: flex; gap: 10px; }
+.pikku-dots i { width: 14px; height: 14px; border-radius: 50%; background: var(--pikku-mane); border: 2.5px solid var(--pikku-ink); animation: pikkuDot 1.2s ease-in-out infinite; }
+.pikku-dots i:nth-child(2) { background: var(--pikku-star); animation-delay: .15s; }
+.pikku-dots i:nth-child(3) { background: var(--pikku-shirt); animation-delay: .3s; }
+@keyframes pikkuBounce { from { transform: translateY(0); } to { transform: translateY(-12px); } }
+@keyframes pikkuDot { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-9px); } }
+
+/* ---------- Cheer (games: pops up in a bottom corner when a round is finished) ---------- */
+.pikku-cheer {
+  position: fixed; z-index: 40; pointer-events: none;
+  left: calc(12px + env(safe-area-inset-left, 0px));
+  bottom: calc(-4px + env(safe-area-inset-bottom, 0px));
+  display: flex; align-items: flex-start; gap: 4px;
+  transform: translateY(110%); transition: transform .45s cubic-bezier(.3, .8, .4, 1.15);
+}
+.pikku-cheer.show { transform: translateY(0); }
+.pikku-cheer .pikku { --pikku-size: clamp(92px, 16vmin, 150px); }
+.pikku-cheer .pikku-say { margin-top: 6px; font-size: clamp(1.05rem, 3vmin, 1.4rem); }
+.pikku-cheer.show .pikku { animation: pikkuCheerHop .6s .35s ease-in-out 2; }
+@keyframes pikkuCheerHop { 50% { transform: translateY(-10px) rotate(-3deg); } }
+
+/* ---------- Visually hidden text ---------- */
+.pikku-sr { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Calm mode ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .pikku-body, .pikku-lids i, .pikku.is-waving .pikku-body, .pikku.is-hopping .pikku-body,
+  .pikku-say.pop, .pikku-loader .pikku-face, .pikku-dots i, .pikku-cheer.show .pikku { animation: none !important; }
+  .pikku-cheer { transform: none; opacity: 0; transition: opacity .2s ease; }
+  .pikku-cheer.show { opacity: 1; }
+}

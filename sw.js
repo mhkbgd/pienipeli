@@ -5,7 +5,7 @@
      is refreshed); offline the saved copy is used.
    When you add a game or a file, add it to FILES below and bump VERSION.        */
 
-const VERSION = 'v7';
+const VERSION = 'v8';
 const CACHE = 'pienipeli-' + VERSION;
 
 const FILES = [
@@ -21,6 +21,13 @@ const FILES = [
   '/assets/js/i18n.js',
   '/assets/js/chrome.js',
   '/assets/css/chrome.css',
+  '/assets/css/pikku.css',
+  // Pikku, the mascot (the big master picture in assets/mascot/source/ is never loaded)
+  '/assets/mascot/pikku-240.webp',
+  '/assets/mascot/pikku-480.webp',
+  '/assets/mascot/pikku-800.webp',
+  '/assets/mascot/pikku-face-96.webp',
+  '/assets/mascot/pikku-face-192.webp',
   '/assets/i18n/en.js',
   '/assets/i18n/fi.js',
   '/assets/i18n/bn.js',

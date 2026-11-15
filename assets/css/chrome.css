@@ -2,6 +2,8 @@
    The same round grown-up buttons in every game, the "how to play" hand, and the
    restart fade. Loaded by every game after its own stylesheet, so it wins.        */
 
+@import url("pikku.css");   /* Pikku, the mascot: slow-loading screen and round cheers */
+
 @font-face {
   font-family: "Noto Sans Bengali";
   font-style: normal;

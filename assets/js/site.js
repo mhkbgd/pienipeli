@@ -83,6 +83,47 @@
   const I18N = window.PP_I18N;
   const tr = (key, fallback) => (I18N ? I18N.t(key, fallback) : fallback);
 
+  // ---------- Pikku in the hero ----------
+  // Tap Pikku: he waves and says something new. Balloon milestones make him hop and
+  // cheer. After a moment his bubble goes back to the greeting (which follows the
+  // chosen language by itself, because it keeps its data-i18n-html).
+  const pikkuBtn = $('pikkuBtn');
+  const pikkuSay = $('pikkuSay');
+  const PIKKU_LINES = [
+    ['pikku.tap.1', 'Roar! A tiny one.', 'roar'], ['pikku.tap.2', 'Pop a balloon with me!'],
+    ['pikku.tap.3', 'Hee hee, that tickles!'], ['pikku.tap.4', 'High five!'], ['pikku.tap.5', 'You’re my best friend!']
+  ];
+  let pikkuLine = 0;
+  function pikkuMove(cls) {
+    const el = pikkuBtn && pikkuBtn.querySelector('.pikku');
+    if (!el || reduced) return;
+    el.classList.remove('is-waving', 'is-hopping');
+    void el.offsetWidth;
+    el.classList.add(cls);
+    clearTimeout(pikkuMove.t);
+    pikkuMove.t = setTimeout(() => el.classList.remove(cls), 1200);
+  }
+  function pikkuTalk(text) {
+    if (!pikkuSay) return;
+    const greet = pikkuSay.querySelector('.say-greet');
+    const line = pikkuSay.querySelector('.say-line');
+    line.textContent = text;
+    greet.hidden = true; line.hidden = false;
+    pikkuSay.classList.remove('pop'); void pikkuSay.offsetWidth; pikkuSay.classList.add('pop');
+    clearTimeout(pikkuTalk.t);
+    pikkuTalk.t = setTimeout(() => { line.hidden = true; greet.hidden = false; }, 3500);
+  }
+  if (pikkuBtn) {
+    pikkuBtn.addEventListener('click', () => {
+      const [key, text, sound] = PIKKU_LINES[pikkuLine++ % PIKKU_LINES.length];
+      pikkuMove('is-waving');
+      pikkuTalk(tr(key, text));
+      if (sound) play('animal', sound); else play('tap');
+    });
+    // A friendly wave hello shortly after the page opens
+    setTimeout(() => pikkuMove('is-waving'), 900);
+  }
+
   // ---------- Wobbly headline letters ----------
   // The hero heading is split into letters that boing when touched (and get rainbow
   // colours). Translations replace the heading, so it is split again after every
@@ -214,7 +255,7 @@
     const msg = milestone(pops) || (rainbow ? tr('home.rainbow', 'Rainbow!') : '');
     if (msg) {
       counter.querySelector('.pop-label').textContent = msg;
-      if (MILESTONES[pops]) play('fanfare');
+      if (MILESTONES[pops]) { play('fanfare'); pikkuMove('is-hopping'); pikkuTalk(msg); }
       clearTimeout(countPop.t);
       countPop.t = setTimeout(() => { counter.querySelector('.pop-label').textContent = tr('home.popped', 'popped!'); }, 1800);
     }

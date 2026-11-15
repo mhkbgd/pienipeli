@@ -1047,3 +1047,77 @@ html[lang="bn"] .hero h1 { line-height: 1.2; }
 
 /* Long translated words never overflow */
 h1, h2, h3, .btn, .chip, .trust li, .nav a, .cat-tile { overflow-wrap: break-word; hyphens: auto; }
+
+/* =====================================================================
+   Pikku, the mascot, on the website pages (the component itself: pikku.css)
+   ===================================================================== */
+
+/* Home hero: Pikku sits in front of the toy shelf and says hello */
+.hero-stage { position: relative; aspect-ratio: 1 / .92; max-width: 560px; width: 100%; justify-self: center; }
+.hero-stage .shelf { position: absolute; inset: 0; max-width: none; aspect-ratio: auto; }
+.hero-pikku { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.pikku-btn {
+  position: absolute; left: -3%; bottom: -8%; width: 47%;
+  padding: 0; margin: 0; border: 0; background: none; cursor: pointer; pointer-events: auto;
+  border-radius: 42% 42% 30% 30%; -webkit-tap-highlight-color: transparent;
+}
+.pikku-btn .pikku { width: 100%; }
+.pikku-btn:focus-visible { outline-offset: -6px; }
+.hero-pikku .pikku-say {
+  position: absolute; left: 45%; bottom: 33%; max-width: 50%; margin: 0;
+  font-size: clamp(1rem, 1.7vw, 1.3rem); rotate: -2deg; pointer-events: auto;
+}
+.hero-pikku .pikku-say b { color: var(--tomato); }
+
+@media (max-width: 760px) {
+  /* Phones: Pikku and his hello come first, next to each other; the shelf rests */
+  .hero-stage { order: -1; aspect-ratio: auto; max-width: none; justify-self: stretch; margin-bottom: -10px; }
+  .hero-stage .shelf { display: none; }
+  .hero-pikku { position: relative; display: flex; flex-direction: row-reverse; justify-content: flex-end; align-items: center; gap: 12px; }
+  .pikku-btn { position: relative; left: auto; bottom: auto; width: 116px; flex: none; }
+  .hero-pikku .pikku-say { position: relative; left: auto; bottom: auto; max-width: none; flex: 0 1 auto; font-size: 1.05rem; rotate: 0deg; }
+}
+
+/* "Pikku's pick" sticker on selected game cards */
+.pikku-pick {
+  position: absolute; left: 10px; bottom: 10px; z-index: 2;
+  display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px 3px 3px;
+  background: #fff; border: 2px solid var(--ink); border-radius: 999px; box-shadow: 2px 2px 0 var(--ink);
+  font-family: var(--display); font-weight: 600; font-size: .85rem; line-height: 1.1;
+}
+.pikku-pick .pikku-face { --pikku-size: 32px; border-width: 2px; box-shadow: none; }
+.game-card:hover .pikku-pick .pikku-face { animation: pikkuNod .6s ease-in-out; }
+@keyframes pikkuNod { 35% { rotate: -10deg; } 70% { rotate: 6deg; } }
+
+/* "More games" card */
+.more-top { display: flex; align-items: center; gap: 14px; }
+.more-pikku { --pikku-size: 62px; }
+.more-card:hover .more-pikku { animation: pikkuNod .6s ease-in-out; }
+
+/* Filter shows nothing: Pikku encourages */
+.empty.show { display: flex; flex-direction: column-reverse; align-items: center; gap: 4px; padding: 30px 20px 40px; }
+.empty .empty-pikku { --pikku-size: 140px; }
+.empty .pikku-say { color: var(--ink); }
+
+/* Peeking over a wave */
+.peek-pikku .pikku-face { --pikku-size: 84px; border-width: 3px; }
+.peek .pikku-face img { width: 100%; height: 100%; }
+@media (max-width: 760px) { .peek-pikku .pikku-face { --pikku-size: 64px; } }
+
+/* About: meet Pikku */
+.pikku-card {
+  display: flex; align-items: center; gap: 14px; margin-top: 34px; padding: 18px 24px 18px 10px;
+  background: var(--band-sky); border: var(--line); border-radius: var(--r); box-shadow: var(--pop); transform: rotate(1deg);
+}
+.pikku-card .about-pikku { --pikku-size: 118px; flex: none; }
+.pikku-card h2 { font-size: 1.6rem; margin-bottom: .25em; }
+.pikku-card p { margin: 0; color: var(--ink); }
+
+/* 404: Pikku lost his balloon */
+.nf-pikku { position: relative; display: inline-block; margin-bottom: 4px; }
+.nf-pikku .pikku { --pikku-size: 170px; }
+.nf-balloon { position: absolute; right: -46px; top: -18px; font-size: 3.6rem; line-height: 1; animation: float404 3s ease-in-out infinite alternate; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nf-balloon, .pikku-pick .pikku-face, .more-pikku { animation: none !important; }
+}
