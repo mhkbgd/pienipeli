@@ -1,0 +1,107 @@
+/* ============ Pienipeli kit: base styles shared by the toddler games ============
+   Reset, no-zoom/no-scroll rules, sky + meadow, grown-up corner buttons, effects layer.
+   Each game adds its own style.css after this file.                                    */
+
+:root {
+  --sky-top: #c9ecff;
+  --sky-bottom: #fff3fa;
+  --ink: #4a3434;
+  --shadow: 0 6px 18px rgba(110, 140, 190, .28);
+  --emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Twemoji Mozilla", sans-serif;
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-l: env(safe-area-inset-left, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;                 /* never scroll during play */
+  overscroll-behavior: none;
+  font-family: "Fredoka", "Nunito", "Segoe UI Rounded", system-ui, sans-serif;
+  color: var(--ink);
+  background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
+  touch-action: manipulation;       /* no double-tap zoom */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+button { font: inherit; color: inherit; border: 0; padding: 0; background: none; cursor: pointer; touch-action: manipulation; }
+button:focus-visible, a:focus-visible { outline: 4px solid #b995ff; outline-offset: 4px; }
+.emoji { font-family: var(--emoji); line-height: 1; }
+
+/* ---------- Sky + meadow ---------- */
+.sky { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+.sun {
+  position: absolute; top: -7vmin; right: -7vmin;
+  width: 32vmin; height: 32vmin; border-radius: 50%;
+  background: radial-gradient(circle, #fff6b8 0 45%, #ffe37a 46% 60%, rgba(255, 227, 122, 0) 61%);
+  animation: kit-spin 40s linear infinite;
+}
+.cloud {
+  position: absolute; left: -30vmin;
+  width: 24vmin; height: 8vmin; border-radius: 8vmin;
+  background: #fff; opacity: .85;
+  animation: kit-drift linear infinite;
+}
+.cloud::before, .cloud::after { content: ""; position: absolute; background: #fff; border-radius: 50%; }
+.cloud::before { width: 11vmin; height: 11vmin; left: 3vmin; top: -5.5vmin; }
+.cloud::after  { width: 8vmin;  height: 8vmin;  left: 12vmin; top: -3.5vmin; }
+.c1 { top: 12%; animation-duration: 75s; animation-delay: -20s; }
+.c2 { top: 28%; animation-duration: 95s; animation-delay: -60s; transform: scale(.65); }
+.hill { position: absolute; border-radius: 50%; }
+.h1 { left: -20vw; bottom: -30vh; width: 85vw; height: 62vh; background: #c4f2cd; }
+.h2 { right: -25vw; bottom: -34vh; width: 95vw; height: 64vh; background: #addfb9; }
+@keyframes kit-drift { from { left: -30vmin; } to { left: 110vw; } }
+@keyframes kit-spin { to { transform: rotate(360deg); } }
+
+/* ---------- Corner buttons (for grown-ups) ---------- */
+.corner-btn {
+  position: fixed; z-index: 20;
+  top: calc(10px + var(--safe-t));
+  width: 52px; height: 52px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 24px; line-height: 1; text-decoration: none; color: var(--ink);
+  background: rgba(255, 255, 255, .75);
+  box-shadow: var(--shadow);
+  transition: transform .15s;
+}
+.corner-btn:active { transform: scale(.88); }
+.corner-btn.home { left: calc(10px + var(--safe-l)); font-family: var(--emoji); }
+.corner-btn.sound { left: calc(72px + var(--safe-l)); font-family: var(--emoji); }
+.corner-btn.sound[aria-pressed="false"] { opacity: .6; }
+.corner-btn.full { left: calc(134px + var(--safe-l)); font-size: 26px; font-weight: 700; }
+
+/* ---------- Effects ---------- */
+.fx { position: fixed; inset: 0; pointer-events: none; z-index: 30; overflow: hidden; }
+.fx .float, .fx .confetti, .fx .drop { position: absolute; left: 0; top: 0; will-change: transform; }
+.fx .float {
+  font-family: var(--emoji); line-height: 1;
+  animation: kit-float var(--dur, 2.2s) ease-out forwards;
+}
+@keyframes kit-float {
+  0%   { transform: translate(-50%, -50%) scale(.2) rotate(0); opacity: 0; }
+  15%  { transform: translate(calc(-50% + var(--dx) * .2), calc(-50% - 30px)) scale(1.15) rotate(calc(var(--rot) * .3)); opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--dx)), calc(-50% - var(--rise))) scale(.9) rotate(var(--rot)); opacity: 0; }
+}
+.fx .confetti { width: 12px; height: 18px; border-radius: 3px; }
+.fx .drop { border-radius: 50%; }
+
+.noscript {
+  position: fixed; inset: auto 0 40% 0; text-align: center;
+  font-size: 22px; font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sun, .cloud { animation: none !important; }
+}

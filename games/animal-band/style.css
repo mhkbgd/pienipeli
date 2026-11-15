@@ -1,0 +1,153 @@
+/* ============ Animal Band! styles (base styles in assets/css/kit.css) ============ */
+
+:root {
+  /* Portrait: 2 columns x 3 rows. Landscape: one row of 6, like a piano. */
+  --cell: min(44vw, calc((100vh - 190px) / 3.15), 240px);
+  --gap: clamp(8px, 2.2vmin, 22px);
+  --beat: .625s;
+}
+@media (orientation: landscape) {
+  :root { --cell: min(calc((100vw - 60px) / 6.3), calc(100vh - 200px), 220px); }
+}
+
+html, body { background: linear-gradient(#ffe9f3, #fff6e6); }
+
+/* ---------- Theatre ---------- */
+.theatre { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+.curtain {
+  position: absolute; top: 0; bottom: 0; width: 9vw; min-width: 34px;
+  background: repeating-linear-gradient(90deg, #ff7aa8 0 12px, #ff8fb6 12px 24px);
+  box-shadow: 0 0 24px rgba(180, 60, 110, .25);
+}
+.cl { left: 0; border-bottom-right-radius: 60% 18%; }
+.cr { right: 0; border-bottom-left-radius: 60% 18%; }
+.valance {
+  position: absolute; left: 0; right: 0; top: 0; height: 30px;
+  background: radial-gradient(circle at 30px -6px, #ff6f9f 0 30px, transparent 31px) 0 0 / 60px 36px repeat-x;
+}
+.spot {
+  position: absolute; top: -10vh; width: 60vmin; height: 120vh;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 250, 200, .55), rgba(255, 250, 200, 0) 65%);
+  transform-origin: 50% 0;
+  animation: sweep 7s ease-in-out infinite alternate;
+}
+.s1 { left: 5%; rotate: -18deg; }
+.s2 { right: 5%; rotate: 18deg; animation-delay: -3.5s; }
+@keyframes sweep { from { transform: rotate(-8deg); } to { transform: rotate(8deg); } }
+.floorboards {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 18%;
+  background: repeating-linear-gradient(90deg, #f2c58d 0 70px, #eab77c 70px 140px);
+  box-shadow: inset 0 8px 0 rgba(0, 0, 0, .05);
+}
+body.beat .spot { animation-duration: calc(var(--beat) * 4); }
+
+/* ---------- Music buttons (top right, big enough for toddlers and grown-ups) ---------- */
+.music-btns {
+  position: fixed; z-index: 20;
+  top: calc(10px + var(--safe-t)); right: calc(10px + var(--safe-r));
+  display: flex; gap: 10px;
+}
+.music-btn {
+  width: 64px; height: 64px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 32px;
+  background: rgba(255, 255, 255, .85);
+  box-shadow: var(--shadow);
+  transition: transform .15s, box-shadow .2s;
+}
+.music-btn:active { transform: scale(.88); }
+.music-btn[aria-pressed="true"] { background: #fff2a8; box-shadow: 0 0 0 5px #ffd23d, var(--shadow); }
+body.beat #beatBtn .emoji { display: block; animation: pulse var(--beat) ease-in-out infinite; }
+body.song #songBtn .emoji { display: block; animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 20% { transform: scale(1.18); } }
+
+/* ---------- Layout ---------- */
+.stage {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px;
+  padding: calc(84px + var(--safe-t)) calc(12px + var(--safe-r)) calc(14px + var(--safe-b)) calc(12px + var(--safe-l));
+}
+.band {
+  display: grid; gap: var(--gap);
+  grid-template-columns: repeat(2, var(--cell));
+}
+@media (orientation: landscape) {
+  .band { grid-template-columns: repeat(6, var(--cell)); align-items: end; }
+}
+
+/* ---------- One band member ---------- */
+.player {
+  position: relative;
+  width: var(--cell); height: var(--cell);
+  display: grid; place-items: center;
+  animation: playerIn .6s cubic-bezier(.3, 1.6, .5, 1) backwards;
+  animation-delay: calc(var(--i) * .07s);
+}
+@keyframes playerIn { from { scale: 0; } to { scale: 1; } }
+.pad {
+  position: absolute; inset: 4%;
+  border-radius: 30%;
+  background: radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--c) 45%, #fff), var(--c));
+  box-shadow: 0 8px 0 color-mix(in srgb, var(--c) 70%, #6a4060), 0 14px 20px rgba(120, 60, 100, .2);
+  transition: transform .1s, box-shadow .1s;
+}
+.who {
+  position: relative;
+  width: calc(var(--cell) * .7); height: calc(var(--cell) * .7);
+  filter: drop-shadow(0 5px 3px rgba(0, 0, 0, .15));
+  pointer-events: none;
+}
+/* Gentle idle sway, in time with the beat when it's on */
+.player .who { animation: sway 2.4s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -.4s); }
+body.beat .player .who { animation: bop var(--beat) ease-in-out infinite; animation-delay: 0s; }
+@keyframes sway { from { rotate: -5deg; } to { rotate: 5deg; } }
+@keyframes bop { 0%, 100% { translate: 0 0; } 30% { translate: 0 -8%; } }
+
+/* Singing: the pad presses down, the animal jumps */
+.player.sing .pad { animation: press .3s ease-out; }
+.player.sing .who { animation: jump .45s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes press {
+  0% { transform: translateY(6px) scale(.97); box-shadow: 0 2px 0 color-mix(in srgb, var(--c) 70%, #6a4060), 0 4px 8px rgba(120, 60, 100, .2); }
+  100% { transform: none; }
+}
+@keyframes jump {
+  0% { transform: scale(1); }
+  30% { transform: translateY(-16%) scale(1.15, .9); }
+  60% { transform: translateY(-6%) scale(.95, 1.08); }
+  100% { transform: none; }
+}
+
+/* Song time: the next animal shines */
+.player.next .pad { box-shadow: 0 0 0 6px #fff, 0 0 0 11px var(--c), 0 8px 0 color-mix(in srgb, var(--c) 70%, #6a4060), 0 0 30px var(--c); }
+.player.nudge .who { animation: nudge 1s ease-in-out; }
+@keyframes nudge {
+  0%, 100% { transform: none; }
+  20% { transform: scale(1.15) rotate(-10deg); }
+  40% { transform: scale(1.15) rotate(10deg); }
+  60% { transform: scale(1.1) rotate(-6deg); }
+}
+
+/* Song progress: a row of little notes that fill up */
+.progress {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;
+  max-width: min(92vw, 640px);
+}
+.progress i {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: rgba(255, 255, 255, .8);
+  box-shadow: inset 0 0 0 2px rgba(180, 110, 150, .3);
+  transition: background .2s, scale .2s;
+}
+.progress i.on { background: #ffb3d0; scale: 1.2; box-shadow: none; }
+
+/* Song finished: everyone jumps */
+.band.cheer .who { animation: cheer .35s ease-in-out infinite alternate !important; }
+.band.cheer .player:nth-child(even) .who { animation-delay: .17s !important; }
+@keyframes cheer { from { transform: translateY(0) rotate(-8deg); } to { transform: translateY(-14%) rotate(8deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .spot, .player .who, body.beat .player .who, .band.cheer .who { animation: none !important; }
+}
+
+.who img { display: block; width: 100%; height: 100%; -webkit-user-drag: none; }

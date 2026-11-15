@@ -5,7 +5,7 @@
 Pienipeli (Finnish *pieni peli*, "little game") makes gentle, joyful browser games for babies
 and toddlers. There are no ads, no purchases, no tracking, no scores and no losing.
 
-This repository holds the whole website: the landing page plus each game. It's plain
+This repository holds the whole website: a few small pages plus each game. It's plain
 HTML, CSS and JavaScript with **no build step and no dependencies**.
 
 ## Games
@@ -15,30 +15,72 @@ HTML, CSS and JavaScript with **no build step and no dependencies**.
 | **Baby Pop!** | [`games/baby-pop/`](games/baby-pop/) | Pop smiley balloons by tapping, swiping or pressing any key. Includes gentle generated sounds, speed control, full screen and rare rainbow balloons. |
 | **Find the Animal!** | [`games/find-the-animal/`](games/find-the-animal/) | The game asks "Where is the cat?" out loud and the child taps the right one of three animals. 40 animals, English / Finnish / Bengali, spoken questions, animal sounds, confetti, no losing. |
 | **Feed the Animals!** | [`games/feed-the-animals/`](games/feed-the-animals/) | One of 21 hungry animals (monkey, panda, lion, penguin, giraffe and more) opens its mouth and the child taps the right one of three foods. The food flies in, the animal chews and dances, hearts and stars float up. Any other food just gets a silly head shake. Generated munching, animal and celebration sounds, no text, no losing. |
+| **Peekaboo!** | [`games/peekaboo/`](games/peekaboo/) | Three hiding places (bush, curtain, gift box) each hide an animal. One tap opens it with a "pee-ka-BOO" tune, the animal waves, calls and giggles. All found: fanfare, then new animals hide. Ages 1–3. |
+| **Bubble Bath!** | [`games/bubble-bath/`](games/bubble-bath/) | A muddy animal sits in the tub. Rub (one finger or many) to wipe the mud away with soap bubbles and squeaks. Clean: it shakes dry, sparkles, and the next one splashes in. Tap the rubber duck to squeak it. |
+| **Color Splash!** | [`games/color-splash/`](games/color-splash/) | Pick one of six paint pots and tap a part of the picture to fill it. Every colour plays its own note (pentatonic), so colouring makes music. Eight pictures. Babies who only tap the picture get a new colour each tap. |
+| **Animal Band!** | [`games/animal-band/`](games/animal-band/) | Six singing animals on a C major pentatonic scale, so any mash sounds nice. 🥁 adds a soft backing beat; 🎵 is song time, where every tap plays the next note of a nursery tune. Number and letter keys play too. |
+| **Bedtime!** | [`games/bedtime/`](games/bedtime/) | Drag small, middle and big animals into the bed that fits (or tap the animal, then the bed). Each tuck-in plays a phrase of Brahms' Lullaby; when all three sleep, the lights dim and the whole lullaby plays, then morning comes. |
+
+The five newer games use **no words at all**: no speech and no text to read. Everything you
+hear is music, chimes and playful synthesized animal calls.
 
 ## Project structure
 
 ```
 .
-├── index.html            Landing page (pienipeli.fi)
+├── index.html            Home: hero with poppable balloons, pick by age, new games, animal playground
+├── games/index.html      All games (/games/): every game card, filter chips (age, music, calm)
+├── parents.html          For parents: promises, home-screen setup tabs, skills table, tips, FAQ
+├── about.html            About: why and how the games are made, contact
 ├── privacy.html          Privacy statement
 ├── 404.html              "Page not found" page (uses absolute paths)
 ├── assets/
-│   ├── css/site.css      Styles for the landing, privacy and 404 pages
-│   ├── js/site.js        Landing page play: balloons, pop counter, animal playground, reveals
+│   ├── css/site.css      Styles for all website pages (the games have their own)
+│   ├── js/site.js        Website behaviour: balloons, playground, filters, setup tabs, "Surprise me", reveals
 │   ├── js/app.js         Shared by all games: offline (service worker) + full screen / home-screen tip
+│   ├── js/kit.js         Shared by the five newer games: sounds + music, effects, corner buttons
+│   ├── css/kit.css       Base styles for those games (reset, sky, corner buttons, effects)
 │   ├── fonts/            Self-hosted Fredoka + Noto Sans Bengali fonts and their licences (OFL)
 │   └── img/              Logo (SVG), favicons, app icons, social share image
 ├── games/
-│   ├── baby-pop/         Baby Pop! (index.html, script.js, style.css)
+│   ├── index.html        The "All games" page (see above)
+│   ├── baby-pop/         Baby Pop! (index.html, script.js, style.css, card-art.svg)
 │   ├── find-the-animal/  Find the Animal! (see below)
-│   └── feed-the-animals/ Feed the Animals! (see below)
+│   ├── feed-the-animals/ Feed the Animals! (see below)
+│   ├── peekaboo/         Peekaboo!      ┐
+│   ├── bubble-bath/      Bubble Bath!   │ index.html, style.css, script.js,
+│   ├── color-splash/     Color Splash!  │ manifest.webmanifest, icons/, card-art.svg
+│   ├── animal-band/      Animal Band!   │ (Color Splash also has pictures.js)
+│   └── bedtime/          Bedtime!       ┘
 ├── site.webmanifest      Web app manifest (name, icons, colours)
 ├── robots.txt            Search engine rules + sitemap location
 ├── sitemap.xml           List of public pages for search engines
 ├── sw.js                 Service worker: saves the games for offline use
 └── _headers              Security & caching headers (read by Cloudflare Pages)
 ```
+
+## The website pages
+
+Four pages share one header, footer and stylesheet (`assets/css/site.css`):
+**Home**, **All games** (`games/index.html`), **For parents** and **About**, plus Privacy and 404.
+
+- **Look:** bright and playful, made for kids. The home page opens in a sky with a smiling sun,
+  drifting clouds and green hills (like the games). Every section below is its own colour band
+  (`band band-grass`, `band-sun`, `band-sky`, `band-pink`, `band-lilac`, `band-base`) with a
+  wavy top (`wave`). Floating confetti shapes (`.decos`) drift near the edges, and animals peek
+  over the waves (`.peek`). Inner pages start with a coloured header (`page-hero hero-sky`,
+  `hero-mint`, `hero-pink`, `hero-lilac`). Cards and buttons have dark outlines and chunky
+  shadows, and wiggle on hover. The footer is a starry night sky. Colours are CSS variables at
+  the top of `site.css`; the "Fun layer" block at the end holds the bands, sky and decorations.
+- **Navigation:** pill links in the header. On phones (under 760 px) the same links turn into a
+  tab bar at the bottom of the screen, with icons.
+- **All games filters:** each card has `data-tags` (`age-1`, `age-2`, `music`, `calm`). The chips
+  filter the grid and update the address (`games/#music`), so the home page "Pick by age" tiles
+  link straight into a filter. Without JavaScript every game simply shows.
+- **"Surprise me"** buttons (`data-random="url url ..."`) open a random game.
+- **Parents setup tabs** open on the visitor's own device (iPhone, Android or computer).
+- Links from the old single page (`/#games`, `/#faq`, ...) are sent to the new pages.
+- Inside every game, the 🏠 button goes to **All games**.
 
 ## Find the Animal!
 
@@ -53,7 +95,7 @@ games/find-the-animal/
 ├── narration/     Optional recorded narration clips + manifest.js + README (voice brief)
 ├── tools/         narration-lines.mjs: lists every spoken line for recording
 ├── script.js      Game logic, speech timing, confetti
-└── card-art.svg   Picture for the game card on the landing page
+└── card-art.svg   Picture for the game card on the website
 ```
 
 - **Adding an animal:** add one entry to the `ANIMALS` list in `animals.js` with its
@@ -83,7 +125,7 @@ games/feed-the-animals/
 ├── animals.js     Foods (emoji + plate colour) and the 21 animal drawings (inline SVG)
 ├── sounds.js      All sounds, generated live with the Web Audio API (no audio files)
 ├── script.js      Rounds, tap handling, flying food, hearts/stars/confetti, hints
-└── card-art.svg   Picture for the game card on the landing page (made from animals.js)
+└── card-art.svg   Picture for the game card on the website (made from animals.js)
 ```
 
 - **Moods:** each animal is one SVG with a mouth and eyes for every mood. `script.js` only
@@ -101,6 +143,57 @@ games/feed-the-animals/
 - **Taps:** food plates react on touch-down. While food is flying or the animal is
   reacting, taps are ignored, so double taps can't skip anything. After 6 seconds without
   a tap, the right food gives a little wiggle as a hint.
+
+## Animal pictures (shared by every game)
+
+Every animal is one picture file in **`assets/animals/<id>.svg`** (cat, dog, cow, … 40 in all),
+drawn in one soft cartoon style. The same file is used everywhere an animal appears: Peekaboo,
+Bubble Bath, Animal Band, Bedtime, the website and the game card pictures. So an animal looks
+the same on every phone (no emoji that change from device to device), and it works offline.
+
+- The pictures are generated from the drawings in `games/find-the-animal/animals.js`.
+  After changing or adding a drawing there, run `node tools/build-animal-pictures.mjs`.
+- In the kit games: `Kit.animalImg('dog', 'class')` gives an `<img>`, `Kit.animalSrc('dog')` the
+  file's address, and `Kit.loadAnimal('dog')` a loaded image (Bubble Bath draws it on a canvas,
+  and its mud follows the animal's outline).
+- `Kit.Sound.call(id)` plays the animal's call. Animals without their own call borrow a close
+  cousin's (zebra uses the horse, goat the sheep, chicken the chick, …): see `CALL_ALIAS` in `kit.js`.
+- New picture files must also be added to `FILES` in `sw.js` (and bump `VERSION`) so they work offline.
+
+## The toddler kit (Peekaboo, Bubble Bath, Color Splash, Animal Band, Bedtime)
+
+These five games share `assets/js/kit.js` and `assets/css/kit.css`, so each game's own
+`script.js` is only its game logic. Load order in each page: `app.js`, `kit.js`, then the game.
+
+- **`Kit.Sound`**: every sound and tune is generated live with the Web Audio API (no audio
+  files, no speech). It has the animal calls (same recipes as Feed the Animals, plus frog, owl,
+  fox and hamster), common sounds (`tap`, `boing`, `yay`, `fanfare`, `twinkle`, `slideUp`/`slideDown`,
+  `hmm`), and music helpers: `hz('C5')`, `musicBox`, `marimba` and `melody(notes, { bpm, voice })`.
+  A game makes its own sounds with `Sound.run(() => Sound.tone({...}))`, which stays silent when
+  muted. A soft compressor on the output keeps many fingers at once from getting loud.
+- **Mute** is shared by all five games (`localStorage` key `pienipeli-muted`).
+- **`Kit.fx`**: `floaties` (hearts and stars), `confetti`, `burst` (paint or water drops), `rise` (♪, 💤).
+- **`Kit.setup({ onFirstTap })`**: wires 🔊 and ⛶, unlocks audio on the first tap, and blocks
+  pinch zoom, double-tap and the context menu.
+- **Every game**: reacts on touch-down, ignores taps while something is animating, gives a
+  gentle hint after a few idle seconds (a wiggle, glow or twinkle), plays from the keyboard
+  (any key does something), and respects `prefers-reduced-motion`.
+
+Per game:
+
+- **Peekaboo** (`script.js`): `ANIMALS` (emoji + call id), three cover kinds drawn as inline SVG
+  (`bushHalf`, `curtainParts`, `boxParts`). CSS opens them by `data-state="open"` per `data-kind`.
+- **Bubble Bath** (`script.js`): two canvases. The mud is drawn only where the animal's own
+  shape is (`destination-in` with the emoji) and above the water line, then rubbing erases it
+  (`destination-out`). A pixel count says when less than 18% is left. Multi-touch works.
+- **Color Splash** (`pictures.js`): each picture is an SVG in a 400 × 400 box. Shapes with
+  `class="region"` get coloured; `class="face"` decorations never catch taps. Add a picture by
+  adding an entry. The colours and notes are in `PAINTS` in `script.js`.
+- **Animal Band** (`script.js`): `BAND` (emoji, note, colour, voice), `SONGS` (only C D E G A
+  notes), and a look-ahead drum/bass scheduler on the audio clock. The beat stops when the tab is hidden.
+- **Bedtime** (`script.js`): `TRIOS` (small, middle, big), `LULLABY` in phrases. Drag with
+  pointer capture, or tap an animal and then a bed; the wrong bed bounces the animal back
+  and makes the right bed glow.
 
 ## Home screen, full screen & offline
 
@@ -144,15 +237,22 @@ when opened from disk. That's expected; on Cloudflare it works.
 
 ## Adding a new game
 
+For a toddler game with no words, the quickest start is copying one of the five kit games
+(for example `games/peekaboo/`) and replacing its `script.js` and `style.css`.
+
+
 1. Create a folder `games/<game-name>/` with its own `index.html` (plus any CSS/JS).
    Each game is self-contained, so it can have its own styles and scripts.
 2. In the game's `<head>`, reuse the shared icon and font (see `games/baby-pop/index.html`):
    - `../../assets/img/logo.svg` for the favicon
    - `@font-face` pointing to `../../assets/fonts/fredoka-latin.woff2`
-3. Add a game card in the **Our games** section of `index.html`. Always link to
-   `games/<game-name>/index.html`, never just the folder, so the link works from disk. Copy the Baby Pop
-   `<article class="game-card">` and replace the "Coming soon" card when it's ready.
-4. Add the game's URL to `sitemap.xml`.
+3. Make a `card-art.svg` (640 × 400) and add a card to `games/index.html`: copy any
+   `<article class="game-card">`, change `data-game`, `data-tags`, the texts and links (paths there
+   start with `../`), and give it a colour in the "Per-game card colours" block of `site.css`.
+   Add `<span class="new">NEW</span>` if you like, and put it in the "New this month" row on the home page.
+   Always link to `games/<game-name>/index.html`, never just the folder, so links work from disk.
+4. Add a row to the skills table in `parents.html`, a link in the footer of each page, the
+   game to every "Surprise me" `data-random` list, its URL to `sitemap.xml`, and its files to `sw.js`.
 
 ### Principles for every game
 

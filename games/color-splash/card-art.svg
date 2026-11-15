@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+<!-- Card picture for the landing page -->
+<rect width="640" height="400" fill="#fff4e0"/>
+<circle cx="70" cy="70" r="50" fill="#ff8fb3" opacity=".2"/><circle cx="590" cy="350" r="70" fill="#4fb3ff" opacity=".18"/>
+<rect x="60" y="40" width="320" height="320" rx="26" fill="#fff"/>
+<g stroke="#4a3434" stroke-width="7" stroke-linejoin="round" transform="translate(70 50) scale(.75)">
+<path d="M300,200 L372,138 Q384,200 372,262 Z" fill="#ff5a5f"/>
+<path d="M150,118 Q200,52 262,112 Z" fill="#ffd93d"/>
+<path d="M170,284 Q210,336 250,286 Z" fill="#fff"/>
+<ellipse cx="200" cy="200" rx="128" ry="92" fill="#4fb3ff"/>
+<path d="M152,140 Q186,200 152,260 Q120,200 152,140 Z" fill="#fff"/>
+<circle cx="88" cy="188" r="6" fill="#4a3434" stroke="none"/><circle cx="120" cy="188" r="6" fill="#4a3434" stroke="none"/>
+<path d="M93,201 Q104,212 115,201" fill="none" stroke-width="5" stroke-linecap="round"/>
+</g>
+<g><circle cx="450" cy="110" r="38" fill="#fff"/><circle cx="450" cy="110" r="29" fill="#ff5a5f"/><ellipse cx="441" cy="99" rx="8" ry="5" fill="#fff" opacity=".55"/><circle cx="540" cy="110" r="38" fill="#fff"/><circle cx="540" cy="110" r="29" fill="#ffa53a"/><ellipse cx="531" cy="99" rx="8" ry="5" fill="#fff" opacity=".55"/><circle cx="450" cy="200" r="38" fill="#fff"/><circle cx="450" cy="200" r="29" fill="#ffd93d"/><ellipse cx="441" cy="189" rx="8" ry="5" fill="#fff" opacity=".55"/><circle cx="540" cy="200" r="38" fill="#fff"/><circle cx="540" cy="200" r="29" fill="#5fd068"/><ellipse cx="531" cy="189" rx="8" ry="5" fill="#fff" opacity=".55"/><circle cx="450" cy="290" r="38" fill="#fff"/><circle cx="450" cy="290" r="29" fill="#4fb3ff"/><ellipse cx="441" cy="279" rx="8" ry="5" fill="#fff" opacity=".55"/><circle cx="540" cy="290" r="38" fill="#fff"/><circle cx="540" cy="290" r="29" fill="#b47cff"/><ellipse cx="531" cy="279" rx="8" ry="5" fill="#fff" opacity=".55"/></g>
+<circle cx="450" cy="290" r="42" fill="none" stroke="#4fb3ff" stroke-width="6"/>
+<text x="484" y="256" font-size="44" text-anchor="middle" dominant-baseline="central" font-family="Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif">🖌️</text>
+<text x="150" y="330" font-size="30" text-anchor="middle" dominant-baseline="central" font-family="Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif">🎵</text><text x="330" y="70" font-size="30" text-anchor="middle" dominant-baseline="central" font-family="Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif">🎶</text>
+</svg>

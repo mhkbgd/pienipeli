@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport-fit + no zoom keeps toddler taps from zooming the page -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Bedtime! Free Big and Small Sorting Game for Toddlers | Pienipeli</title>
+  <meta name="description" content="Play Bedtime free online: put the small, middle and big animals into the bed that fits. Each one snuggles in to a music-box lullaby, then the stars come out. A calm size-sorting game for toddlers. No ads, no words, no losing.">
+  <link rel="canonical" href="https://pienipeli.fi/games/bedtime/">
+  <meta name="theme-color" content="#2b2f6b">
+  <link rel="icon" href="../../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <!-- Add to Home Screen: opens straight into this game, full screen (see manifest.webmanifest) -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Bedtime">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pienipeli">
+  <meta property="og:title" content="Bedtime! Free big and small sorting game for toddlers">
+  <meta property="og:description" content="Tuck small, middle and big animals into the bed that fits, then hear a music-box lullaby. No ads, no words, no losing.">
+  <meta property="og:url" content="https://pienipeli.fi/games/bedtime/">
+  <meta property="og:image" content="https://pienipeli.fi/assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/css/kit.css">
+  <link rel="stylesheet" href="style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "VideoGame",
+        "@id": "https://pienipeli.fi/games/bedtime/#game",
+        "name": "Bedtime!",
+        "url": "https://pienipeli.fi/games/bedtime/",
+        "description": "A free, ad-free size-sorting game for toddlers. Drag the small, middle and big animals into the beds that fit them, then the lights dim and a music-box lullaby plays.",
+        "image": "https://pienipeli.fi/assets/img/og-image.png",
+        "genre": ["Educational", "Casual", "Kids"],
+        "gamePlatform": ["Web browser", "Mobile", "Tablet", "Desktop"],
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+        "audience": { "@type": "PeopleAudience", "suggestedMinAge": 2, "suggestedMaxAge": 4 },
+        "publisher": { "@type": "Organization", "name": "Pienipeli", "url": "https://pienipeli.fi/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Pienipeli", "item": "https://pienipeli.fi/" },
+          { "@type": "ListItem", "position": 2, "name": "Bedtime!", "item": "https://pienipeli.fi/games/bedtime/" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div class="scene" id="scene">
+    <!-- Bedroom at night: window with moon and stars, a rug -->
+    <div class="room" aria-hidden="true">
+      <div class="day"></div>
+      <div class="window">
+        <span class="star st1"></span><span class="star st2"></span><span class="star st3"></span><span class="star st4"></span>
+        <span class="moon"><i></i></span>
+        <span class="morning-sun"></span>
+      </div>
+      <div class="rug"></div>
+    </div>
+
+    <h1 class="sr-only">Bedtime!</h1>
+
+    <main class="stage">
+      <!-- Sleepy animals wait here (built by script.js) -->
+      <div class="wait" id="wait" role="group" aria-label="Sleepy animals"></div>
+      <!-- Small, middle and big beds -->
+      <div class="beds" id="beds" role="group" aria-label="Beds"></div>
+    </main>
+
+    <!-- Lights out: the room dims and stars twinkle -->
+    <div class="night" id="night" aria-hidden="true">
+      <span class="tw" style="--x:8%;--y:12%;--d:0s"></span><span class="tw" style="--x:22%;--y:30%;--d:-.7s"></span>
+      <span class="tw" style="--x:40%;--y:8%;--d:-1.3s"></span><span class="tw" style="--x:58%;--y:22%;--d:-.4s"></span>
+      <span class="tw" style="--x:76%;--y:10%;--d:-1.8s"></span><span class="tw" style="--x:90%;--y:28%;--d:-1s"></span>
+      <span class="tw" style="--x:14%;--y:46%;--d:-2.2s"></span><span class="tw" style="--x:84%;--y:48%;--d:-.2s"></span>
+      <span class="tw" style="--x:50%;--y:40%;--d:-1.5s"></span><span class="tw" style="--x:32%;--y:54%;--d:-2.6s"></span>
+    </div>
+  </div>
+
+  <!-- Grown-up corner buttons (kept small and out of the way) -->
+  <a class="corner-btn home" href="../index.html" aria-label="All games"><span aria-hidden="true">🏠</span></a>
+  <button class="corner-btn sound" id="soundBtn" type="button" aria-label="Sound off" aria-pressed="true"><span aria-hidden="true">🔊</span></button>
+  <button class="corner-btn full" id="fullBtn" type="button" aria-label="Full screen" hidden><span aria-hidden="true">⛶</span></button>
+
+  <div class="fx" id="fx" aria-hidden="true"></div>
+
+  <noscript><p class="noscript">This game needs JavaScript turned on.</p></noscript>
+
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/kit.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

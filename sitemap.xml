@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://pienipeli.fi/</loc><lastmod>2026-11-13</lastmod></url>
+  <url><loc>https://pienipeli.fi/</loc><lastmod>2026-11-15</lastmod></url>
   <url><loc>https://pienipeli.fi/games/baby-pop/</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://pienipeli.fi/games/find-the-animal/</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://pienipeli.fi/games/feed-the-animals/</loc><lastmod>2026-11-14</lastmod></url>
+  <url><loc>https://pienipeli.fi/games/peekaboo/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://pienipeli.fi/games/bubble-bath/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://pienipeli.fi/games/color-splash/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://pienipeli.fi/games/animal-band/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://pienipeli.fi/games/bedtime/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://pienipeli.fi/games/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://pienipeli.fi/parents</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://pienipeli.fi/about</loc><lastmod>2026-11-15</lastmod></url>
   <url><loc>https://pienipeli.fi/privacy</loc><lastmod>2026-11-13</lastmod></url>
 </urlset>

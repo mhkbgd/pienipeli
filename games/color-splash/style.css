@@ -1,0 +1,116 @@
+/* ============ Color Splash! styles (base styles in assets/css/kit.css) ============ */
+
+:root {
+  /* Portrait: picture on top, pots in 2 rows of 3 below */
+  --pot: min(25vw, 11vh, 112px);
+  --pic: min(92vw, calc(100vh - 2 * var(--pot) - 150px), 640px);
+  --gap: clamp(10px, 2.4vmin, 24px);
+  --brush: #ff5a5f;
+}
+/* Landscape: picture on the left, pots in 3 rows of 2 on the right */
+@media (orientation: landscape) {
+  :root {
+    --pot: min(11vw, 22vh, 120px);
+    --pic: min(calc(100vw - 2 * var(--pot) - 120px), calc(100vh - 90px), 680px);
+  }
+}
+
+html, body {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 143, 179, .18) 0 9vmin, transparent 9.2vmin),
+    radial-gradient(circle at 88% 82%, rgba(79, 179, 255, .16) 0 12vmin, transparent 12.2vmin),
+    radial-gradient(circle at 85% 14%, rgba(255, 217, 61, .2) 0 7vmin, transparent 7.2vmin),
+    radial-gradient(circle at 10% 88%, rgba(95, 208, 104, .16) 0 10vmin, transparent 10.2vmin),
+    #fff4e0;
+}
+
+.stage {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: calc(var(--gap) * 1.4);
+  padding: calc(70px + var(--safe-t)) calc(12px + var(--safe-r)) calc(14px + var(--safe-b)) calc(12px + var(--safe-l));
+}
+@media (orientation: landscape) {
+  .stage { flex-direction: row; padding-top: calc(66px + var(--safe-t)); }
+}
+
+/* ---------- Easel + picture ---------- */
+.easel {
+  width: var(--pic); aspect-ratio: 1;
+  padding: 3%;
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: 0 10px 0 #f0d9b5, 0 18px 34px rgba(160, 110, 60, .22);
+}
+.picture { width: 100%; height: 100%; }
+.art { display: block; width: 100%; height: 100%; overflow: visible; }
+.art .region { cursor: pointer; transition: fill .3s ease; transform-box: fill-box; transform-origin: center; }
+.art .face { pointer-events: none; }
+
+.picture.enter .art { animation: picIn .65s cubic-bezier(.3, 1.5, .5, 1) both; }
+.picture.leave .art { animation: picOut .45s ease-in both; }
+@keyframes picIn { from { transform: scale(.3) rotate(-12deg); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes picOut { to { transform: scale(.2) rotate(14deg); opacity: 0; } }
+
+.region.splat { animation: splat .45s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes splat { 0% { transform: scale(1); } 35% { transform: scale(1.12); } 100% { transform: scale(1); } }
+.region.glow { animation: glow 1.4s ease-in-out; }
+@keyframes glow {
+  0%, 100% { transform: scale(1); fill: #fff; }
+  30% { transform: scale(1.08); fill: color-mix(in srgb, var(--brush) 35%, #fff); }
+  60% { transform: scale(1); fill: #fff; }
+  80% { transform: scale(1.05); fill: color-mix(in srgb, var(--brush) 25%, #fff); }
+}
+.art.wobble { animation: wobble .5s ease-in-out; }
+@keyframes wobble { 25% { transform: rotate(-3deg); } 75% { transform: rotate(3deg); } }
+
+/* Finished: the picture dances */
+.picture.alive .art { animation: dance .4s ease-in-out infinite alternate; }
+@keyframes dance {
+  from { transform: translateY(0) rotate(-4deg) scale(1); }
+  to   { transform: translateY(-4%) rotate(4deg) scale(1.04); }
+}
+
+/* ---------- Paint pots ---------- */
+.pots {
+  display: grid; gap: var(--gap);
+  grid-template-columns: repeat(3, var(--pot));
+}
+@media (orientation: landscape) {
+  .pots { grid-template-columns: repeat(2, var(--pot)); }
+}
+.pot {
+  position: relative;
+  width: var(--pot); aspect-ratio: 1;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 6px 0 rgba(160, 120, 80, .25), 0 10px 18px rgba(160, 120, 80, .2);
+  transition: transform .2s cubic-bezier(.3, 1.6, .5, 1), box-shadow .2s;
+}
+.pot-paint {
+  position: absolute; inset: 12%;
+  border-radius: 50%;
+  background: var(--paint);
+  box-shadow: inset 0 -6px 0 rgba(0, 0, 0, .12);
+}
+.pot-shine {
+  position: absolute; left: 26%; top: 22%; width: 22%; height: 14%;
+  border-radius: 50%; background: rgba(255, 255, 255, .55); rotate: -30deg;
+}
+.pot.on {
+  transform: translateY(-10%) scale(1.1);
+  box-shadow: 0 0 0 6px var(--paint), 0 12px 0 rgba(160, 120, 80, .18), 0 18px 24px rgba(160, 120, 80, .25);
+}
+.pot.on::after { /* a little paint brush over the chosen pot */
+  content: "🖌️"; font-family: var(--emoji);
+  position: absolute; right: -14%; top: -18%;
+  font-size: calc(var(--pot) * .42);
+  animation: brush 1.2s ease-in-out infinite alternate;
+}
+@keyframes brush { from { rotate: -10deg; } to { rotate: 12deg; } }
+.pot.bloop .pot-paint { animation: bloop .45s ease-out; }
+@keyframes bloop { 30% { transform: scale(.82); } 65% { transform: scale(1.08); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .picture.alive .art, .pot.on::after { animation: none !important; }
+}

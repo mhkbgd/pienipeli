@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport-fit + no zoom keeps toddler taps from zooming the page -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Color Splash! Free Musical Coloring Game for Toddlers | Pienipeli</title>
+  <meta name="description" content="Play Color Splash free online: tap a paint pot, then tap the picture to splash it with colour. Every colour plays its own note, so colouring in makes music. No ads, no words, no losing.">
+  <link rel="canonical" href="https://pienipeli.fi/games/color-splash/">
+  <meta name="theme-color" content="#fff4e0">
+  <link rel="icon" href="../../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <!-- Add to Home Screen: opens straight into this game, full screen (see manifest.webmanifest) -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Color Splash">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pienipeli">
+  <meta property="og:title" content="Color Splash! Free musical colouring game for toddlers">
+  <meta property="og:description" content="Splash colour on balloons, fish, flowers and more. Every colour sings its own note. No ads, no words, no losing.">
+  <meta property="og:url" content="https://pienipeli.fi/games/color-splash/">
+  <meta property="og:image" content="https://pienipeli.fi/assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/css/kit.css">
+  <link rel="stylesheet" href="style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "VideoGame",
+        "@id": "https://pienipeli.fi/games/color-splash/#game",
+        "name": "Color Splash!",
+        "url": "https://pienipeli.fi/games/color-splash/",
+        "description": "A free, ad-free musical colouring game for toddlers. Pick a paint pot and tap the picture to fill it with colour. Every colour plays its own note.",
+        "image": "https://pienipeli.fi/assets/img/og-image.png",
+        "genre": ["Educational", "Casual", "Kids"],
+        "gamePlatform": ["Web browser", "Mobile", "Tablet", "Desktop"],
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+        "audience": { "@type": "PeopleAudience", "suggestedMinAge": 2, "suggestedMaxAge": 4 },
+        "publisher": { "@type": "Organization", "name": "Pienipeli", "url": "https://pienipeli.fi/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Pienipeli", "item": "https://pienipeli.fi/" },
+          { "@type": "ListItem", "position": 2, "name": "Color Splash!", "item": "https://pienipeli.fi/games/color-splash/" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <h1 class="sr-only">Color Splash!</h1>
+
+  <!-- Grown-up corner buttons (kept small and out of the way) -->
+  <a class="corner-btn home" href="../index.html" aria-label="All games"><span aria-hidden="true">🏠</span></a>
+  <button class="corner-btn sound" id="soundBtn" type="button" aria-label="Sound off" aria-pressed="true"><span aria-hidden="true">🔊</span></button>
+  <button class="corner-btn full" id="fullBtn" type="button" aria-label="Full screen" hidden><span aria-hidden="true">⛶</span></button>
+
+  <main class="stage">
+    <!-- An easel with the picture (drawn by script.js from pictures.js) -->
+    <div class="easel">
+      <div class="picture" id="picture"></div>
+    </div>
+    <!-- Paint pots -->
+    <div class="pots" id="pots" role="group" aria-label="Colours"></div>
+  </main>
+
+  <div class="fx" id="fx" aria-hidden="true"></div>
+
+  <noscript><p class="noscript">This game needs JavaScript turned on.</p></noscript>
+
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/kit.js"></script>
+  <script src="pictures.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

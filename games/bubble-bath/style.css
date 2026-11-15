@@ -1,0 +1,175 @@
+/* ============ Bubble Bath! styles (base styles in assets/css/kit.css) ============ */
+
+:root {
+  /* The animal: as big as fits (the tub adds about a third of its height below it) */
+  --pet: min(80vw, 54vh, 500px);
+  --tubw: min(96vw, calc(var(--pet) * 1.55), 760px);
+  --front: calc(var(--pet) * .38);
+}
+@media (orientation: landscape) and (max-height: 620px) {
+  :root { --pet: min(60vw, 62vh); }
+}
+
+html, body { background: #d8f1ff; }
+
+/* ---------- Bathroom ---------- */
+.room { position: fixed; inset: 0; pointer-events: none; }
+.tiles {
+  position: absolute; inset: 0;
+  background-color: #dff4ff;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .9) 3px, transparent 3px),
+    linear-gradient(90deg, rgba(255, 255, 255, .9) 3px, transparent 3px);
+  background-size: 64px 64px;
+}
+.floor {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 22%;
+  background: repeating-linear-gradient(90deg, #ffe9c7 0 60px, #ffe0b5 60px 120px);
+  box-shadow: inset 0 6px 0 rgba(0, 0, 0, .04);
+}
+
+/* ---------- Layout ---------- */
+.stage {
+  position: fixed; inset: 0;
+  display: grid; place-items: center;
+  padding: calc(66px + var(--safe-t)) calc(10px + var(--safe-r)) calc(10px + var(--safe-b)) calc(10px + var(--safe-l));
+}
+.tub {
+  position: relative;
+  width: var(--tubw);
+  height: calc(var(--pet) * .70 + var(--front));
+}
+
+/* ---------- The animal + mud ---------- */
+.pet {
+  position: absolute; left: 50%; top: 0;
+  width: var(--pet); height: var(--pet);
+  translate: -50% 0;
+  touch-action: none;          /* rubbing must not scroll or zoom */
+  cursor: grab;
+}
+.pet canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+#petCanvas { filter: drop-shadow(0 8px 6px rgba(0, 60, 120, .15)); }
+.tub.scrub .pet { cursor: grabbing; }
+
+.pet.enter { animation: slideIn .9s cubic-bezier(.3, 1.2, .5, 1) both; }
+.pet.leave { animation: hopOut .6s ease-in both; }
+.pet.shake { animation: shake .12s linear 6; }
+.pet.happy { animation: happy .42s ease-in-out infinite alternate; }
+@keyframes slideIn {
+  0%   { transform: translate(70vw, -30%) rotate(20deg) scale(.7); }
+  55%  { transform: translate(-4vw, -14%) rotate(-6deg) scale(1); }
+  80%  { transform: translate(0, 4%) scale(1.04, .94); }
+  100% { transform: none; }
+}
+@keyframes hopOut {
+  0%   { transform: none; }
+  35%  { transform: translateY(-18%) rotate(-6deg); }
+  100% { transform: translate(-80vw, -40%) rotate(-20deg); opacity: 0; }
+}
+@keyframes shake {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-9deg) translateX(-2%); }
+  75% { transform: rotate(9deg) translateX(2%); }
+}
+@keyframes happy {
+  from { transform: translateY(0) rotate(-5deg); }
+  to   { transform: translateY(-9%) rotate(5deg); }
+}
+
+/* Hint: a sponge swipes over the animal */
+.sponge {
+  position: absolute; left: 20%; top: 34%;
+  font-size: calc(var(--pet) * .2);
+  opacity: 0; pointer-events: none;
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, .15));
+}
+.pet.hint .sponge { animation: spongeSwipe 1.8s ease-in-out; }
+@keyframes spongeSwipe {
+  0%   { opacity: 0; transform: translate(0, 0) rotate(-10deg); }
+  15%  { opacity: 1; }
+  35%  { transform: translate(140%, -40%) rotate(10deg); }
+  60%  { transform: translate(40%, 20%) rotate(-10deg); }
+  85%  { opacity: 1; transform: translate(180%, 10%) rotate(10deg); }
+  100% { opacity: 0; transform: translate(200%, 0) rotate(0); }
+}
+
+/* ---------- Water, foam, tub ---------- */
+.water {
+  position: absolute; left: 4%; right: 4%;
+  top: calc(var(--pet) * .64); height: calc(var(--pet) * .1);
+  pointer-events: none; z-index: 2;
+}
+.foam {
+  position: absolute; top: 0;
+  width: calc(var(--pet) * .2); aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff 0 55%, #e6f6ff 100%);
+  box-shadow: 0 2px 6px rgba(80, 150, 200, .2);
+  animation: foam 2.6s ease-in-out infinite alternate;
+}
+.f1 { left: 2%;  scale: .8; }
+.f2 { left: 16%; top: -20%; animation-delay: -.6s; }
+.f3 { left: 31%; scale: .9; animation-delay: -1.2s; }
+.f4 { left: 50%; top: -15%; scale: 1.1; animation-delay: -.3s; }
+.f5 { left: 66%; scale: .85; animation-delay: -1.8s; }
+.f6 { left: 80%; top: -10%; animation-delay: -.9s; }
+@keyframes foam { to { transform: translateY(-10%) scale(1.06); } }
+
+.tub-front {
+  position: absolute; left: 0; right: 0;
+  top: calc(var(--pet) * .70); height: var(--front);
+  z-index: 3; pointer-events: none;
+  border-radius: 24px 24px 50% 50% / 24px 24px 38% 38%;
+  background: linear-gradient(#ffffff, #eaf4ff 60%, #d5e8fb);
+  box-shadow: inset 0 10px 0 #ffffff, inset 0 -10px 18px rgba(120, 160, 210, .25), 0 12px 24px rgba(80, 120, 170, .2);
+}
+.tub-front::before { /* blue stripe */
+  content: ""; position: absolute; left: 6%; right: 6%; top: 28%; height: 9%;
+  border-radius: 99px; background: #9fdcff; opacity: .7;
+}
+.foot {
+  position: absolute; bottom: -9%; width: 10%; height: 16%;
+  background: #ffd23d; border-radius: 40% 40% 50% 50%;
+  z-index: -1;
+}
+.fl { left: 14%; }
+.fr { right: 14%; }
+
+/* ---------- Rubber duck ---------- */
+.duck {
+  position: absolute; z-index: 4;
+  right: 6%; top: calc(var(--pet) * .56);
+  width: calc(var(--pet) * .24); height: calc(var(--pet) * .24);
+  animation: bob 2.4s ease-in-out infinite;
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, .15));
+}
+.duck.squeak { animation: squeak .5s ease-out, bob 2.4s ease-in-out .5s infinite; }
+@keyframes bob { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-8%) rotate(4deg); } }
+@keyframes squeak {
+  0%, 100% { transform: none; }
+  30% { transform: scale(1.25, .8); }
+  60% { transform: scale(.9, 1.15) translateY(-12%); }
+}
+
+/* ---------- Soap bubbles ---------- */
+.fx .bubble {
+  position: absolute; left: 0; top: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, .95) 0 12%, rgba(255, 255, 255, .25) 30%, rgba(170, 220, 255, .35) 70%, rgba(255, 170, 230, .5) 100%);
+  border: 2px solid rgba(255, 255, 255, .8);
+  box-shadow: 0 2px 6px rgba(80, 150, 220, .2);
+  animation: bubbleUp var(--dur, 1.5s) ease-out forwards;
+}
+@keyframes bubbleUp {
+  0%   { transform: translate(-50%, -50%) scale(.2); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { transform: translate(calc(-50% + var(--dx)), calc(-50% - var(--rise) * .9)) scale(1); opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--dx)), calc(-50% - var(--rise))) scale(1.5); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .foam, .duck, .pet.happy { animation: none !important; }
+  .pet.enter, .pet.leave { animation-duration: .2s !important; }
+}
+
+.duck img { display: block; width: 100%; height: 100%; pointer-events: none; -webkit-user-drag: none; }

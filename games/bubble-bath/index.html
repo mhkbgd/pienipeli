@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport-fit + no zoom keeps toddler taps from zooming the page -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Bubble Bath! Free Wash the Animal Game for Toddlers | Pienipeli</title>
+  <meta name="description" content="Play Bubble Bath free online: a muddy animal sits in the bath and your toddler rubs the mud away with a finger. Soap bubbles, squeaky-clean sounds and a happy shake. No ads, no words, no losing.">
+  <link rel="canonical" href="https://pienipeli.fi/games/bubble-bath/">
+  <meta name="theme-color" content="#d8f1ff">
+  <link rel="icon" href="../../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <!-- Add to Home Screen: opens straight into this game, full screen (see manifest.webmanifest) -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Bubble Bath">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pienipeli">
+  <meta property="og:title" content="Bubble Bath! Free wash the animal game for toddlers">
+  <meta property="og:description" content="Rub the mud off a happy animal in the bath. Soap bubbles, squeaks and sparkles. No ads, no words, no losing.">
+  <meta property="og:url" content="https://pienipeli.fi/games/bubble-bath/">
+  <meta property="og:image" content="https://pienipeli.fi/assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/css/kit.css">
+  <link rel="stylesheet" href="style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "VideoGame",
+        "@id": "https://pienipeli.fi/games/bubble-bath/#game",
+        "name": "Bubble Bath!",
+        "url": "https://pienipeli.fi/games/bubble-bath/",
+        "description": "A free, ad-free bath time game for toddlers. Rub the mud off an animal in the tub with one finger or many, then watch it shake dry and sparkle.",
+        "image": "https://pienipeli.fi/assets/img/og-image.png",
+        "genre": ["Educational", "Casual", "Kids"],
+        "gamePlatform": ["Web browser", "Mobile", "Tablet", "Desktop"],
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+        "audience": { "@type": "PeopleAudience", "suggestedMinAge": 1, "suggestedMaxAge": 4 },
+        "publisher": { "@type": "Organization", "name": "Pienipeli", "url": "https://pienipeli.fi/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Pienipeli", "item": "https://pienipeli.fi/" },
+          { "@type": "ListItem", "position": 2, "name": "Bubble Bath!", "item": "https://pienipeli.fi/games/bubble-bath/" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <!-- Bathroom: tiled wall and a floor -->
+  <div class="room" aria-hidden="true">
+    <div class="tiles"></div>
+    <div class="floor"></div>
+  </div>
+
+  <h1 class="sr-only">Bubble Bath!</h1>
+
+  <!-- Grown-up corner buttons (kept small and out of the way) -->
+  <a class="corner-btn home" href="../index.html" aria-label="All games"><span aria-hidden="true">🏠</span></a>
+  <button class="corner-btn sound" id="soundBtn" type="button" aria-label="Sound off" aria-pressed="true"><span aria-hidden="true">🔊</span></button>
+  <button class="corner-btn full" id="fullBtn" type="button" aria-label="Full screen" hidden><span aria-hidden="true">⛶</span></button>
+
+  <main class="stage">
+    <div class="tub" id="tub">
+      <!-- The animal (bottom canvas) and its mud (top canvas): rub to clean -->
+      <div class="pet" id="pet" role="img" aria-label="A muddy animal in the bath">
+        <canvas id="petCanvas"></canvas>
+        <canvas id="mudCanvas"></canvas>
+        <span class="sponge emoji" aria-hidden="true">🧽</span>
+      </div>
+      <div class="water" aria-hidden="true">
+        <span class="foam f1"></span><span class="foam f2"></span><span class="foam f3"></span>
+        <span class="foam f4"></span><span class="foam f5"></span><span class="foam f6"></span>
+      </div>
+      <div class="tub-front" aria-hidden="true"><span class="foot fl"></span><span class="foot fr"></span></div>
+      <button class="duck" id="duck" type="button" aria-label="Rubber duck"></button>
+    </div>
+  </main>
+
+  <div class="fx" id="fx" aria-hidden="true"></div>
+
+  <noscript><p class="noscript">This game needs JavaScript turned on.</p></noscript>
+
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/kit.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

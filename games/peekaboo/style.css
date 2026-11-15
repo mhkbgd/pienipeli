@@ -1,0 +1,119 @@
+/* ============ Peekaboo! styles (base styles in assets/css/kit.css) ============ */
+
+:root {
+  /* One hiding place: big, and three must always fit (2 + 1 on tall phones) */
+  --spot: min(44vw, 34vh, 300px);
+  --gap: clamp(10px, 3vmin, 34px);
+}
+@media (orientation: landscape) {
+  :root { --spot: min(30vw, 62vh, 340px); }
+}
+
+.stage {
+  position: fixed; inset: 0;
+  display: flex; flex-wrap: wrap; align-content: center; justify-content: center;
+  gap: var(--gap);
+  padding: calc(70px + var(--safe-t)) calc(12px + var(--safe-r)) calc(16px + var(--safe-b)) calc(12px + var(--safe-l));
+}
+
+/* ---------- A hiding place ---------- */
+.spot {
+  position: relative;
+  width: var(--spot); height: var(--spot);
+  animation: spotIn .55s cubic-bezier(.3, 1.6, .5, 1) backwards;
+  animation-delay: calc(var(--i) * .12s);
+}
+.spot.in { animation: none; }            /* entrance played: never replay it */
+.spot.away { animation: spotOut .45s ease-in forwards; }
+@keyframes spotIn { from { scale: 0; rotate: -14deg; } to { scale: 1; rotate: 0deg; } }
+@keyframes spotOut { to { scale: 0; opacity: 0; } }
+
+.spot .piece { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.spot .cover { position: absolute; inset: 0; pointer-events: none; }
+.spot::after { /* soft ground shadow */
+  content: ""; position: absolute; left: 12%; right: 12%; bottom: -3%; height: 7%;
+  border-radius: 50%; background: rgba(60, 120, 70, .16); z-index: -1;
+}
+
+/* The animal */
+.peeker {
+  position: absolute; left: 50%; bottom: 14%;
+  translate: -50% 0;
+  display: grid; place-items: center;
+  pointer-events: none;
+  opacity: 0; scale: .4;
+  transition: opacity .2s, scale .45s cubic-bezier(.3, 1.7, .5, 1), translate .45s cubic-bezier(.3, 1.5, .5, 1);
+}
+.peeker .who {
+  display: block;
+  width: calc(var(--spot) * .62); height: calc(var(--spot) * .62);
+  filter: drop-shadow(0 6px 4px rgba(0, 0, 0, .15));
+  -webkit-user-drag: none;
+}
+.paw {
+  position: absolute; top: 46%;
+  width: calc(var(--spot) * .13); height: calc(var(--spot) * .13);
+  border-radius: 50%;
+  background: #fff3e4; box-shadow: inset 0 -4px 0 rgba(0, 0, 0, .08), 0 3px 6px rgba(0, 0, 0, .12);
+  opacity: 0;
+}
+.paw-l { left: -10%; }
+.paw-r { right: -10%; }
+
+.spot[data-state="open"] .peeker { opacity: 1; scale: 1; transition-delay: .12s; }
+.spot[data-state="open"] .peeker .who { animation: peek .9s ease-in-out .5s infinite alternate; }
+.spot[data-state="open"] .paw { opacity: 1; transition: opacity .2s .35s; }
+.spot[data-state="open"] .paw-l { animation: waveL .45s ease-in-out .4s 6 alternate; }
+.spot[data-state="open"] .paw-r { animation: waveR .45s ease-in-out .4s 6 alternate; }
+@keyframes peek { from { rotate: -6deg; } to { rotate: 6deg; } }
+@keyframes waveL { from { transform: translateY(0) rotate(0); } to { transform: translateY(-60%) rotate(-20deg); } }
+@keyframes waveR { from { transform: translateY(-60%) rotate(20deg); } to { transform: translateY(0) rotate(0); } }
+
+.peeker.boop .who { animation: boop .5s ease-out !important; }
+@keyframes boop {
+  0%, 100% { transform: none; }
+  30% { transform: scale(1.18, .86); }
+  60% { transform: scale(.92, 1.1) translateY(-6%); }
+}
+
+/* ---------- Bush and curtain: two halves slide apart ---------- */
+.half { transition: transform .5s cubic-bezier(.3, 1.3, .5, 1); }
+.half-l { transform-origin: 0% 100%; }
+.half-r { transform-origin: 100% 100%; }
+.spot[data-state="open"][data-kind="bush"] .half-l { transform: translateX(-38%) rotate(-10deg) scale(.85); }
+.spot[data-state="open"][data-kind="bush"] .half-r { transform: translateX(38%) rotate(10deg) scale(.85); }
+.spot[data-state="open"][data-kind="curtain"] .half-l { transform: scaleX(.3); }
+.spot[data-state="open"][data-kind="curtain"] .half-r { transform: scaleX(.3); }
+.spot[data-kind="curtain"] .half-l { transform-origin: 7% 50%; }
+.spot[data-kind="curtain"] .half-r { transform-origin: 93% 50%; }
+.spot[data-kind="curtain"] .peeker { bottom: 16%; }
+
+/* ---------- Gift box: lid pops off, the animal rises out ---------- */
+.spot[data-kind="box"] .peeker { bottom: 22%; translate: -50% 30%; }
+.spot[data-kind="box"][data-state="open"] .peeker { translate: -50% -18%; }
+.spot[data-kind="box"] .lid { transition: transform .55s cubic-bezier(.3, 1.2, .5, 1), opacity .4s; transform-origin: 50% 45%; }
+.spot[data-kind="box"][data-state="open"] .lid { transform: translate(34%, -46%) rotate(28deg) scale(.7); opacity: 0; }
+
+/* ---------- Hint wiggle and closed-state breathing ---------- */
+.spot[data-state="closed"] .cover { animation: breathe 3.2s ease-in-out infinite; animation-delay: calc(var(--i) * -.9s); }
+@keyframes breathe { 50% { transform: scale(1.025, .985); } }
+.spot.wiggle .cover { animation: wiggle .9s ease-in-out; }
+@keyframes wiggle {
+  0%, 100% { transform: none; }
+  15% { transform: rotate(-5deg) scale(1.05); }
+  30% { transform: rotate(5deg) scale(1.05); }
+  45% { transform: rotate(-4deg) scale(1.04); }
+  60% { transform: rotate(3deg); }
+}
+
+/* ---------- All found: everyone cheers ---------- */
+.stage.cheer .spot { animation: cheer .4s ease-in-out infinite alternate; }
+.stage.cheer .spot:nth-child(2) { animation-delay: .13s; }
+.stage.cheer .spot:nth-child(3) { animation-delay: .26s; }
+@keyframes cheer { from { translate: 0 0; } to { translate: 0 -7%; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .spot, .spot[data-state="closed"] .cover, .spot[data-state="open"] .peeker .who,
+  .stage.cheer .spot { animation: none !important; }
+  .spot.away { animation: spotOut .2s forwards !important; }
+}

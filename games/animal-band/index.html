@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport-fit + no zoom keeps toddler taps from zooming the page -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Animal Band! Free Animal Piano Music Game for Babies &amp; Toddlers | Pienipeli</title>
+  <meta name="description" content="Play Animal Band free online: six singing animals make a toddler piano that always sounds nice. Add a soft beat, or play nursery songs one tap at a time. No ads, no words, no losing.">
+  <link rel="canonical" href="https://pienipeli.fi/games/animal-band/">
+  <meta name="theme-color" content="#ffe9f3">
+  <link rel="icon" href="../../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <!-- Add to Home Screen: opens straight into this game, full screen (see manifest.webmanifest) -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Animal Band">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pienipeli">
+  <meta property="og:title" content="Animal Band! Free animal piano for babies and toddlers">
+  <meta property="og:description" content="Six singing animals, a soft beat and nursery songs one tap at a time. No ads, no words, no losing.">
+  <meta property="og:url" content="https://pienipeli.fi/games/animal-band/">
+  <meta property="og:image" content="https://pienipeli.fi/assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/css/kit.css">
+  <link rel="stylesheet" href="style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "VideoGame",
+        "@id": "https://pienipeli.fi/games/animal-band/#game",
+        "name": "Animal Band!",
+        "url": "https://pienipeli.fi/games/animal-band/",
+        "description": "A free, ad-free music game for babies and toddlers. Six singing animals play a piano scale that always sounds nice, with a soft backing beat and nursery songs played one tap at a time.",
+        "image": "https://pienipeli.fi/assets/img/og-image.png",
+        "genre": ["Educational", "Music", "Kids"],
+        "gamePlatform": ["Web browser", "Mobile", "Tablet", "Desktop"],
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+        "audience": { "@type": "PeopleAudience", "suggestedMinAge": 1, "suggestedMaxAge": 4 },
+        "publisher": { "@type": "Organization", "name": "Pienipeli", "url": "https://pienipeli.fi/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Pienipeli", "item": "https://pienipeli.fi/" },
+          { "@type": "ListItem", "position": 2, "name": "Animal Band!", "item": "https://pienipeli.fi/games/animal-band/" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <!-- Stage: curtains and spotlights -->
+  <div class="theatre" aria-hidden="true">
+    <div class="curtain cl"></div>
+    <div class="curtain cr"></div>
+    <div class="valance"></div>
+    <div class="spot s1"></div>
+    <div class="spot s2"></div>
+    <div class="floorboards"></div>
+  </div>
+
+  <h1 class="sr-only">Animal Band!</h1>
+
+  <!-- Grown-up corner buttons (kept small and out of the way) -->
+  <a class="corner-btn home" href="../index.html" aria-label="All games"><span aria-hidden="true">🏠</span></a>
+  <button class="corner-btn sound" id="soundBtn" type="button" aria-label="Sound off" aria-pressed="true"><span aria-hidden="true">🔊</span></button>
+  <button class="corner-btn full" id="fullBtn" type="button" aria-label="Full screen" hidden><span aria-hidden="true">⛶</span></button>
+
+  <!-- Music buttons: backing beat and song time -->
+  <div class="music-btns">
+    <button class="music-btn" id="beatBtn" type="button" aria-label="Drum beat" aria-pressed="false"><span class="emoji" aria-hidden="true">🥁</span></button>
+    <button class="music-btn" id="songBtn" type="button" aria-label="Song time" aria-pressed="false"><span class="emoji" aria-hidden="true">🎵</span></button>
+  </div>
+
+  <main class="stage">
+    <div class="progress" id="progress" aria-hidden="true" hidden></div>
+    <div class="band" id="band" role="group" aria-label="Animal band"></div>
+  </main>
+
+  <div class="fx" id="fx" aria-hidden="true"></div>
+
+  <noscript><p class="noscript">This game needs JavaScript turned on.</p></noscript>
+
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/kit.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

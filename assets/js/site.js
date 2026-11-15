@@ -1,9 +1,11 @@
-/* ============ Pienipeli: landing page ============
-   Little bits of play for the landing page:
-   - poppable hero balloons with a pop counter (tap the sky for more)
-   - wobbly headline letters, a sun that follows the pointer
-   - an animal playground that reuses Find the Animal's drawings and sounds
-   - scroll reveals, count-up stats and tilting game cards
+/* ============ Pienipeli: website pages ============
+   Small bits of play and help for the website pages. Each part only runs when its
+   elements are on the page, so one file serves home, all games, parents and about.
+   - Home: poppable hero balloons + pop counter, wobbly headline letters, and an animal
+     playground that reuses Find the Animal's drawings and sounds.
+   - All games: filter chips (also from the address: games/#age-1, #music, ...).
+   - Parents: device tabs for the home-screen guide (opens on the visitor's device).
+   - Everywhere: "Surprise me" buttons, scroll reveals, header line on scroll.
    Every sound is generated live (games/find-the-animal/sounds.js); nothing is fetched. */
 
 (() => {
@@ -11,13 +13,13 @@
 
   const $ = id => document.getElementById(id);
   const root = document.documentElement;
+  root.classList.remove('no-js');
   root.classList.add('js');
 
   const yearEl = $('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const rand = (a, b) => a + Math.random() * (b - a);
   const pick = a => a[Math.floor(Math.random() * a.length)];
   const store = {
@@ -25,7 +27,30 @@
     set(k, v) { try { localStorage.setItem('pienipeli-' + k, JSON.stringify(v)); } catch (e) { /* private mode */ } },
   };
 
-  // ---------- Sound (optional: everything works silently without it) ----------
+  // ---------- Old single-page links (pienipeli.fi/#faq etc.) go to their new pages ----------
+  const OLD = { '#games': 'games/index.html', '#parents': 'parents.html', '#faq': 'parents.html#faq', '#about': 'about.html' };
+  if ($('hero') && OLD[location.hash]) location.replace(OLD[location.hash]);
+
+  // ---------- Header: a line under it once you scroll ----------
+  const header = document.querySelector('.site-header');
+  if (header) {
+    const onScroll = () => header.classList.toggle('scrolled', scrollY > 8);
+    addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  // ---------- "Surprise me": a random game ----------
+  document.querySelectorAll('[data-random]').forEach(a => {
+    a.addEventListener('click', e => {
+      const list = a.dataset.random.split(' ').filter(Boolean);
+      if (!list.length) return;
+      e.preventDefault();
+      a.classList.add('rolling');
+      setTimeout(() => { location.href = pick(list); }, reduced ? 0 : 250);
+    });
+  });
+
+  // ---------- Sound (home only; everything works silently without it) ----------
   const Sound = window.FTA_Sound || null;
   let muted = store.get('muted', false);
   const toggle = $('soundToggle');
@@ -50,25 +75,12 @@
   applyMute();
   const play = (fn, ...args) => { if (Sound && !muted) { Sound.unlock(); Sound[fn](...args); } };
 
-  // Say the animal's name in the same gentle narrator voice as Find the Animal:
-  // a recorded clip if one exists, otherwise the warmest, most natural voice on
-  // the device, spoken slowly and softly ("That's the cat.").
+  // Say the animal's name in Find the Animal's gentle narrator voice
   const Narrator = window.FTA_Narrator || null;
   const STR = window.FTA_STRINGS ? window.FTA_STRINGS.T.en : null;
   function say(a) {
-    if (muted) return;
-    const name = a.names.en;
-    if (Narrator && STR) {
-      Narrator.say('en', [{ key: 'thatis-' + a.id, text: STR.thatIs(name), mood: 'soft' }]);
-      return;
-    }
-    if (!('speechSynthesis' in window)) return;
-    try { // fallback if the narrator script didn't load
-      speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(name);
-      u.lang = 'en-US'; u.rate = 0.82; u.pitch = 1.1;
-      speechSynthesis.speak(u);
-    } catch (e) { /* no voice: that's fine */ }
+    if (muted || !Narrator || !STR) return;
+    Narrator.say('en', [{ key: 'thatis-' + a.id, text: STR.thatIs(a.names.en), mood: 'soft' }]);
   }
 
   // ---------- Wobbly headline letters ----------
@@ -95,81 +107,55 @@
     };
     wrap(el);
   });
-  document.querySelectorAll('.ltr').forEach((s, i) => {
-    const boing = () => {
-      s.classList.remove('boing');
-      void s.offsetWidth; // restart the animation
-      s.classList.add('boing');
-    };
+  document.querySelectorAll('.ltr').forEach(s => {
+    const boing = () => { s.classList.remove('boing'); void s.offsetWidth; s.classList.add('boing'); };
     s.addEventListener('pointerenter', boing);
     s.addEventListener('pointerdown', () => { boing(); play('tap'); });
     s.addEventListener('animationend', () => s.classList.remove('boing'));
-    s.style.setProperty('--i', i);
   });
 
-  // ---------- Hero: sun follows the pointer ----------
-  const hero = $('hero');
-  if (hero && finePointer && !reduced) {
-    let raf = 0;
-    hero.addEventListener('pointermove', e => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        raf = 0;
-        const r = hero.getBoundingClientRect();
-        hero.style.setProperty('--px', ((e.clientX - r.left) / r.width - 0.5).toFixed(3));
-        hero.style.setProperty('--py', ((e.clientY - r.top) / r.height - 0.5).toFixed(3));
-      });
-    });
-    hero.addEventListener('pointerleave', () => { hero.style.setProperty('--px', 0); hero.style.setProperty('--py', 0); });
-  }
-
   // ---------- Hero: poppable balloons ----------
+  const hero = $('hero');
   const layer = $('heroBalloons');
   const counter = $('popCount');
   let pops = 0;
   const MILESTONES = { 5: 'Yay!', 10: 'Wow!', 25: 'Super!', 50: 'Pop star!', 100: 'Amazing!' };
-
   const PALETTES = [
-    ['#ffe3ef', '#ffa6cb', '#f77fb0'],
-    ['#e0f2ff', '#8ecbff', '#62aef0'],
-    ['#fffbd0', '#ffe27a', '#f5c94a'],
+    ['#ffe3ef', '#ff9fc6', '#f77fb0'],
+    ['#e0f2ff', '#8ecbff', '#5fb4f0'],
+    ['#fff6c8', '#ffd84f', '#f5c23a'],
     ['#efe4ff', '#c6a8ff', '#a583f0'],
-    ['#dcfbec', '#9fe8c3', '#6fd3a2'],
+    ['#dcfbec', '#7fe3b8', '#48d6a4'],
+    ['#ffe6dc', '#ff9a85', '#ff6f59'],
   ];
   const BITS = ['⭐', '✨', '💖', '💛', '💫'];
-  const maxBalloons = () => (innerWidth < 600 ? 5 : 9);
+  const maxBalloons = () => (innerWidth < 760 ? 4 : 7);
 
   function spawn(midFlight, atX) {
     if (!layer || layer.childElementCount > maxBalloons() + 6) return;
     const h = layer.clientHeight;
-    const size = Math.round(rand(56, 86));
+    const size = Math.round(rand(50, 78));
     const dur = rand(13, 21);
     const rainbow = Math.random() < 0.08;
     const [c1, c2, c3] = pick(PALETTES);
-
     const el = document.createElement('div');
     el.className = 'hb' + (rainbow ? ' rainbow' : '');
     el.style.cssText =
       `--size:${size}px;--c1:${c1};--c2:${c2};--c3:${c3};--h:${h}px;` +
       `--dur:${dur}s;--delay:${midFlight ? -rand(0, dur * 0.85) : 0}s;--sd:${-rand(0, 4)}s;`;
-    // Keep balloons mostly to the right on wide screens so the headline stays readable
-    const minX = innerWidth > 900 ? 0.52 : 0.05;
+    // Keep balloons off the headline on wide screens
+    const minX = innerWidth > 980 ? 0.5 : innerWidth < 760 ? 0.62 : 0.04;
     const x = atX !== undefined
       ? Math.min(Math.max(atX - size / 2, 4), layer.clientWidth - size - 4)
       : rand(layer.clientWidth * minX, layer.clientWidth - size - 10);
     el.style.left = x + 'px';
     el.innerHTML = '<div class="sway"><div class="balloon"><i class="face"></i></div><span class="string"></span></div>';
-
     el.addEventListener('animationend', e => {
       if (e.animationName !== 'rise') return;
       el.remove();
       if (layer.childElementCount < maxBalloons()) spawn(false);
     });
-    el.querySelector('.balloon').addEventListener('pointerdown', e => {
-      e.preventDefault();
-      e.stopPropagation();
-      pop(el);
-    });
+    el.querySelector('.balloon').addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); pop(el); });
     layer.appendChild(el);
   }
 
@@ -222,7 +208,7 @@
 
   if (layer && hero && !reduced) {
     for (let i = 0; i < maxBalloons() - 2; i++) spawn(true);
-    // Tap the empty sky: a little sparkle and a new balloon right there
+    // Tap empty sky: a sparkle and a new balloon right there
     hero.addEventListener('pointerdown', e => {
       if (e.target.closest('a, button, .balloon, .ltr')) return;
       const box = layer.getBoundingClientRect();
@@ -230,18 +216,17 @@
       spawn(false, e.clientX - box.left);
       play('tap');
     });
-  } else if (counter) {
+  } else {
     const hint = document.querySelector('.hint');
     if (hint) hint.hidden = true;
   }
 
-  // ---------- Animal playground ----------
+  // ---------- Animal playground (home) ----------
   const zoo = $('zoo');
   const animals = window.FTA_ANIMALS, toSVG = window.FTA_toSVG;
   if (zoo && animals && toSVG) {
     $('play').hidden = false;
-    const count = () => (innerWidth < 600 ? 6 : 8);
-
+    const count = () => (innerWidth < 980 ? 4 : 8);
     function fill() {
       const pool = [...animals].sort(() => Math.random() - 0.5).slice(0, count());
       zoo.innerHTML = '';
@@ -250,7 +235,7 @@
         b.type = 'button';
         b.className = 'critter';
         b.style.setProperty('--i', i);
-        b.style.setProperty('--hue', (i * 47) % 360);
+        b.style.setProperty('--hue', (i * 47 + 20) % 360);
         b.setAttribute('aria-label', a.names.en);
         b.innerHTML = `<span class="critter-art">${toSVG(a)}</span><span class="critter-name" aria-hidden="true">${a.names.en}!</span>`;
         b.addEventListener('click', () => {
@@ -270,64 +255,76 @@
       });
     }
     fill();
-    $('zooShuffle').addEventListener('click', () => { play('success'); zoo.classList.add('shuffling'); setTimeout(() => { fill(); zoo.classList.remove('shuffling'); }, reduced ? 0 : 220); });
+    $('zooShuffle').addEventListener('click', () => {
+      play('success');
+      zoo.classList.add('shuffling');
+      setTimeout(() => { fill(); zoo.classList.remove('shuffling'); }, reduced ? 0 : 220);
+    });
   }
 
-  // ---------- Count-up stats ----------
-  function countUp(el) {
-    const to = +el.dataset.count, suffix = el.dataset.suffix || '';
-    if (reduced || to === 0) { el.textContent = to + suffix; return; }
-    const t0 = performance.now(), dur = 1100;
-    const step = now => {
-      const k = Math.min(1, (now - t0) / dur);
-      el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))) + suffix;
-      if (k < 1) requestAnimationFrame(step);
+  // ---------- All games: filters ----------
+  const filters = $('filters');
+  const grid = $('gameGrid');
+  if (filters && grid) {
+    filters.hidden = false;
+    const chips = [...filters.querySelectorAll('.chip')];
+    const cards = [...grid.querySelectorAll('.game-card')];
+    const empty = $('empty');
+    function apply(f, push) {
+      if (!chips.some(c => c.dataset.filter === f)) f = 'all';
+      chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.filter === f)));
+      let shown = 0;
+      cards.forEach(card => {
+        const on = f === 'all' || card.dataset.tags.split(' ').includes(f);
+        card.classList.toggle('out', !on);
+        if (on) { shown++; card.classList.add('in'); }
+      });
+      if (empty) empty.classList.toggle('show', shown === 0);
+      if (push) history.replaceState(null, '', f === 'all' ? location.pathname : '#' + f);
+    }
+    chips.forEach(c => c.addEventListener('click', () => apply(c.dataset.filter, true)));
+    apply(location.hash.slice(1) || 'all', false);
+    addEventListener('hashchange', () => apply(location.hash.slice(1) || 'all', false));
+  }
+
+  // ---------- Parents: device tabs ----------
+  const tabs = $('setupTabs');
+  if (tabs) {
+    const btns = [...tabs.querySelectorAll('[role="tab"]')];
+    const select = (btn, focus) => {
+      btns.forEach(b => {
+        const on = b === btn;
+        b.setAttribute('aria-selected', String(on));
+        b.tabIndex = on ? 0 : -1;
+        $(b.getAttribute('aria-controls')).hidden = !on;
+      });
+      if (focus) btn.focus();
     };
-    el.textContent = '0' + suffix;
-    requestAnimationFrame(step);
+    btns.forEach((b, i) => {
+      b.addEventListener('click', () => select(b));
+      b.addEventListener('keydown', e => {
+        const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (d) { e.preventDefault(); select(btns[(i + d + btns.length) % btns.length], true); }
+      });
+    });
+    // Open the visitor's own device first
+    const ua = navigator.userAgent;
+    const ios = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    select(ios ? btns[0] : /Android/.test(ua) ? btns[1] : (matchMedia('(pointer: fine)').matches ? btns[2] : btns[0]));
   }
 
   // ---------- Scroll reveals ----------
-  const revealables = document.querySelectorAll('.reveal, [data-count]');
+  const revealables = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && !reduced) {
     const io = new IntersectionObserver(entries => {
       entries.forEach(en => {
         if (!en.isIntersecting) return;
         io.unobserve(en.target);
-        if (en.target.dataset.count !== undefined) countUp(en.target);
-        else en.target.classList.add('in');
+        en.target.classList.add('in');
       });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
     revealables.forEach(el => io.observe(el));
   } else {
     revealables.forEach(el => el.classList.add('in'));
-  }
-
-  // ---------- Tilting game cards ----------
-  if (finePointer && !reduced) {
-    document.querySelectorAll('[data-tilt]').forEach(card => {
-      card.addEventListener('pointermove', e => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
-        card.style.setProperty('--rx', (-y * 7).toFixed(2) + 'deg');
-        card.style.setProperty('--ry', (x * 9).toFixed(2) + 'deg');
-        card.style.setProperty('--gx', ((x + 0.5) * 100).toFixed(1) + '%');
-        card.style.setProperty('--gy', ((y + 0.5) * 100).toFixed(1) + '%');
-        card.classList.add('tilting');
-      });
-      card.addEventListener('pointerleave', () => {
-        card.classList.remove('tilting');
-        card.style.setProperty('--rx', '0deg');
-        card.style.setProperty('--ry', '0deg');
-      });
-    });
-  }
-
-  // ---------- Header: subtle shadow once you scroll ----------
-  const header = document.querySelector('.site-header');
-  if (header) {
-    const onScroll = () => header.classList.toggle('scrolled', scrollY > 8);
-    addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
   }
 })();
