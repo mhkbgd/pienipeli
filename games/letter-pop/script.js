@@ -90,6 +90,9 @@
     pop(b);
   });
 
-  Kit.setup();
+  Kit.setup({ id: 'letter-pop', how: () => {
+    const b = [...stage.querySelectorAll('.balloon:not(.popped) .skin')].find(s => { const r = s.getBoundingClientRect(); return r.top > 90 && r.bottom < innerHeight - 40; });
+    return b ? [{ tap: b }] : [];
+  } });
   for (let k = 0; k < max(); k++) spawn(null, !reduceMotion);
 })();

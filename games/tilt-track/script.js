@@ -256,7 +256,9 @@
   });
   addEventListener('resize', resize);
 
-  Kit.setup();
+  Kit.setup({ id: 'tilt-track', how: () => running
+    ? [{ tap: { x: innerWidth * 0.8, y: innerHeight * 0.7 } }, { tap: { x: innerWidth * 0.2, y: innerHeight * 0.7 } }]
+    : [{ tap: startBtn }] });
   const pick = ['dog', 'cat', 'rabbit', 'panda', 'monkey', 'pig', 'frog', 'lion'];
   carColor = CAR_COLORS[Math.floor(rand(0, CAR_COLORS.length))];
   Kit.loadAnimal(pick[Math.floor(rand(0, pick.length))]).then(img => { driver = img; draw(); }, () => {});

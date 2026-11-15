@@ -340,7 +340,10 @@
     const on = !Sound.isMuted();
     soundBtn.firstElementChild.textContent = on ? "🔊" : "🔇";
     soundBtn.setAttribute("aria-pressed", String(on));
-    soundBtn.setAttribute("aria-label", on ? "Sound off" : "Sound on");
+    const tr = (k, f) => (window.PP_I18N ? PP_I18N.t(k, f) : f);
+    soundBtn.setAttribute("aria-label", on ? tr("chrome.soundOff", "Sound off") : tr("chrome.soundOn", "Sound on"));
+    const home = document.querySelector(".corner-btn.home");
+    if (home) home.setAttribute("aria-label", tr("chrome.home", "All games"));
   }
   soundBtn.addEventListener("click", () => {
     Sound.setMuted(!Sound.isMuted());
@@ -349,6 +352,15 @@
     Sound.tap();
   });
   showSound();
+  if (window.PP_I18N) PP_I18N.onChange(showSound);
+
+  /* ---------- Shared chrome: how to play + start again ---------- */
+  if (window.PPChrome) {
+    PPChrome.init({ id: "feed-the-animals", howDelay: 2200, how: () => {
+      const good = [...foodsEl.querySelectorAll(".plate")].find((p) => animal && animal.eats.includes(p.dataset.food));
+      return good ? [{ tap: good }] : [];
+    } });
+  }
 
   /* ---------- Full screen (grown-up button) ---------- */
   // Fullscreen API on Android/desktop/iPad, an "Add to Home Screen" tip on iPhone,
@@ -358,7 +370,8 @@
     Pienipeli.fullscreenButton(fullBtn, {
       onChange(full) {
         fullBtn.firstElementChild.textContent = full ? "🗗" : "⛶";
-        fullBtn.setAttribute("aria-label", full ? "Exit full screen" : "Full screen");
+        const tr = (k, f) => (window.PP_I18N ? PP_I18N.t(k, f) : f);
+        fullBtn.setAttribute("aria-label", full ? tr("chrome.exitFull", "Exit full screen") : tr("chrome.full", "Full screen"));
       }
     });
   }

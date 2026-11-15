@@ -4,7 +4,7 @@
    cake and it sticks right where it lands (squish + a note). Tap one and it hops onto
    the cake by itself. There's no right way: it's all about making.
    🎉 lights the candles (adding some if there are none) and plays a birthday tune;
-   tap the cake to blow them out. 🔄 brings a fresh cake in a new flavour.          */
+   tap the cake to blow them out. The shared ↻ (start again) brings a fresh cake.   */
 
 (function () {
   'use strict';
@@ -41,7 +41,7 @@
   const $ = (id) => document.getElementById(id);
   const cake = $('cake');
   const tray = $('tray');
-  let flavour = 0, layer = null, party = false, noteN = 0, partyTimer = 0;
+  let flavour = Math.floor(Math.random() * 5), layer = null, party = false, noteN = 0, partyTimer = 0;
 
   // Cake shape (viewBox 400 x 340); decorations stick inside these areas
   const CAKE_AREAS = [{ x: 70, y: 150, w: 260, h: 140 }, { x: 115, y: 60, w: 170, h: 100 }];
@@ -180,19 +180,14 @@
     const p = toCake(e.clientX, e.clientY);
     if (onCake(p.x, p.y)) stick('sprinkles', p.x, p.y);
   });
-  $('newBtn').addEventListener('click', () => {
-    party = false;
-    clearTimeout(partyTimer);
-    cake.classList.remove('party');
-    cake.classList.add('swap');
-    Sound.slideUp(0.3);
-    later(() => { flavour++; drawCake(); cake.classList.remove('swap'); Sound.boing(2); }, 350);
-  });
   document.addEventListener('keydown', (e) => {
     if (e.repeat || e.ctrlKey || e.metaKey || e.altKey || e.key === 'Tab' || e.key === 'Enter' || e.key === ' ') return;
     if (e.key.length === 1) { const p = randomSpot(); stick(pick(Object.keys(ITEMS)), p.x, p.y); }
   });
 
-  Kit.setup();
+  Kit.setup({ id: 'decorate-cake', how: () => [
+    { drag: [() => tray.querySelector('[data-item="strawberry"]'), cake] },
+    { drag: [() => tray.querySelector('[data-item="candle"]'), cake] },
+    { tap: () => document.getElementById('partyBtn') }] });
   drawCake();
 })();

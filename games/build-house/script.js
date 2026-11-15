@@ -254,7 +254,12 @@
   let lastWide = null;
   addEventListener('resize', () => { const w = innerWidth > innerHeight * 1.15; if (w !== lastWide) { lastWide = w; layout(); } });
 
-  Kit.setup();
+  Kit.setup({ id: 'build-house', how: () => {
+    const p = pieces.find(q => !q.placed);
+    if (!p) return [];
+    const m = svg.getScreenCTM();
+    return [{ drag: [p.g, { x: p.slot[0] * m.a + m.e, y: p.slot[1] * m.d + m.f }] }];
+  } });
   newBuild();
   lastWide = wide;
 })();

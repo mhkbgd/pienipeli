@@ -285,7 +285,8 @@
 
   function showMute() {
     muteBtn.textContent = muted ? '🔇' : '🔊';
-    muteBtn.setAttribute('aria-label', muted ? 'Unmute sound' : 'Mute sound');
+    const tr = (k, f) => (window.PP_I18N ? PP_I18N.t(k, f) : f);
+    muteBtn.setAttribute('aria-label', muted ? tr('chrome.soundOn', 'Sound on') : tr('chrome.soundOff', 'Sound off'));
   }
   press(muteBtn, () => { muted = !muted; store.set('muted', muted); showMute(); if (!muted) playPop(); });
 
@@ -304,7 +305,7 @@
     Pienipeli.fullscreenButton(fsBtn, {
       onChange(full) {
         fsBtn.textContent = full ? '🗗' : '⛶';
-        fsBtn.setAttribute('aria-label', full ? 'Exit full screen' : 'Full screen');
+        fsBtn.setAttribute('aria-label', full ? (window.PP_I18N ? PP_I18N.t('chrome.exitFull', 'Exit full screen') : 'Exit full screen') : (window.PP_I18N ? PP_I18N.t('chrome.full', 'Full screen') : 'Full screen'));
       }
     });
     fsBtn.addEventListener('click', () => { ensureAudio(); fsBtn.blur(); });
@@ -338,7 +339,15 @@
 
   // ---------- Start ----------
   showMute();
-  showFS();
-  setSpeed(speedIdx);
+  setSpeed(speedIdx);   // (the full-screen button sets itself up above)
+
+  // Shared chrome: "how to play" hand + this game's own restart button in the right corner
+  if (window.PPChrome) {
+    PPChrome.init({ id: 'baby-pop', adopt: [restartBtn], how: () => {
+      const b = [...stage.querySelectorAll('.balloon')].find(el => { const r = el.getBoundingClientRect(); return r.top > 100 && r.bottom < innerHeight - 110; });
+      return b ? [{ tap: b }] : [];
+    } });
+  }
+  if (window.PP_I18N) PP_I18N.onChange(showMute);
   fillBalloons(true);
 })();

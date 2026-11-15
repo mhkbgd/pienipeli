@@ -205,7 +205,11 @@
     else if (!busy) scheduleHint();
   });
 
-  Kit.setup();
+  Kit.setup({ id: 'color-splash', how: () => {
+    const pot = document.querySelector('.pot:nth-child(5)');
+    const r = canvas.querySelector('.region:not([data-paint])');
+    return [{ tap: pot }, { tap: r }];
+  } });
   select(PAINTS[0], false);
   newPicture();
 })();

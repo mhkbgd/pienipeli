@@ -242,6 +242,11 @@
   function scheduleHint() { clearHint(); hintTimer = setTimeout(() => { hint(); scheduleHint(); }, 6000); }
   function clearHint() { clearTimeout(hintTimer); }
 
-  Kit.setup();
+  Kit.setup({ id: 'trace-letter', how: () => {
+    const s = strokes.find(x => !x.done);
+    if (!s) return [];
+    const m = svg.getScreenCTM();
+    return [{ path: s.pts.map(([x, y]) => ({ x: x * m.a + m.e, y: y * m.d + m.f })) }];
+  } });
   build();
 })();

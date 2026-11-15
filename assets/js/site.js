@@ -2,7 +2,8 @@
    Small bits of play and help for the website pages. Each part only runs when its
    elements are on the page, so one file serves home, all games, parents and about.
    - Home: poppable hero balloons + pop counter, wobbly headline letters, and an animal
-     playground that reuses Find the Animal's drawings and sounds.
+     playground that reuses Find the Animal's drawings and sounds (loaded only when it
+     scrolls into view; names shown in the chosen language, never spoken).
    - All games: filter chips (also from the address: games/#age-1, #music, ...).
    - Parents: device tabs for the home-screen guide (opens on the visitor's device).
    - Everywhere: "Surprise me" buttons, scroll reveals, header line on scroll.
@@ -26,6 +27,12 @@
     get(k, d) { try { const v = localStorage.getItem('pienipeli-' + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
     set(k, v) { try { localStorage.setItem('pienipeli-' + k, JSON.stringify(v)); } catch (e) { /* private mode */ } },
   };
+
+  // ---------- Counts in the chosen language's digits (Bengali has its own) ----------
+  if (window.PP_I18N) PP_I18N.onChange(() => document.querySelectorAll('.n').forEach(el => {
+    if (!el.dataset.n) el.dataset.n = el.textContent;
+    el.textContent = PP_I18N.num(el.dataset.n);
+  }));
 
   // ---------- Old single-page links (pienipeli.fi/#faq etc.) go to their new pages ----------
   const OLD = { '#games': 'games/index.html', '#parents': 'parents.html', '#faq': 'parents.html#faq', '#about': 'about.html' };
@@ -56,8 +63,6 @@
   const toggle = $('soundToggle');
   function applyMute() {
     if (Sound) Sound.setMuted(muted);
-    if (muted && window.FTA_Narrator) window.FTA_Narrator.stop();
-    else if (muted && 'speechSynthesis' in window) speechSynthesis.cancel();
     if (toggle) {
       toggle.setAttribute('aria-pressed', String(!muted));
       toggle.setAttribute('aria-label', muted ? 'Sound off' : 'Sound on');
@@ -75,44 +80,54 @@
   applyMute();
   const play = (fn, ...args) => { if (Sound && !muted) { Sound.unlock(); Sound[fn](...args); } };
 
-  // Say the animal's name in Find the Animal's gentle narrator voice
-  const Narrator = window.FTA_Narrator || null;
-  const STR = window.FTA_STRINGS ? window.FTA_STRINGS.T.en : null;
-  function say(a) {
-    if (muted || !Narrator || !STR) return;
-    Narrator.say('en', [{ key: 'thatis-' + a.id, text: STR.thatIs(a.names.en), mood: 'soft' }]);
-  }
+  const I18N = window.PP_I18N;
+  const tr = (key, fallback) => (I18N ? I18N.t(key, fallback) : fallback);
 
   // ---------- Wobbly headline letters ----------
-  document.querySelectorAll('.wobble').forEach(el => {
-    el.setAttribute('aria-label', el.textContent);
+  // The hero heading is split into letters that boing when touched (and get rainbow
+  // colours). Translations replace the heading, so it is split again after every
+  // language change. Bengali is split into whole words: splitting its letters would
+  // break the joined letters (conjuncts).
+  const segmenter = (typeof Intl !== 'undefined' && Intl.Segmenter) ? new Intl.Segmenter(undefined, { granularity: 'grapheme' }) : null;
+  const pieces = (text) => {
+    if (document.documentElement.lang === 'bn') return text.split(/(\s+)/).filter(Boolean);
+    return segmenter ? [...segmenter.segment(text)].map(x => x.segment) : [...text];
+  };
+  function wobble(el) {
+    el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
     const wrap = node => {
       [...node.childNodes].forEach(n => {
         if (n.nodeType === 3) {
           const frag = document.createDocumentFragment();
-          [...n.textContent].forEach(ch => {
-            if (ch === ' ') { frag.appendChild(document.createTextNode(' ')); return; }
-            const s = document.createElement('span');
-            s.className = 'ltr';
-            s.setAttribute('aria-hidden', 'true');
-            s.textContent = ch;
-            frag.appendChild(s);
+          pieces(n.textContent).forEach(ch => {
+            if (/^\s+$/.test(ch)) { frag.appendChild(document.createTextNode(' ')); return; }
+            const sp = document.createElement('span');
+            sp.className = 'ltr';
+            sp.setAttribute('aria-hidden', 'true');
+            sp.textContent = ch;
+            frag.appendChild(sp);
           });
           n.replaceWith(frag);
-        } else if (n.nodeType === 1) {
+        } else if (n.nodeType === 1 && !n.classList.contains('ltr')) {
           n.setAttribute('aria-hidden', 'true');
           wrap(n);
         }
       });
     };
     wrap(el);
-  });
-  document.querySelectorAll('.ltr').forEach(s => {
-    const boing = () => { s.classList.remove('boing'); void s.offsetWidth; s.classList.add('boing'); };
-    s.addEventListener('pointerenter', boing);
-    s.addEventListener('pointerdown', () => { boing(); play('tap'); });
-    s.addEventListener('animationend', () => s.classList.remove('boing'));
-  });
+    el.querySelectorAll('.ltr').forEach(sp => {
+      const boing = () => { sp.classList.remove('boing'); void sp.offsetWidth; sp.classList.add('boing'); };
+      sp.addEventListener('pointerenter', boing);
+      sp.addEventListener('pointerdown', () => { boing(); play('tap'); });
+      sp.addEventListener('animationend', () => sp.classList.remove('boing'));
+    });
+  }
+  const heroTitle = document.querySelector('.hero h1');
+  if (heroTitle) {
+    const raw = heroTitle.innerHTML;          // the clean English heading
+    wobble(heroTitle);
+    if (I18N) I18N.onChange((lang) => { if (lang === 'en') heroTitle.innerHTML = raw; wobble(heroTitle); });
+  }
 
   // ---------- Hero: poppable balloons ----------
   const hero = $('hero');
@@ -120,6 +135,7 @@
   const counter = $('popCount');
   let pops = 0;
   const MILESTONES = { 5: 'Yay!', 10: 'Wow!', 25: 'Super!', 50: 'Pop star!', 100: 'Amazing!' };
+  const milestone = (n) => MILESTONES[n] ? tr('home.milestone.' + n, MILESTONES[n]) : '';
   const PALETTES = [
     ['#ffe3ef', '#ff9fc6', '#f77fb0'],
     ['#e0f2ff', '#8ecbff', '#5fb4f0'],
@@ -191,16 +207,16 @@
     if (!counter) return;
     pops++;
     counter.hidden = false;
-    counter.querySelector('b').textContent = pops;
+    counter.querySelector('b').textContent = I18N ? I18N.num(pops) : pops;
     counter.classList.remove('bump');
     void counter.offsetWidth;
     counter.classList.add('bump');
-    const msg = MILESTONES[pops] || (rainbow ? 'Rainbow!' : '');
+    const msg = milestone(pops) || (rainbow ? tr('home.rainbow', 'Rainbow!') : '');
     if (msg) {
       counter.querySelector('.pop-label').textContent = msg;
       if (MILESTONES[pops]) play('fanfare');
       clearTimeout(countPop.t);
-      countPop.t = setTimeout(() => { counter.querySelector('.pop-label').textContent = 'popped!'; }, 1800);
+      countPop.t = setTimeout(() => { counter.querySelector('.pop-label').textContent = tr('home.popped', 'popped!'); }, 1800);
     }
     const hint = document.querySelector('.hint');
     if (hint) hint.classList.add('gone');
@@ -222,44 +238,71 @@
   }
 
   // ---------- Animal playground (home) ----------
+  // The 40 drawings (games/find-the-animal/animals.js) load only when the playground
+  // is about to scroll into view, so the home page opens fast on phones.
   const zoo = $('zoo');
-  const animals = window.FTA_ANIMALS, toSVG = window.FTA_toSVG;
-  if (zoo && animals && toSVG) {
-    $('play').hidden = false;
-    const count = () => (innerWidth < 980 ? 4 : 8);
-    function fill() {
-      const pool = [...animals].sort(() => Math.random() - 0.5).slice(0, count());
-      zoo.innerHTML = '';
-      pool.forEach((a, i) => {
-        const b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'critter';
-        b.style.setProperty('--i', i);
-        b.style.setProperty('--hue', (i * 47 + 20) % 360);
-        b.setAttribute('aria-label', a.names.en);
-        b.innerHTML = `<span class="critter-art">${toSVG(a)}</span><span class="critter-name" aria-hidden="true">${a.names.en}!</span>`;
-        b.addEventListener('click', () => {
-          b.classList.remove('boing', 'talk');
-          void b.offsetWidth;
-          b.classList.add('boing', 'talk');
-          clearTimeout(b._t);
-          b._t = setTimeout(() => b.classList.remove('talk'), 1600);
-          const r = b.getBoundingClientRect(), zr = zoo.getBoundingClientRect();
-          burst(r.left - zr.left + r.width / 2, r.top - zr.top + r.height * 0.3, ['💛', '✨', '⭐', '💖'], 7, zoo);
-          play('animal', a.sound);
-          clearTimeout(fill.sayT);
-          fill.sayT = setTimeout(() => say(a), 650);
+  const playSection = $('play');
+  if (zoo && playSection) {
+    const here = document.currentScript && document.currentScript.src;
+    const animalsSrc = new URL('../../games/find-the-animal/animals.js', here || location.href).href;
+    let loaded = false, fill = null;
+    const nameOf = (a) => (a.names[I18N && I18N.lang] || a.names.en);
+    function setup() {
+      const animals = window.FTA_ANIMALS, toSVG = window.FTA_toSVG;
+      if (!animals || !toSVG) return;
+      const count = () => (innerWidth < 980 ? 4 : 8);
+      fill = () => {
+        const pool = [...animals].sort(() => Math.random() - 0.5).slice(0, count());
+        zoo.innerHTML = '';
+        pool.forEach((a, i) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'critter';
+          b._animal = a;
+          b.style.setProperty('--i', i);
+          b.style.setProperty('--hue', (i * 47 + 20) % 360);
+          b.setAttribute('aria-label', nameOf(a));
+          b.innerHTML = `<span class="critter-art">${toSVG(a)}</span><span class="critter-name" aria-hidden="true">${nameOf(a)}!</span>`;
+          b.addEventListener('click', () => {
+            b.classList.remove('boing', 'talk');
+            void b.offsetWidth;
+            b.classList.add('boing', 'talk');
+            clearTimeout(b._t);
+            b._t = setTimeout(() => b.classList.remove('talk'), 1600);
+            const r = b.getBoundingClientRect(), zr = zoo.getBoundingClientRect();
+            burst(r.left - zr.left + r.width / 2, r.top - zr.top + r.height * 0.3, ['💛', '✨', '⭐', '💖'], 7, zoo);
+            play('animal', a.sound);
+          });
+          b.addEventListener('animationend', e => { if (e.animationName === 'boing') b.classList.remove('boing'); });
+          zoo.appendChild(b);
         });
-        b.addEventListener('animationend', e => { if (e.animationName === 'boing') b.classList.remove('boing'); });
-        zoo.appendChild(b);
+      };
+      fill();
+      $('zooShuffle').addEventListener('click', () => {
+        play('success');
+        zoo.classList.add('shuffling');
+        setTimeout(() => { fill(); zoo.classList.remove('shuffling'); }, reduced ? 0 : 220);
       });
+      // Names follow the language picker
+      if (I18N) I18N.onChange(() => zoo.querySelectorAll('.critter').forEach(b => {
+        b.setAttribute('aria-label', nameOf(b._animal));
+        b.querySelector('.critter-name').textContent = nameOf(b._animal) + '!';
+      }));
     }
-    fill();
-    $('zooShuffle').addEventListener('click', () => {
-      play('success');
-      zoo.classList.add('shuffling');
-      setTimeout(() => { fill(); zoo.classList.remove('shuffling'); }, reduced ? 0 : 220);
-    });
+    function load() {
+      if (loaded) return;
+      loaded = true;
+      const sc = document.createElement('script');
+      sc.src = animalsSrc;
+      sc.onload = setup;
+      sc.onerror = () => { playSection.hidden = true; };   // no drawings: just hide the playground
+      document.head.appendChild(sc);
+    }
+    playSection.hidden = false;
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => { if (es.some(e => e.isIntersecting)) { io.disconnect(); load(); } }, { rootMargin: '600px 0px' });
+      io.observe(playSection);
+    } else load();
   }
 
   // ---------- All games: filters ----------

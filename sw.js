@@ -5,7 +5,7 @@
      is refreshed); offline the saved copy is used.
    When you add a game or a file, add it to FILES below and bump VERSION.        */
 
-const VERSION = 'v5';
+const VERSION = 'v7';
 const CACHE = 'pienipeli-' + VERSION;
 
 const FILES = [
@@ -18,6 +18,13 @@ const FILES = [
   '/assets/js/site.js',
   '/assets/js/app.js',
   '/assets/js/kit.js',
+  '/assets/js/i18n.js',
+  '/assets/js/chrome.js',
+  '/assets/css/chrome.css',
+  '/assets/i18n/en.js',
+  '/assets/i18n/fi.js',
+  '/assets/i18n/bn.js',
+  '/assets/i18n/tr.js',
   '/assets/css/kit.css',
   '/assets/js/alphabet.js',
   '/assets/things/apple.svg',

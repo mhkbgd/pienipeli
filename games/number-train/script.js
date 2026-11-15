@@ -201,6 +201,9 @@
   }
   function clearHint() { clearTimeout(hintTimer); }
 
-  Kit.setup();
+  Kit.setup({ id: 'number-train', how: () => {
+    const r = riders.querySelector('.rider:not(.gone)');
+    return r ? [{ drag: [r, () => train.querySelector(`.car[data-num="${r.dataset.num}"]`)] }] : [];
+  } });
   newRound();
 })();

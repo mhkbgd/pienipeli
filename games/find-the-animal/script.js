@@ -41,7 +41,10 @@
 
   // ---------- State ----------
   const browserLang = (navigator.language || 'en').slice(0, 2);
-  let lang = store.get('lang', LANGS.includes(browserLang) ? browserLang : 'en');
+  // Start in the language chosen on the website (if this game speaks it), else this game's own choice
+  let siteLang = null;
+  try { siteLang = localStorage.getItem('pienipeli-lang'); } catch (e) { /* private mode */ }
+  let lang = (siteLang && LANGS.includes(siteLang)) ? siteLang : store.get('lang', LANGS.includes(browserLang) ? browserLang : 'en');
   if (!LANGS.includes(lang)) lang = 'en';
   let muted = store.get('muted', false);
   let musicOn = store.get('music', false); // background music is off by default

@@ -268,5 +268,8 @@
     if (document.hidden) { if (beatOn) setBeat(false); clearHint(); }
   });
 
-  Kit.setup();
+  Kit.setup({ id: 'animal-band', how: () => [
+    { tap: () => document.querySelector('.player:nth-child(1)') },
+    { tap: () => document.querySelector('.player:nth-child(4)') },
+    { tap: () => document.querySelector('.player:nth-child(6)') }] });
 })();

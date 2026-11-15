@@ -199,6 +199,9 @@
   }
   function clearHint() { clearTimeout(hintTimer); }
 
-  Kit.setup();
+  Kit.setup({ id: 'feed-numbers', how: () => {
+    const a = basket.querySelector('.apple:not(.used)');
+    return a ? [{ drag: [a, () => monster.querySelector('.target')] }] : [];
+  } });
   newRound();
 })();

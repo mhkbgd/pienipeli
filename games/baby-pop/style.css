@@ -307,3 +307,15 @@ a.round-btn { display: inline-grid; place-items: center; text-decoration: none; 
   100% { transform: translateX(-50%) scale(1); }
 }
 @media (prefers-reduced-motion: reduce) { .counter.bump { animation: none; } }
+
+/* ---------- Shared look (assets/css/chrome.css): round white buttons with a dark outline ---------- */
+.controls {
+  background: rgba(255, 255, 255, .92);
+  border: 3px solid #2b1d5c; box-shadow: 3px 4px 0 #2b1d5c;
+}
+.controls .round-btn {
+  background: #fff; border: 3px solid #2b1d5c; box-shadow: 2px 3px 0 #2b1d5c;
+  transition: transform .12s, box-shadow .12s;
+}
+.controls .round-btn:active { transform: translate(2px, 3px); box-shadow: none; }
+.counter { border: 3px solid #2b1d5c; box-shadow: 3px 4px 0 #2b1d5c; }

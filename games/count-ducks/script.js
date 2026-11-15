@@ -105,6 +105,6 @@
   }
   function clearHint() { clearTimeout(hintTimer); }
 
-  Kit.setup();
+  Kit.setup({ id: 'count-ducks', how: () => [{ tap: pond }, { tap: pond }] });
   newRound();
 })();

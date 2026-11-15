@@ -211,3 +211,8 @@ html, body { background: #2b2f6b; }
 
 /* Animal pictures: sized in em so the small / middle / big font sizes above still apply */
 .critter img, .sleeper img { display: block; width: 1.15em; height: 1.15em; pointer-events: none; -webkit-user-drag: none; }
+
+/* Sideways phones: the window moves to the middle so it never sits under the toolbar */
+@media (orientation: landscape) and (max-height: 620px) {
+  .window { top: calc(10px + var(--safe-t)); left: 50%; right: auto; translate: -50% 0; width: 130px; }
+}

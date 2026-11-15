@@ -154,6 +154,8 @@
   addEventListener('resize', place);
   document.addEventListener('visibilitychange', () => { if (!document.hidden && phase === 'race') last = performance.now(); });
 
-  Kit.setup();
+  Kit.setup({ id: 'tap-race', how: () => phase === 'pick'
+    ? [{ tap: () => racers[1] && racers[1].el }]
+    : [{ tap: track }, { tap: track }, { tap: track }] });
   setup();
 })();

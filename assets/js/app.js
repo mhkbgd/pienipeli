@@ -45,24 +45,25 @@
   }
 
   // A small card for grown-ups explaining how to get full screen on iPhone.
+  const tr = (k, f) => (window.PP_I18N ? PP_I18N.t(k, f) : f);
   function showHomeScreenTip() {
     if (document.getElementById('pp-tip')) return;
     const tip = document.createElement('div');
     tip.id = 'pp-tip';
     tip.setAttribute('role', 'dialog');
     tip.setAttribute('aria-modal', 'true');
-    tip.setAttribute('aria-label', 'Full screen on iPhone');
+    tip.setAttribute('aria-label', tr('chrome.iosTitle', 'Full screen on iPhone'));
     tip.style.cssText = 'position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:20px;' +
       'background:rgba(40,30,60,.45);font-family:system-ui,-apple-system,sans-serif;color:#3a2a3a';
     tip.innerHTML =
       '<div style="max-width:340px;background:#fff;border-radius:24px;padding:22px 22px 18px;box-shadow:0 18px 40px rgba(0,0,0,.25);text-align:center">' +
         '<div style="font-size:42px;line-height:1;margin-bottom:8px" aria-hidden="true">📲</div>' +
-        '<p style="margin:0 0 10px;font-size:19px;font-weight:700">Full screen on iPhone</p>' +
-        '<p style="margin:0 0 6px;font-size:16px;line-height:1.45">1. Tap the <b>Share</b> button ' +
-          '<svg width="16" height="20" viewBox="0 0 16 20" aria-label="Share icon" style="vertical-align:-3px"><path d="M8 1v12M3.5 5.5 8 1l4.5 4.5M2 9v9h12V9" fill="none" stroke="#2f7cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> in Safari.</p>' +
-        '<p style="margin:0 0 6px;font-size:16px;line-height:1.45">2. Choose <b>Add to Home Screen</b>.</p>' +
-        '<p style="margin:0 0 16px;font-size:16px;line-height:1.45">3. Open the game from its new icon: it fills the whole screen.</p>' +
-        '<button type="button" style="font:inherit;font-size:17px;font-weight:700;border:0;border-radius:999px;padding:10px 26px;background:#ff8fb3;color:#fff;cursor:pointer">OK</button>' +
+        '<p style="margin:0 0 10px;font-size:19px;font-weight:700">' + tr('chrome.iosTitle', 'Full screen on iPhone') + '</p>' +
+        '<p style="margin:0 0 6px;font-size:16px;line-height:1.45">1. ' + tr('chrome.ios1', 'Tap the Share button in Safari.') + ' ' +
+          '<svg width="16" height="20" viewBox="0 0 16 20" aria-label="Share icon" style="vertical-align:-3px"><path d="M8 1v12M3.5 5.5 8 1l4.5 4.5M2 9v9h12V9" fill="none" stroke="#2f7cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></p>' +
+        '<p style="margin:0 0 6px;font-size:16px;line-height:1.45">2. ' + tr('chrome.ios2', 'Choose Add to Home Screen.') + '</p>' +
+        '<p style="margin:0 0 16px;font-size:16px;line-height:1.45">3. ' + tr('chrome.ios3', 'Open the game from its new icon: it fills the whole screen.') + '</p>' +
+        '<button type="button" style="font:inherit;font-size:17px;font-weight:700;border:0;border-radius:999px;padding:10px 26px;background:#ff8fb3;color:#fff;cursor:pointer">' + tr('chrome.ok', 'OK') + '</button>' +
       '</div>';
     const close = (e) => { if (e.target === tip || e.target.tagName === 'BUTTON') tip.remove(); };
     tip.addEventListener('click', close);

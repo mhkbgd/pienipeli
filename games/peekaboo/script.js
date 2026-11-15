@@ -253,6 +253,9 @@
     else if (!busy) scheduleHint();
   });
 
-  Kit.setup();
+  Kit.setup({ id: 'peekaboo', how: () => {
+    const s = stage.querySelector('.spot[data-state="closed"]:not(.away)');
+    return s ? [{ tap: s }] : [];
+  } });
   newRound();
 })();

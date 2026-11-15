@@ -72,6 +72,50 @@ hear is music, chimes and playful synthesized animal calls.
 └── _headers              Security & caching headers (read by Cloudflare Pages)
 ```
 
+## Languages (English, Suomi, বাংলা, Türkçe)
+
+- **`assets/js/i18n.js`** is the one language system for every page and game. Elements carry
+  `data-i18n="key"` (text), `data-i18n-html="key"` (our own HTML) or
+  `data-i18n-attr="aria-label:key"`; scripts use `PP_I18N.t('key', 'English fallback')`.
+- Dictionaries: **`assets/i18n/en.js`** (generated from the page texts, never edit by hand),
+  `fi.js`, `bn.js`, `tr.js`. Only the chosen language file is downloaded.
+- The **language picker** in the header is a native `<select>` (works with touch, keyboard and
+  screen readers). The choice is saved on the device (`pienipeli-lang`) and shared by all pages
+  and games; first visit uses the browser language if we have it, else English.
+- Bengali uses the self-hosted Noto Sans Bengali (downloaded only when Bengali text shows).
+  Numbers in counts switch to Bengali digits.
+- **Adding a language:** copy `en.js` to `<code>.js`, translate every value, add it to
+  `LANGS` in `i18n.js` with `ready: true`, add the file to `sw.js`, then run
+  `node tools/build-site.mjs`: it lists any missing keys per language.
+- Pages are written in English (that's what search engines see); other languages are applied
+  in the browser.
+
+## Building the pages (optional tools, no dependencies)
+
+- **`node tools/build-site.mjs`** writes `index.html`, `games/index.html`, `parents.html`,
+  `about.html`, `privacy.html`, `404.html` and `assets/i18n/en.js` from one file (the game list,
+  categories, every text). **Edit texts and game cards there, not in the HTML** (the HTML is
+  overwritten), then run it. It also reports untranslated keys.
+- **`node tools/build-game-pages.mjs`** writes the page boilerplate (head, SEO, toolbar,
+  scripts) for the ten newest games.
+- **`node tools/build-animal-pictures.mjs`** rebuilds `assets/animals/` from the drawings.
+
+## Shared game toolbar (every game)
+
+`assets/js/chrome.js` + `assets/css/chrome.css`, loaded by all 18 games:
+
+- The same round buttons everywhere: 🏠 all games, 🔊 sound, ⛶ full screen (left corner) and
+  **?** how to play, **↻** start again (right corner). Big (54 px; 48 px on very small phones),
+  dark outline, chunky shadow, press-down feedback.
+- **How to play:** a cartoon hand acts out the move on the real pieces (tap, drag, rub or trace),
+  with no words. It plays once on a game's first visit on the device (`pienipeli-how-<game>`),
+  and again whenever **?** is tapped; any tap on the game stops it. Each game describes its move:
+  `Kit.setup({ id, how: () => [{ tap: el }, { drag: [from, to] }, { rub: el }, { path: [...] }] })`.
+- **Start again** reloads the game with a quick fade (Baby Pop keeps its own instant restart;
+  Find the Animal keeps its own home/restart bar).
+- Games with their own buttons (Animal Band 🥁🎵, the cake's 🎉, Tilt Track's stars) place them
+  just below the toolbar so nothing overlaps.
+
 ## The website pages
 
 Four pages share one header, footer and stylesheet (`assets/css/site.css`):

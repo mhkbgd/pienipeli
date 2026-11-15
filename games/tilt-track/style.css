@@ -26,3 +26,6 @@ html, body { background: #8fe0a3; }
 @keyframes pulse { 50% { scale: 1.06; } }
 
 @media (prefers-reduced-motion: reduce) { .start { animation: none; } }
+
+/* Star counter sits just below the shared toolbar */
+.stars-count { top: calc(76px + var(--safe-t)); }

@@ -30,7 +30,7 @@ html, body {
   height: 100%;
   overflow: hidden;                 /* never scroll during play */
   overscroll-behavior: none;
-  font-family: "Fredoka", "Nunito", "Segoe UI Rounded", system-ui, sans-serif;
+  font-family: "Fredoka", "Noto Sans Bengali", "Nunito", "Segoe UI Rounded", system-ui, sans-serif;
   color: var(--ink);
   background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
   touch-action: manipulation;       /* no double-tap zoom */
@@ -73,22 +73,7 @@ button:focus-visible, a:focus-visible { outline: 4px solid #b995ff; outline-offs
 @keyframes kit-drift { from { left: -30vmin; } to { left: 110vw; } }
 @keyframes kit-spin { to { transform: rotate(360deg); } }
 
-/* ---------- Corner buttons (for grown-ups) ---------- */
-.corner-btn {
-  position: fixed; z-index: 20;
-  top: calc(10px + var(--safe-t));
-  width: 52px; height: 52px; border-radius: 50%;
-  display: grid; place-items: center;
-  font-size: 24px; line-height: 1; text-decoration: none; color: var(--ink);
-  background: rgba(255, 255, 255, .75);
-  box-shadow: var(--shadow);
-  transition: transform .15s;
-}
-.corner-btn:active { transform: scale(.88); }
-.corner-btn.home { left: calc(10px + var(--safe-l)); font-family: var(--emoji); }
-.corner-btn.sound { left: calc(72px + var(--safe-l)); font-family: var(--emoji); }
-.corner-btn.sound[aria-pressed="false"] { opacity: .6; }
-.corner-btn.full { left: calc(134px + var(--safe-l)); font-size: 26px; font-weight: 700; }
+/* Corner buttons, "how to play" and restart live in assets/css/chrome.css (shared by every game). */
 
 /* ---------- Effects ---------- */
 .fx { position: fixed; inset: 0; pointer-events: none; z-index: 30; overflow: hidden; }

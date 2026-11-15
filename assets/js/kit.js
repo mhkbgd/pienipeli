@@ -444,7 +444,12 @@
   /* =====================================================================
      Page setup: corner buttons, audio unlock, toddler-proofing
      ===================================================================== */
-  function setup({ onFirstTap } = {}) {
+  const tr = (k, f) => (window.PP_I18N ? PP_I18N.t(k, f) : f);
+
+  // setup({ id, how, restart, onFirstTap })
+  //   how:     () => demo steps for the "how to play" hand (see assets/js/chrome.js)
+  //   restart: optional soft restart; by default the game reloads
+  function setup({ onFirstTap, how, restart, id } = {}) {
     // Browsers only allow audio after a tap. onFirstTap lets a game replay a sound
     // that was silent because sound wasn't allowed yet.
     let unlocked = false;
@@ -456,29 +461,41 @@
     }, { capture: true });
     document.addEventListener('keydown', () => Sound.unlock(), { capture: true, once: true });
 
+    const home = document.querySelector('.corner-btn.home');
     const soundBtn = document.getElementById('soundBtn');
-    if (soundBtn) {
-      const show = () => {
+    const fullBtn = document.getElementById('fullBtn');
+    let isFull = false;
+    const labels = () => {
+      if (home) { home.setAttribute('aria-label', tr('chrome.home', 'All games')); home.title = home.getAttribute('aria-label'); }
+      if (soundBtn) {
         const on = !Sound.isMuted();
         soundBtn.firstElementChild.textContent = on ? '🔊' : '🔇';
         soundBtn.setAttribute('aria-pressed', String(on));
-        soundBtn.setAttribute('aria-label', on ? 'Sound off' : 'Sound on');
-      };
-      soundBtn.addEventListener('click', () => { Sound.setMuted(!Sound.isMuted()); show(); Sound.tap(); });
-      show();
-    }
+        soundBtn.setAttribute('aria-label', on ? tr('chrome.soundOff', 'Sound off') : tr('chrome.soundOn', 'Sound on'));
+        soundBtn.title = soundBtn.getAttribute('aria-label');
+      }
+      if (fullBtn) {
+        fullBtn.setAttribute('aria-label', isFull ? tr('chrome.exitFull', 'Exit full screen') : tr('chrome.full', 'Full screen'));
+        fullBtn.title = fullBtn.getAttribute('aria-label');
+      }
+    };
+    if (soundBtn) soundBtn.addEventListener('click', () => { Sound.setMuted(!Sound.isMuted()); labels(); Sound.tap(); });
 
     // Fullscreen API on Android/desktop/iPad, an "Add to Home Screen" tip on iPhone,
     // hidden when the game was opened full screen from its home-screen icon.
-    const fullBtn = document.getElementById('fullBtn');
     if (fullBtn && window.Pienipeli) {
       Pienipeli.fullscreenButton(fullBtn, {
         onChange(full) {
+          isFull = full;
           fullBtn.firstElementChild.textContent = full ? '🗗' : '⛶';
-          fullBtn.setAttribute('aria-label', full ? 'Exit full screen' : 'Full screen');
+          labels();
         }
       });
     }
+    labels();
+    if (window.PP_I18N) { PP_I18N.onChange(labels); }
+
+    if (window.PPChrome) PPChrome.init({ id, how, restart });
 
     document.addEventListener('contextmenu', (e) => e.preventDefault());
     document.addEventListener('gesturestart', (e) => e.preventDefault());   // iOS pinch

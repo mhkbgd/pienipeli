@@ -65,3 +65,7 @@ html, body {
   .tray { max-width: 40vw; }
 }
 @media (prefers-reduced-motion: reduce) { .cake.party, .deco-candle.lit .flame { animation: none; } }
+
+/* Party button sits just below the shared toolbar */
+.cake-btns { top: calc(76px + var(--safe-t)); }
+@media (orientation: landscape) and (max-height: 620px) { .cake-btns { top: auto; bottom: calc(12px + var(--safe-b)); } }

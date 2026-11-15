@@ -1,0 +1,75 @@
+/* ============ Pienipeli: shared game chrome ============
+   The same round grown-up buttons in every game, the "how to play" hand, and the
+   restart fade. Loaded by every game after its own stylesheet, so it wins.        */
+
+@font-face {
+  font-family: "Noto Sans Bengali";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../fonts/noto-sans-bengali.woff2") format("woff2");
+  unicode-range: U+0980-09FF, U+200C-200D, U+25CC;
+}
+
+:root {
+  --pp-ink: #2b1d5c;
+  --pp-btn: 54px;
+  --pp-gap: 10px;
+  --pp-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Twemoji Mozilla", sans-serif;
+}
+
+/* ---------- Round corner buttons ---------- */
+.corner-btn {
+  position: fixed; z-index: 20;
+  top: calc(10px + env(safe-area-inset-top, 0px));
+  width: var(--pp-btn); height: var(--pp-btn); border-radius: 50%;
+  display: grid; place-items: center;
+  padding: 0; margin: 0;
+  font-family: var(--pp-emoji); font-size: 24px; line-height: 1; font-weight: 700;
+  color: var(--pp-ink); text-decoration: none; cursor: pointer;
+  background: #fff;
+  border: 3px solid var(--pp-ink);
+  box-shadow: 2px 3px 0 var(--pp-ink);
+  transition: transform .12s ease, box-shadow .12s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.corner-btn:active { transform: translate(2px, 3px); box-shadow: 0 0 0 var(--pp-ink); }
+.corner-btn:focus-visible { outline: 4px solid #b07cff; outline-offset: 3px; }
+.corner-btn.home  { left: calc(10px + env(safe-area-inset-left, 0px)); }
+.corner-btn.sound { left: calc(10px + var(--pp-btn) + var(--pp-gap) + env(safe-area-inset-left, 0px)); }
+.corner-btn.full  { left: calc(10px + (var(--pp-btn) + var(--pp-gap)) * 2 + env(safe-area-inset-left, 0px)); font-family: inherit; font-size: 26px; }
+.corner-btn.sound[aria-pressed="false"] { background: #eceaf3; }
+
+/* Right corner: how to play + start again */
+.chrome-right {
+  position: fixed; z-index: 20;
+  top: calc(10px + env(safe-area-inset-top, 0px)); right: calc(10px + env(safe-area-inset-right, 0px));
+  display: flex; gap: var(--pp-gap);
+}
+.chrome-right .corner-btn { position: static; }
+.chrome-right .help { font-family: "Fredoka", system-ui, sans-serif; font-size: 30px; background: #ffd23d; }
+.chrome-right .restart { font-family: system-ui, sans-serif; font-size: 30px; }
+
+/* Small phones: slightly smaller (still well above the 44px touch minimum) */
+@media (max-width: 380px) { :root { --pp-btn: 48px; --pp-gap: 8px; } }
+
+/* ---------- How to play: the hand ---------- */
+.how-layer { position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: 0; transition: opacity .25s; }
+.how-layer.show { opacity: 1; }
+.how-hand { position: absolute; left: 0; top: 0; width: 64px; height: 80px; filter: drop-shadow(0 6px 6px rgba(43, 29, 92, .3)); will-change: transform; }
+.how-hand svg { display: block; width: 100%; height: 100%; }
+.how-ring {
+  position: absolute; width: 70px; height: 70px; margin: -35px 0 0 -35px; border-radius: 50%;
+  border: 5px solid #fff; box-shadow: 0 0 0 3px rgba(43, 29, 92, .35); opacity: 0;
+}
+.how-ring.go { animation: how-ring .6s ease-out; }
+@keyframes how-ring { from { transform: scale(.3); opacity: 1; } to { transform: scale(1.4); opacity: 0; } }
+
+/* ---------- Start again: a quick fade ---------- */
+body.pp-restarting { opacity: 0; transition: opacity .2s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .how-ring.go { animation: none; }
+  .corner-btn { transition: none; }
+}

@@ -380,6 +380,10 @@
     else if (!busy) scheduleHint();
   });
 
-  Kit.setup();
+  Kit.setup({ id: 'bedtime', how: () => {
+    const c = document.querySelector('.critter:not(.done)');
+    const b = c && document.querySelector(`.bed[data-size="${c.dataset.size}"]:not(.taken)`);
+    return c && b ? [{ drag: [c, b] }] : [];
+  } });
   newRound();
 })();

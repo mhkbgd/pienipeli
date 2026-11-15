@@ -118,6 +118,6 @@
     else if (e.key === 'ArrowLeft') go(i - 1, false);
   });
 
-  Kit.setup();
+  Kit.setup({ id: 'alphabet-zoo', how: () => [{ tap: card }, { tap: card }] });
   render();
 })();

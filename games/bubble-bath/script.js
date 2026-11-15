@@ -322,6 +322,8 @@
   });
 
   Kit.setup({
+    id: 'bubble-bath',
+    how: () => [{ rub: pet }],
     // The first animal's hello was silent (sound needs a tap first): replay it.
     onFirstTap(e) { if (!e.target.closest('#pet, #duck, .corner-btn') && animal) Sound.call(animal.id); }
   });
